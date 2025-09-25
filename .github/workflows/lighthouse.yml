@@ -1,0 +1,127 @@
+name: Lighthouse CI
+on:
+    push:
+        branches: [main, development]
+    pull_request:
+        branches: [main, development]
+
+jobs:
+    lhci:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '20'
+
+            - name: Install pnpm & dependencies
+              run: |
+                  corepack enable
+                  pnpm install
+
+            - name: Setup pnpm global bin and PATH
+              run: |
+                  pnpm setup
+                  echo "PNPM_HOME=$HOME/.pnpm" >> $GITHUB_ENV
+                  echo "PATH=$HOME/.pnpm:$PATH" >> $GITHUB_ENV
+
+            - name: Build site
+              run: pnpm build
+
+            - name: Install Lighthouse CI
+              run: pnpm add -g @lhci/cli
+
+            - name: Run Lighthouse CI
+              run: lhci autorun --upload.target=temporary-public-storage
+
+            - name: Warn if Lighthouse performance is slow and show details
+              shell: bash
+              run: |
+                  set -euo pipefail
+                  # Try to get representative run JSON from LHCI manifest
+                  LHR_FROM_MANIFEST=""
+                  if [ -f ".lighthouseci/manifest.json" ]; then
+                    LHR_FROM_MANIFEST="$(jq -r 'first(.runs[] | select(.isRepresentativeRun==true) | .lhrPath) // empty' .lighthouseci/manifest.json || true)"
+                  fi
+
+                  if [ -n "${LHR_FROM_MANIFEST:-}" ] && [ -f ".lighthouseci/${LHR_FROM_MANIFEST}" ]; then
+                    LHCI_JSON=".lighthouseci/${LHR_FROM_MANIFEST}"
+                  else
+                    # Fallback: first lhr-*.json produced by lhci
+                    LHCI_JSON="$(ls .lighthouseci/lhr-*.json 2>/dev/null | head -n 1 || true)"
+                  fi
+
+                  if [ -z "${LHCI_JSON:-}" ] || [ ! -f "${LHCI_JSON}" ]; then
+                    echo "::error ::No Lighthouse report found!"
+                    echo "Contents of .lighthouseci for debugging:"
+                    ls -la .lighthouseci || true
+                    # Do not exit, just warn and continue
+                  else
+                    PERF="$(jq '.categories.performance.score' "${LHCI_JSON}")"
+                    FCP="$(jq '.audits["first-contentful-paint"].numericValue' "${LHCI_JSON}")"
+                    TTI="$(jq '.audits["interactive"].numericValue' "${LHCI_JSON}")"
+                    echo "Lighthouse Performance Score: ${PERF}"
+                    echo "First Contentful Paint (ms): ${FCP}"
+                    echo "Time to Interactive (ms): ${TTI}"
+
+                    if (( $(echo "${TTI} > 3000" | bc -l) )); then
+                      echo "::warning ::Time to Interactive is above budget! TTI = ${TTI} ms (budget: ≤ 3000ms)"
+                      HTML_FROM_MANIFEST="$(jq -r 'first(.runs[] | select(.isRepresentativeRun==true) | .htmlPath) // empty' .lighthouseci/manifest.json 2>/dev/null || true)"
+                      if [ -n "${HTML_FROM_MANIFEST:-}" ] && [ -f ".lighthouseci/${HTML_FROM_MANIFEST}" ]; then
+                        echo "Open local report: .lighthouseci/${HTML_FROM_MANIFEST}"
+                      fi
+                    fi
+                  fi
+                  # Always continue, never exit nonzero
+                  exit 0
+
+            - name: Performance Budget Check
+              shell: bash
+              run: |
+                  set -euo pipefail
+                  echo "🎯 Performance Budget Check"
+
+                  LHR_FROM_MANIFEST=""
+                  if [ -f ".lighthouseci/manifest.json" ]; then
+                    LHR_FROM_MANIFEST="$(jq -r 'first(.runs[] | select(.isRepresentativeRun==true) | .lhrPath) // empty' .lighthouseci/manifest.json || true)"
+                  fi
+                  if [ -n "${LHR_FROM_MANIFEST:-}" ] && [ -f ".lighthouseci/${LHR_FROM_MANIFEST}" ]; then
+                    LHCI_JSON=".lighthouseci/${LHR_FROM_MANIFEST}"
+                  else
+                    LHCI_JSON="$(ls .lighthouseci/lhr-*.json 2>/dev/null | head -n 1 || true)"
+                  fi
+
+                  if [ -z "${LHCI_JSON:-}" ] || [ ! -f "${LHCI_JSON}" ]; then
+                    echo "::error ::No Lighthouse report found!"
+                    ls -la .lighthouseci || true
+                    # Do not exit, just warn and continue
+                  else
+                    PERFORMANCE="$(jq '.categories.performance.score' "${LHCI_JSON}")"
+                    ACCESSIBILITY="$(jq '.categories.accessibility.score' "${LHCI_JSON}")"
+                    BEST_PRACTICES="$(jq '.categories["best-practices"].score' "${LHCI_JSON}")"
+                    SEO="$(jq '.categories.seo.score' "${LHCI_JSON}")"
+                    # Convert to percentage
+                    PERFORMANCE="$(echo "${PERFORMANCE}*100" | bc)"
+                    ACCESSIBILITY="$(echo "${ACCESSIBILITY}*100" | bc)"
+                    BEST_PRACTICES="$(echo "${BEST_PRACTICES}*100" | bc)"
+                    SEO="$(echo "${SEO}*100" | bc)"
+                    echo "Performance: ${PERFORMANCE}"
+                    echo "Accessibility: ${ACCESSIBILITY}"
+                    echo "Best Practices: ${BEST_PRACTICES}"
+                    echo "SEO: ${SEO}"
+                    if (( $(echo "${PERFORMANCE} < 90" | bc -l) )); then echo "::error ::Performance below budget"; fi
+                    if (( $(echo "${ACCESSIBILITY} < 95" | bc -l) )); then echo "::error ::Accessibility below budget"; fi
+                    if (( $(echo "${BEST_PRACTICES} < 90" | bc -l) )); then echo "::error ::Best Practices below budget"; fi
+                    if (( $(echo "${SEO} < 90" | bc -l) )); then echo "::error ::SEO below budget"; fi
+                  fi
+                  # Always continue, never exit nonzero
+                  exit 0
+
+            - name: Upload Lighthouse results
+              uses: actions/upload-artifact@v4
+              with:
+                  name: lighthouse-results
+                  path: .lighthouseci/
+                  retention-days: 30

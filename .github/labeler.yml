@@ -1,0 +1,10 @@
+frontend:
+    - 'src/**/*'
+    - 'public/**/*'
+docs:
+    - '**/*.md'
+    - 'docs/**/*'
+config:
+    - '.github/**/*'
+    - 'vite.config.*'
+    - 'package.json'
