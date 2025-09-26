@@ -11,7 +11,6 @@ import routeData from './data/routeData';
 import useAuthCheck from './hooks/useAuthCheck';
 import LayoutComponent from './Layout/Layout';
 import Login from './pages/auth/Login';
-import PrivateRoute from './pages/auth/PrivateRoute';
 
 function App() {
     const authChecked = useAuthCheck();
@@ -31,9 +30,9 @@ function App() {
                                     key={i}
                                     path={path}
                                     element={
-                                        <PrivateRoute>
-                                            <LayoutComponent>{element}</LayoutComponent>
-                                        </PrivateRoute>
+                                        // <PrivateRoute>
+                                        <LayoutComponent>{element}</LayoutComponent>
+                                        // </PrivateRoute>
                                     }
                                 />
                             ))}

@@ -1,8 +1,10 @@
 import AttendancePage from '@/pages/Attendance/Attendance';
 import Dashboard from '@/pages/Dashboard/Dashboard';
-import DHCreditLifting from '@/pages/Inventory/DHCreditLifting';
+import {
+    default as DHCCreditLifting,
+    default as DHCreditLifting,
+} from '@/pages/Inventory/DHCreditLifting';
 import DHProductReceived from '@/pages/Inventory/DHProductReceived';
-import InventoryStatus from '@/pages/Inventory/InventoryStatus';
 import SalesReportPage from '@/pages/SalesReport/SalesReport';
 
 const routeData = [
@@ -19,7 +21,7 @@ const routeData = [
     {
         name: 'Inventory Status',
         path: '/inventory/inventory-status',
-        element: <InventoryStatus />,
+        element: <DHCCreditLifting />,
     },
     {
         name: 'DH Product Receipt',

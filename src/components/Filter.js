@@ -1,13 +1,20 @@
+import { Row } from 'antd';
+
 import AttendanceFilter from '@/pages/Attendance/AttendanceFilter';
 import DashboardFilter from '@/pages/Dashboard/DashboardFilter';
-import { Row } from 'antd';
+import InventoryFilter from '@/pages/Inventory/components/InventoryFilter';
+import SalesReportFilter from '@/pages/SalesReport/components/SalesReportFilter';
+
 import DataManagementFilter from './DataManagementFilter';
 
 // mapping of pathnames to components
 const filterComponents = {
     '/': DashboardFilter,
     '/attendance': AttendanceFilter,
-    // "/salary-status": SalaryEvaluationFilters,
+    '/inventory-status': InventoryFilter,
+    '/dh-product-receipt': InventoryFilter,
+    '/dh-credit-lifting': InventoryFilter,
+    '/sales-report': SalesReportFilter,
 };
 
 function Filter({

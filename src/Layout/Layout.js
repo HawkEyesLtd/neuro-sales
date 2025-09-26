@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import LoadingBar from 'react-top-loading-bar';
 
-import IdleModal from '../components/ui/IddleSessionTimeoutModal';
-
 import FooterComponent from './FooterComponent';
 import HeaderComponent from './HeaderComponent';
 import Sidebar from './Sidebar';
