@@ -4,7 +4,6 @@ import { useGetAttendanceDataMutation } from '@redux/features/attendance/attenda
 import { resetAttendanceFilter } from '@redux/features/attendance/attendanceFilterSlice';
 import { resetDataManagementFilter } from '@redux/features/filter/dataManagementFilterSlice';
 import { setGlobalLoading, setReFetchFilter } from '@redux/features/loaderSlice';
-import getDataManagementFilterData from '@utils/generateDataManagementFilterData';
 import { Col, Row } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
@@ -16,39 +15,57 @@ import AttendanceLocator from './AttendanceLocator';
 import AttendanceOverview from './AttendanceOverview';
 import AttendanceTracker from './AttendanceTracker';
 
-function getBodyData(
-    dateStr,
-    empCode,
-    lev,
-    townCode,
-    locationmatch,
-    lAttendance,
-    empId,
-    facialError
-) {
+function getAttendanceBodyData(filterState, dataManagementState) {
     const bodyData = {};
-    bodyData.date = dayjs(dateStr || new Date()).format('DD-MM-YYYY');
-    if (empCode) {
-        bodyData.employeeCode = empCode;
+
+    // Add data management filter data
+    if (dataManagementState.region?.length) {
+        bodyData.regionId = dataManagementState.region.map((r) => r._id || r);
     }
-    if (lev) {
-        bodyData.employeeLevel = lev;
+    if (dataManagementState.area?.length) {
+        bodyData.areaId = dataManagementState.area.map((a) => a._id || a);
     }
-    if (townCode) {
-        bodyData.townCode = townCode;
+    if (dataManagementState.territory?.length) {
+        bodyData.territoryId = dataManagementState.territory.map((t) => t._id || t);
     }
-    if (locationmatch) {
-        bodyData.isLocationMatched = locationmatch;
+    if (dataManagementState.town?.length) {
+        bodyData.townId = dataManagementState.town.map((t) => t._id || t);
     }
-    if (lAttendance) {
-        bodyData.lateAttendance = lAttendance;
+
+    // Add date - ensure proper format
+    if (filterState.date) {
+        bodyData.date = dayjs(filterState.date).format('DD-MM-YYYY');
+    } else {
+        bodyData.date = dayjs().format('DD-MM-YYYY');
     }
-    if (empId) {
-        bodyData.employeeId = empId;
+
+    // Add employee level as array
+    if (filterState.level) {
+        bodyData.employeeLevel = Array.isArray(filterState.level)
+            ? filterState.level
+            : [filterState.level];
     }
-    if (facialError) {
-        bodyData.facialError = facialError;
+
+    // Add optional filters
+    if (filterState.employeeCode) {
+        bodyData.employeeCode = filterState.employeeCode;
     }
+    if (filterState.employeeId) {
+        bodyData.employeeId = filterState.employeeId;
+    }
+    if (filterState.townCode) {
+        bodyData.townCode = filterState.townCode;
+    }
+    if (filterState.locationMatch) {
+        bodyData.isLocationMatched = filterState.locationMatch;
+    }
+    if (filterState.lateAttendance) {
+        bodyData.lateAttendance = filterState.lateAttendance;
+    }
+    if (filterState.facialError) {
+        bodyData.facialError = filterState.facialError;
+    }
+
     return bodyData;
 }
 
@@ -64,44 +81,25 @@ export default function AttendancePage() {
         usercode: '',
     });
     const dispatch = useDispatch();
-    const { circle, region, area, territory, town } = useSelector(
-        (state) => state.dataManagement ?? {}
-    );
-    const {
-        date,
-        employeeCode,
-        level,
-        townCode,
-        locationMatch,
-        lateAttendance,
-        employeeId,
-        facialError,
-    } = useSelector((state) => state.attendanceFilter ?? {});
-    const [getAttendanceData, { data, isLoading }] = useGetAttendanceDataMutation();
 
-    const { download, isDownloading } = useDownloadReport();
-
+    // Get filter states
+    const dataManagementState = useSelector((state) => state.dataManagement ?? {});
+    const attendanceFilterState = useSelector((state) => state.attendanceFilter ?? {});
     const { reFetchFilter } = useSelector((state) => state.globalLoading ?? {});
 
+    const [getAttendanceData, { data, isLoading }] = useGetAttendanceDataMutation();
+    const { download, isDownloading } = useDownloadReport();
+
     const filterData = () => {
-        getAttendanceData({
-            ...getDataManagementFilterData({ circle, region, area, territory, town }),
-            ...getBodyData(
-                date,
-                employeeCode,
-                level,
-                townCode,
-                locationMatch,
-                lateAttendance,
-                employeeId,
-                facialError
-            ),
-        });
+        const bodyData = getAttendanceBodyData(attendanceFilterState, dataManagementState);
+        getAttendanceData(bodyData);
     };
 
     useEffect(() => {
-        getAttendanceData();
-    }, [getAttendanceData]);
+        // Initial load with proper body data
+        const bodyData = getAttendanceBodyData(attendanceFilterState, dataManagementState);
+        getAttendanceData(bodyData);
+    }, [getAttendanceData, attendanceFilterState, dataManagementState]);
 
     // reset existing filter
     useEffect(() => {
@@ -115,7 +113,7 @@ export default function AttendancePage() {
         dispatch(setGlobalLoading(isLoading));
     }, [dispatch, isLoading]);
 
-    function getDownloadBodyData({ dArr, ffLev }) {
+    function getDownloadBodyData({ dArr }) {
         const bodyData = {
             index: 0,
         };
@@ -127,13 +125,15 @@ export default function AttendancePage() {
     }
 
     const handleDownload = async () => {
+        const downloadBodyData = getAttendanceBodyData(attendanceFilterState, dataManagementState);
+        const dateBodyData = getDownloadBodyData({ dArr: attendanceFilterState.date });
+
         download({
             url: '/v1/report/attendance',
             fileName: 'Attendance Report.xlsx',
             body: {
-                ...getDataManagementFilterData({ region, area, territory, town }),
-                ...getDownloadBodyData({ dArr: date }),
-                ...getBodyData(date, employeeCode, level, townCode, locationMatch, lateAttendance),
+                ...downloadBodyData,
+                ...dateBodyData,
             },
         });
     };

@@ -16,7 +16,7 @@ const initialState = {
 };
 
 const attendanceFilterSlice = createSlice({
-    name: 'attendanceFilterSlice',
+    name: 'attendanceFilter',
     initialState,
     reducers: {
         setDate: (state, action) => {
@@ -43,7 +43,7 @@ const attendanceFilterSlice = createSlice({
         setFacialError: (state, action) => {
             state.facialError = action.payload;
         },
-        resetAttendanceFilter: (state, action) => {
+        resetAttendanceFilter: (state) => {
             state.date = dayjs();
             state.employeeCode = '';
             state.level = [user?.projectAccess?.[0] || 'CM'];

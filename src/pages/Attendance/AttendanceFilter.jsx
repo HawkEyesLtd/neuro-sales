@@ -15,7 +15,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import getDataManagementFilterData from '@/utils/generateDataManagementFilterData';
 
 function AttendanceFilter({ queryFunc, loading, downloadButton, isDownloading }) {
-    const { date, employeeCode, townCode, level } = useSelector((state) => state.attendanceFilter);
+    const { date, employeeCode, townCode, level } = useSelector(
+        (state) => state.attendanceFilter ?? {}
+    );
 
     const dispatch = useDispatch();
 
@@ -25,7 +27,7 @@ function AttendanceFilter({ queryFunc, loading, downloadButton, isDownloading })
     };
 
     // user information log
-    const { user } = useSelector((state) => state.auth);
+    const { user } = useSelector((state) => state.auth || {});
     const projectAccessData = user?.projectAccess
         ?.map((x) => ({ label: labelChange(x), value: x }))
         ?.filter((x) => x.value !== 'DFF');

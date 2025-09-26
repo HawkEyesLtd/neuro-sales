@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Filter from '@/components/Filter';
 import HelmetHeader from '@/components/HelmetHeader';
+import TownSummaryTable from '@/components/TownSummaryTable';
+import NoResult from '@/components/ui/NoResult';
 import { resetDataManagementFilter } from '@/redux/features/filter/dataManagementFilterSlice';
 import { useGetTownSummaryMutation } from '@/redux/features/inventory/inventoryApiSlice';
 import { setGlobalLoading, setReFetchFilter } from '@/redux/features/loaderSlice';
@@ -18,21 +20,23 @@ export default function DHCCreditLifting() {
     const [totalShowPage, setTotalPageShow] = useState(10);
     const [currentPage, setCurrentPageShow] = useState(1);
 
-    // dh history filter hook
-    const { dateRange, posmId, posmName } = useSelector((state) => state.townSummaryFilter);
+    // dh history filter hook - handle undefined state gracefully
+    const townSummaryFilter = useSelector((state) => state.townSummaryFilter);
+    const { dateRange = [], posmId = null } = townSummaryFilter || {};
 
-    // filter data
-    const { circle, region, area, territory, town } = useSelector((state) => state.dataManagement);
+    // filter data - handle undefined state gracefully
+    const dataManagement = useSelector((state) => state.dataManagement);
+    const { circle, region, area, territory, town } = dataManagement || {};
 
-    const getDhHistoryFilterData = (dateArr, pId) => {
+    const getDhHistoryFilterData = (dateArr = [], pId) => {
         const bodyData = {};
 
-        if (dateArr[0] && dateArr[1]) {
+        if (dateArr && dateArr.length >= 2 && dateArr[0] && dateArr[1]) {
             const [s, e] = dateArr;
             bodyData.from = s;
             bodyData.to = e;
         }
-        if (dateArr.length) {
+        if (dateArr && dateArr.length) {
             let [s, e] = dateArr;
 
             const isSameDay = dayjs(e).isToday();
@@ -91,12 +95,12 @@ export default function DHCCreditLifting() {
     //     fetchDhSummaryData(pageNumber, totalPageChange);
     // };
 
-    const { reFetchFilter, globalLoading } = useSelector((state) => state.globalLoading);
+    const { reFetchFilter, globalLoading } = useSelector((state) => state.globalLoading || {});
     // reset existing filter
     useEffect(() => {
         dispatch(setReFetchFilter(!reFetchFilter));
         dispatch(resetDataManagementFilter());
-    }, [dispatch]);
+    }, [dispatch, reFetchFilter]);
 
     // by default data load
     useEffect(() => {
@@ -107,18 +111,18 @@ export default function DHCCreditLifting() {
     return (
         <>
             {/* page title and description */}
-            <HelmetHeader title="Inventory Status" />
+            <HelmetHeader title="DH Credit Lifting" />
 
             <div style={{ margin: '16px 0' }}>
                 <Filter
                     loading={isLoading || globalLoading}
                     queryFunc={fetchDhSummaryData}
-                    pathname="/inventory-status"
+                    pathname="/dh-credit-lifting"
                 />
             </div>
 
             <div style={{ borderRadius: '10px' }}>
-                <div className="box-heading">Inventory Status</div>
+                <div className="box-heading">DH Credit Lifting</div>
 
                 {data?.data?.summary?.length ? (
                     <>

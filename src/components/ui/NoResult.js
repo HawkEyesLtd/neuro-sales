@@ -6,7 +6,7 @@ import HelmetHeader from '../HelmetHeader';
 
 function NoResult() {
     // user information log
-    const { user: userInfo } = useSelector((state) => state.auth);
+    const { user: userInfo } = useSelector((state) => state.auth || {});
     const isEditableUser = !!userInfo?.permission?.find((x) => x.label === 'User Edit')?.label;
 
     const [showGame, setShowGame] = useState(false);
