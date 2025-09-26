@@ -38,53 +38,11 @@ function Sidebar() {
         setSkip(false);
     }, [accessToken]);
 
-    // Memoize permission set and permitted routes
-    const permissionSet = useMemo(() => {
-        return new Set(data?.data?.permission?.map(({ label }) => label));
-    }, [data]);
-
-    const permittedRoutes = useMemo(() => {
-        if (!items || !permissionSet.size) return [];
-        const labelReplacements = { 'CM SUP': 'MS' };
-        const replaceLabel = (label) => {
-            let updated = label;
-            Object.entries(labelReplacements).forEach(([from, to]) => {
-                updated = updated.replace(from, to);
-            });
-            return updated;
-        };
-        return items
-            ?.reduce((acc, curr) => {
-                if (!permissionSet.has(curr.label)) return acc;
-                const updatedCurr = {
-                    ...curr,
-                    label: replaceLabel(curr.label),
-                };
-                const children = curr.children
-                    ?.filter(({ label }) => permissionSet.has(label))
-                    .map((child) => ({ ...child, label: replaceLabel(child.label) }));
-                return [...acc, { ...updatedCurr, children }];
-            }, [])
-            .sort((a, b) => a.serial - b.serial);
-    }, [permissionSet]);
-
-    // Filter for special group
+    // Always show all menu items without permission checks
     const finalPermittedRoutes = useMemo(() => {
-        if (!data?.data?.group) return permittedRoutes;
-        if (data.data.group === 'UBL Central (Intern)') {
-            return permittedRoutes.filter((route) => route.label !== 'Download Report');
-        }
-        return permittedRoutes;
-    }, [permittedRoutes, data]);
-
-    // Redirect if unauthorized (only after loading and data is available)
-    useEffect(() => {
-        if (!isLoading && data && finalPermittedRoutes.length === 0) {
-            navigate('/un-authorized');
-        }
-    }, [isLoading, data, finalPermittedRoutes, navigate]);
-
-    console.log('finalPermittedRoutes', finalPermittedRoutes);
+        if (!items) return [];
+        return items.sort((a, b) => a.serial - b.serial);
+    }, []);
 
     return (
         <Sider

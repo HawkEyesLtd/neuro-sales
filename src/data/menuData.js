@@ -1,27 +1,23 @@
-import {
-    AimOutlined,
-    FolderOpenOutlined,
-    PieChartOutlined,
-    ProductOutlined,
-} from '@ant-design/icons';
+import { AimOutlined, FolderOpenOutlined, PieChartOutlined } from '@ant-design/icons';
 
 const items = [
     {
         label: 'Dashboard',
         key: '/',
         icon: <PieChartOutlined />,
-        serial: 2,
+        serial: 1,
     },
     {
         label: 'Attendance',
         key: '/attendance',
         icon: <AimOutlined />,
-        serial: 3,
+        serial: 2,
     },
     {
         label: 'Inventory',
         key: '/inventory',
         icon: <FolderOpenOutlined />,
+        serial: 3,
         children: [
             {
                 label: 'Inventory Status',
@@ -38,10 +34,8 @@ const items = [
         ],
     },
     {
-        serial: 4,
-        icon: <ProductOutlined />,
         label: 'Sales Report',
-        key: '/inventory/sales-report',
+        key: '/sales-report',
     },
 ];
 
