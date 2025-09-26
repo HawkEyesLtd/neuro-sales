@@ -5,8 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import appLogo from '@/assets/logo/logo-portal.svg';
 import mlLogo from '@/assets/logo/ml-logo.svg';
+import items from '@/data/menuData';
 
-import { items } from '../data/menuData';
 import { useWhoAmIQuery } from '../redux/features/auth/authApi';
 import { resetSalaryDisbursementFilter } from '../redux/features/SharedSalaryModule/salaryEvaluationFilterSlice';
 
@@ -54,7 +54,7 @@ function Sidebar() {
             return updated;
         };
         return items
-            .reduce((acc, curr) => {
+            ?.reduce((acc, curr) => {
                 if (!permissionSet.has(curr.label)) return acc;
                 const updatedCurr = {
                     ...curr,
@@ -84,8 +84,7 @@ function Sidebar() {
         }
     }, [isLoading, data, finalPermittedRoutes, navigate]);
 
-    // Loading state: show skeleton for menu area
-    // const isMenuLoading = isLoading || !data || finalPermittedRoutes.length === 0;
+    console.log('finalPermittedRoutes', finalPermittedRoutes);
 
     return (
         <Sider

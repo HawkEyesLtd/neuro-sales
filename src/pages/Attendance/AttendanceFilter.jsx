@@ -1,15 +1,9 @@
 import { DownloadOutlined } from '@ant-design/icons';
 import CommonButton from '@components/CommonButton';
-
-import getDataManagementFilterData from '@/utils/generateDataManagementFilterData';
 import {
     setDate,
     setEmployeeCode,
     setEmployeeId,
-    setFacialError,
-    setLateAttendance,
-    setLeveL,
-    setLocationMatch,
 } from '@redux/features/attendance/attendanceFilterSlice';
 import { useSearchEmployeeMutation } from '@redux/features/teamManagement/teamManagementApi';
 import labelChange from '@utils/labelChange';
@@ -17,6 +11,8 @@ import { Button, Col, DatePicker, Input, Select } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
+import getDataManagementFilterData from '@/utils/generateDataManagementFilterData';
 
 function AttendanceFilter({ queryFunc, loading, downloadButton, isDownloading }) {
     const { date, employeeCode, townCode, level } = useSelector((state) => state.attendanceFilter);
@@ -77,18 +73,15 @@ function AttendanceFilter({ queryFunc, loading, downloadButton, isDownloading })
             </Col>
 
             <Col xs={12} sm={8} md={6} lg={6} xl={6}>
-                <Select
-                    mode="multiple"
-                    value={level}
-                    placeholder="EMP Level"
+                <Input
+                    value={employeeCode}
+                    placeholder="FF Level"
                     size="large"
-                    style={{
-                        width: '100%',
-                    }}
-                    options={projectAccessData || []}
-                    onChange={(e) => dispatch(setLeveL(e))}
+                    style={{ width: '100%' }}
+                    onChange={(e) => dispatch(setEmployeeCode(e.target.value))}
                 />
             </Col>
+
             <Col xs={12} sm={8} md={6} lg={6} xl={6}>
                 <Select
                     showSearch
@@ -112,78 +105,17 @@ function AttendanceFilter({ queryFunc, loading, downloadButton, isDownloading })
                     onSearch={onSearch}
                 />
             </Col>
+
             <Col xs={12} sm={8} md={6} lg={6} xl={6}>
                 <Input
                     value={employeeCode}
-                    placeholder="FF Code"
+                    placeholder="Search By User code or Name"
                     size="large"
                     style={{ width: '100%' }}
                     onChange={(e) => dispatch(setEmployeeCode(e.target.value))}
                 />
             </Col>
-            <Col xs={12} sm={8} md={6} lg={6} xl={6}>
-                <Select
-                    allowClear
-                    placeholder="Location Match"
-                    size="large"
-                    style={{
-                        width: '100%',
-                    }}
-                    onChange={(e) => dispatch(setLocationMatch(e))}
-                    options={[
-                        {
-                            value: 'yes',
-                            label: 'Yes',
-                        },
-                        {
-                            value: 'no',
-                            label: 'No',
-                        },
-                    ]}
-                />
-            </Col>
-            <Col xs={12} sm={8} md={6} lg={6} xl={6}>
-                <Select
-                    allowClear
-                    placeholder="Late Attendance"
-                    size="large"
-                    style={{
-                        width: '100%',
-                    }}
-                    onChange={(e) => dispatch(setLateAttendance(e))}
-                    options={[
-                        {
-                            value: 'yes',
-                            label: 'Yes',
-                        },
-                        {
-                            value: 'no',
-                            label: 'No',
-                        },
-                    ]}
-                />
-            </Col>
-            <Col xs={12} sm={8} md={6} lg={6} xl={6}>
-                <Select
-                    allowClear
-                    placeholder="Facial Error"
-                    size="large"
-                    style={{
-                        width: '100%',
-                    }}
-                    onChange={(e) => dispatch(setFacialError(e))}
-                    options={[
-                        {
-                            value: 'yes',
-                            label: 'Yes',
-                        },
-                        {
-                            value: 'no',
-                            label: 'No',
-                        },
-                    ]}
-                />
-            </Col>
+
             <Col xs={12} sm={8} md={6} lg={6} xl={6}>
                 <CommonButton loading={loading} disabled={isDownloading} queryFunc={queryFunc} />
             </Col>

@@ -131,13 +131,13 @@ function DataManagementFilter({ selectAllDisable }) {
     return (
         <>
             {/* {renderMultiselectComponent('Market Operation', 'circle', circle)} */}
-            {renderMultiselectComponent('Cluster', 'region', region)}
-            {renderMultiselectComponent('Area', 'area', area)}
-            {renderMultiselectComponent('Territory', 'territory', territory)}
+            {renderMultiselectComponent('Select Region', 'region', region)}
+            {renderMultiselectComponent('Select Area', 'area', area)}
+            {renderMultiselectComponent('Select Territory', 'territory', territory)}
             {location.pathname !== '/national-level' &&
             location.pathname !== '/wholesale-dashboard' &&
             location.pathname !== '/wholesale-download-report'
-                ? renderMultiselectComponent('Town', 'town', town)
+                ? renderMultiselectComponent('Select Town', 'town', town)
                 : null}
         </>
     );

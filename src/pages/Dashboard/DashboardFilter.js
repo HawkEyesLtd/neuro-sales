@@ -1,9 +1,9 @@
 import { FilterOutlined } from '@ant-design/icons';
 import DateRange from '@components/DateRange';
 import FilterButton from '@components/FilterButton';
-import { setDateRange, setProjectType } from '@redux/features/dashboard/dashboardFilterSlice';
+import { setDateRange } from '@redux/features/dashboard/dashboardFilterSlice';
 import labelChange from '@utils/labelChange';
-import { Col, Select } from 'antd';
+import { Col } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
 function DashboardFilter({ queryFunc, loading }) {
@@ -18,11 +18,6 @@ function DashboardFilter({ queryFunc, loading }) {
         value: x,
     }));
 
-    // useEffect(() => {
-    //     dispatch(setProjectType(projectAccessData[0].value))
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [ projectAccessData ])
-
     // date picker function
     const dataPickerFunc = (_, date) => {
         dispatch(setDateRange(date));
@@ -31,18 +26,7 @@ function DashboardFilter({ queryFunc, loading }) {
     return (
         <>
             <DateRange dataPickerFunc={dataPickerFunc} />
-            <Col xs={12} sm={8} md={6} lg={6} xl={6}>
-                <Select
-                    value={projectType || projectAccessData[0].value}
-                    placeholder="Project Type"
-                    size="large"
-                    style={{ width: '100%' }}
-                    options={projectAccessData || []}
-                    onChange={(e) => {
-                        dispatch(setProjectType(e));
-                    }}
-                />
-            </Col>
+
             <Col xs={12} sm={8} md={6} lg={6} xl={6}>
                 <FilterButton
                     fn={queryFunc}

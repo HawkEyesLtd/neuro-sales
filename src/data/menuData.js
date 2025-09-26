@@ -5,7 +5,7 @@ import {
     ProductOutlined,
 } from '@ant-design/icons';
 
-export const items = [
+const items = [
     {
         label: 'Dashboard',
         key: '/',
@@ -33,7 +33,7 @@ export const items = [
             },
             {
                 label: 'DH Credit Lifting',
-                key: '/inventory/dh-credit-linting',
+                key: '/inventory/dh-credit-lifting',
             },
         ],
     },
