@@ -1,7 +1,9 @@
 import { Layout } from 'antd';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import LoadingBar from 'react-top-loading-bar';
+import { useSelector } from 'react-redux';
+
+import IdleModal from '@/components/ui/IddleSessionTimeoutModal';
 
 import FooterComponent from './FooterComponent';
 import HeaderComponent from './HeaderComponent';
@@ -11,7 +13,7 @@ const { Content } = Layout;
 
 function LayoutComponent({ children }) {
     // globalLoading state
-    const { globalLoading } = useSelector((state) => state.globalLoading);
+    const { globalLoading } = useSelector((state) => state.globalLoading || {});
 
     const [value, setValue] = useState(0);
 

@@ -1,4 +1,3 @@
-import Filter from '@components/Filter';
 import HelmetHeader from '@components/HelmetHeader';
 import useDownloadReport from '@hooks/useDownloadReport';
 import { useGetAttendanceDataMutation } from '@redux/features/attendance/attendanceApi';
@@ -10,6 +9,8 @@ import { Col, Row } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
+import Filter from '@/components/Filter';
 
 import AttendanceLocator from './AttendanceLocator';
 import AttendanceOverview from './AttendanceOverview';
@@ -63,7 +64,9 @@ export default function AttendancePage() {
         usercode: '',
     });
     const dispatch = useDispatch();
-    const { circle, region, area, territory, town } = useSelector((state) => state.dataManagement);
+    const { circle, region, area, territory, town } = useSelector(
+        (state) => state.dataManagement ?? {}
+    );
     const {
         date,
         employeeCode,
@@ -73,12 +76,12 @@ export default function AttendancePage() {
         lateAttendance,
         employeeId,
         facialError,
-    } = useSelector((state) => state.attendanceFilter);
+    } = useSelector((state) => state.attendanceFilter ?? {});
     const [getAttendanceData, { data, isLoading }] = useGetAttendanceDataMutation();
 
-    const { download, isDownloading, downloadProgress, cancelDownload } = useDownloadReport();
+    const { download, isDownloading } = useDownloadReport();
 
-    const { reFetchFilter } = useSelector((state) => state.globalLoading);
+    const { reFetchFilter } = useSelector((state) => state.globalLoading ?? {});
 
     const filterData = () => {
         getAttendanceData({

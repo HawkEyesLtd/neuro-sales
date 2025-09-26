@@ -1,44 +1,31 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import { Col, Row, message } from 'antd';
+// import Filter from '@/components/Filter';
+import { Row, message } from 'antd';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import Filter from '@/components/Filter';
 import HelmetHeader from '@/components/HelmetHeader';
 import { useGetDashboardDataMutation } from '@/redux/features/dashboard/dashboardApi';
-import { resetDataManagementFilter } from '@/redux/features/filter/dataManagementFilterSlice';
 import { setReFetchFilter } from '@/redux/features/loaderSlice';
-import getDataManagementFilterData from '@/utils/generateDataManagementFilterData';
-
-import AttendanceBar from './Chart/AttendanceBar';
-import AttendanceByDate from './Chart/AttendanceByDate';
-import MtSos from './Chart/MtSos';
-import OutletWiseCompliance from './Chart/OutletWiseCompliance';
-import PjpOutletCoverage from './Chart/PjpOutletCoverage';
-import PosmUsages from './Chart/PosmUsages';
-import ShareOfSachetChart from './Chart/SacheChart';
-import ShareOfVisibility from './Chart/ShareOfVisibility';
-import Sos from './Chart/Sos';
-import StrikeRate from './Chart/StrikeRate';
-import StrikeRateByDate from './Chart/StrikeRateByDate';
-import VisitCall from './Chart/VisitCall';
-import Filter from '@/components/Filter';
 
 function Dashboard() {
     // dispatch
     const dispatch = useDispatch();
 
-    const { reFetchFilter } = useSelector((state) => state.globalLoading);
+    // const { reFetchFilter } = useSelector((state) => state.globalLoading);
     // reset existing filter
+
+    const { reFetchFilter } = useSelector((state) => state.loader || {});
+    // const reFetchFilter = false;
     useEffect(() => {
         dispatch(setReFetchFilter(!reFetchFilter));
-        dispatch(resetDataManagementFilter());
+        // dispatch(resetDataManagementFilter());
     }, []);
 
     // data management filter data
-    const { circle, region, area, territory, town, point } = useSelector(
-        (state) => state.dataManagement
-    );
+    // const { region, area, territory, town } = useSelector((state) => state.dataManagement);
 
     // dashboard filter data
     const { dateRange, projectType } = useSelector((state) => state.dashboardFilter);
@@ -78,8 +65,8 @@ function Dashboard() {
     const fetchDashboardData = async () => {
         try {
             getDashboardData({
-                ...getBodyData({ d: dateRange, pType: projectType }),
-                ...getDataManagementFilterData({ circle, region, area, territory, town }),
+                // ...getBodyData({ d: dateRange, pType: projectType }),
+                // ...getDataManagementFilterData({ circle, region, area, territory, town }),
             });
         } catch (err) {
             message.error(err.message);
@@ -107,7 +94,7 @@ function Dashboard() {
             </div>
 
             <Row gutter={[5, 15]}>
-                <Col xs={24} sm={12} md={8} lg={8}>
+                {/* <Col xs={24} sm={12} md={8} lg={8}>
                     <PjpOutletCoverage
                         loading={isLoading}
                         pjpOutletCoverage={data?.data?.pjpOutletCoverage || []}
@@ -120,14 +107,14 @@ function Dashboard() {
 
                 <Col xs={24} sm={12} md={6} lg={6}>
                     <StrikeRate loading={isLoading} strikeRate={data?.data?.strike_rate || 0} />
-                </Col>
+                </Col> */}
 
                 {/* <Col xs={24} sm={12}  md={6} lg={6}>
               <Eco loading={isLoading} eco={data?.data?.eco} />
             </Col> */}
             </Row>
 
-            {data?.data?.attendance_line_chart?.labels?.length > 1 ? (
+            {/* {data?.data?.attendance_line_chart?.labels?.length > 1 ? (
                 <Row style={{ marginTop: '20px' }} gutter={[5, 15]}>
                     <Col xs={24} sm={12} md={12} lg={12}>
                         <AttendanceByDate
@@ -141,7 +128,7 @@ function Dashboard() {
                         />
                     </Col>
                 </Row>
-            ) : null}
+            ) : null} */}
 
             {/* Program Wise Compliance */}
             <Row style={{ marginTop: '20px' }} gutter={[5, 15]}>
@@ -149,34 +136,34 @@ function Dashboard() {
             <DisplayWiseOutletResult displayData={data?.data?.displayWiseResult || []} />
             </Col> */}
 
-                <Col xs={24} sm={24} md={24} lg={24}>
+                {/* <Col xs={24} sm={24} md={24} lg={24}>
                     <OutletWiseCompliance
                         nationalOutletWiseCompliance={
                             data?.data?.national_outlet_wise_compliance || []
                         }
                         outletWiseCompliance={data?.data?.outlet_wise_compliance || []}
                     />
-                </Col>
+                </Col> */}
             </Row>
 
             <Row style={{ marginTop: '20px', marginBottom: '20px' }} gutter={[5, 15]}>
                 {/* Visibility Tracker */}
-                <Col xs={24} sm={24} md={24} lg={24}>
+                {/* <Col xs={24} sm={24} md={24} lg={24}>
                     <VisitCall
                         totalVisitCall={data?.data?.total_visit_call || 0}
                         visitCallData={data?.data?.visitCall || []}
                     />
-                </Col>
+                </Col> */}
                 {/* Share of shelf */}
-                <Col xs={24} sm={24} md={24} lg={24}>
+                {/* <Col xs={24} sm={24} md={24} lg={24}>
                     <Sos
                         totalSosVisit={data?.data?.total_sos_visit_call || 0}
                         sosData={data?.data?.sos || []}
                     />
-                </Col>
+                </Col> */}
             </Row>
 
-            {data?.data?.mtsos.totalCount ? (
+            {/* {data?.data?.mtsos.totalCount ? (
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24}>
                         <MtSos
@@ -186,8 +173,8 @@ function Dashboard() {
                         />
                     </Col>
                 </Row>
-            ) : null}
-
+            ) : null} */}
+            {/*
             <Row style={{ marginTop: '20px', marginBottom: '20px' }}>
                 <Col xs={24} sm={24} md={24} lg={24}>
                     <ShareOfSachetChart data={data?.data?.sachetResult} />
@@ -204,7 +191,7 @@ function Dashboard() {
                 <Col xs={24} sm={24} md={24} lg={24}>
                     <PosmUsages posmUsage={data?.data?.posmUsage || []} />
                 </Col>
-            </Row>
+            </Row> */}
         </>
     );
 }

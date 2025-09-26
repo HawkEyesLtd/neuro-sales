@@ -6,8 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Filter from '@/components/Filter';
 import HelmetHeader from '@/components/HelmetHeader';
+import { resetDataManagementFilter } from '@/redux/features/filter/dataManagementFilterSlice';
 import { useGetTownSummaryMutation } from '@/redux/features/inventory/inventoryApiSlice';
-import { setGlobalLoading } from '@/redux/features/loaderSlice';
+import { setGlobalLoading, setReFetchFilter } from '@/redux/features/loaderSlice';
 import getDataManagementFilterData from '@/utils/generateDataManagementFilterData';
 
 dayjs.extend(isToday);
@@ -92,12 +93,10 @@ export default function DHCCreditLifting() {
 
     const { reFetchFilter, globalLoading } = useSelector((state) => state.globalLoading);
     // reset existing filter
-    // useEffect(() => {
-    //     dispatch(setReFetchFilter(!reFetchFilter));
-    //     dispatch(resetDataManagementFilter());
-    //     dispatch(resetTownSummaryFilter());
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [dispatch]);
+    useEffect(() => {
+        dispatch(setReFetchFilter(!reFetchFilter));
+        dispatch(resetDataManagementFilter());
+    }, [dispatch]);
 
     // by default data load
     useEffect(() => {

@@ -17,8 +17,10 @@ import { useLocation } from 'react-router-dom';
 
 function DataManagementFilter({ selectAllDisable }) {
     const dispatch = useDispatch();
-    const { circle, region, area, territory, town } = useSelector((state) => state.dataManagement);
-    const { reFetchFilter } = useSelector((state) => state.globalLoading);
+    const { circle, region, area, territory, town } = useSelector(
+        (state) => state.dataManagement || {}
+    );
+    const { reFetchFilter } = useSelector((state) => state.globalLoading || {});
 
     const location = useLocation();
 
@@ -68,25 +70,29 @@ function DataManagementFilter({ selectAllDisable }) {
     const data = useMemo(() => {
         const object = [circle, region, area, territory, town].reduce((prev, current, index) => {
             if (index === 0) {
-                return current.length > 0
+                return current?.length > 0
                     ? { ...prev, circleId: current.map((o) => o.value) }
                     : prev;
             }
             if (index === 1) {
-                return current.length > 0
+                return current?.length > 0
                     ? { ...prev, regionId: current.map((o) => o.value) }
                     : prev;
             }
             if (index === 2) {
-                return current.length > 0 ? { ...prev, areaId: current.map((o) => o.value) } : prev;
+                return current?.length > 0
+                    ? { ...prev, areaId: current.map((o) => o.value) }
+                    : prev;
             }
             if (index === 3) {
-                return current.length > 0
+                return current?.length > 0
                     ? { ...prev, territoryId: current.map((o) => o.value) }
                     : prev;
             }
             if (index === 4) {
-                return current.length > 0 ? { ...prev, townId: current.map((o) => o.value) } : prev;
+                return current?.length > 0
+                    ? { ...prev, townId: current.map((o) => o.value) }
+                    : prev;
             }
         }, {});
         return object;
@@ -130,7 +136,7 @@ function DataManagementFilter({ selectAllDisable }) {
 
     return (
         <>
-            {/* {renderMultiselectComponent('Market Operation', 'circle', circle)} */}
+            {renderMultiselectComponent('Market Operation', 'circle', circle)}
             {renderMultiselectComponent('Select Region', 'region', region)}
             {renderMultiselectComponent('Select Area', 'area', area)}
             {renderMultiselectComponent('Select Territory', 'territory', territory)}

@@ -9,10 +9,10 @@ import { useDispatch, useSelector } from 'react-redux';
 function DashboardFilter({ queryFunc, loading }) {
     const dispatch = useDispatch();
 
-    const { projectType } = useSelector((state) => state.dashboardFilter);
+    // const { projectType } = useSelector((state) => state.dashboardFilter);
 
     // user information log
-    const { user } = useSelector((state) => state.auth);
+    const { user } = useSelector((state) => state.auth ?? {});
     const projectAccessData = user?.projectAccess?.map((x) => ({
         label: labelChange(x),
         value: x,

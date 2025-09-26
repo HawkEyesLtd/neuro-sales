@@ -31,7 +31,9 @@ function AttendanceFilter({ queryFunc, loading, downloadButton, isDownloading })
         ?.filter((x) => x.value !== 'DFF');
 
     // filter data
-    const { circle, region, area, territory, town } = useSelector((state) => state.dataManagement);
+    const { circle, region, area, territory, town } = useSelector(
+        (state) => state.dataManagement ?? {}
+    );
 
     // search employee api hook
     const [searchEmployee, { data: employeeData, isLoading }] = useSearchEmployeeMutation();

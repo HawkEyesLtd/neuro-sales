@@ -1,14 +1,13 @@
 import { Layout, Menu, Skeleton } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import appLogo from '@/assets/logo/logo-portal.svg';
 import mlLogo from '@/assets/logo/ml-logo.svg';
 import items from '@/data/menuData';
-
-import { useWhoAmIQuery } from '../redux/features/auth/authApi';
-import { resetSalaryDisbursementFilter } from '../redux/features/SharedSalaryModule/salaryEvaluationFilterSlice';
+import { useWhoAmIQuery } from '@/redux/features/auth/authApi';
 
 const { Sider } = Layout;
 
@@ -17,11 +16,10 @@ function Sidebar() {
     const navigate = useNavigate();
     const [collapsed, setCollapsed] = useState(window.innerWidth <= 1024);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-    const { accessToken } = useSelector((state) => state.auth);
-    const [skip, setSkip] = useState(true);
+    const { accessToken } = useSelector((state) => state.auth ?? {});
 
     // Fetch user permissions
-    const { data, isLoading } = useWhoAmIQuery({}, { skip });
+    const { data, isLoading } = useWhoAmIQuery({}, {});
 
     // Responsive collapse
     useEffect(() => {
@@ -33,10 +31,6 @@ function Sidebar() {
     useEffect(() => {
         setCollapsed(windowWidth <= 1024);
     }, [windowWidth]);
-
-    useEffect(() => {
-        setSkip(false);
-    }, [accessToken]);
 
     // Always show all menu items without permission checks
     const finalPermittedRoutes = useMemo(() => {
@@ -60,7 +54,7 @@ function Sidebar() {
                     />
                 </Link>
             </div>
-            {isLoading || !data ? (
+            {isLoading || data ? (
                 Array.from({ length: 20 }).map((_, index) => (
                     <div
                         style={{
@@ -77,7 +71,7 @@ function Sidebar() {
                     style={{ paddingBottom: '50px' }}
                     onClick={({ key }) => {
                         navigate(key);
-                        dispatch(resetSalaryDisbursementFilter());
+                        // dispatch(resetSalaryDisbursementFilter());
                     }}
                     selectedKeys={[window.location.pathname]}
                     defaultSelectedKeys={[window.location.pathname]}

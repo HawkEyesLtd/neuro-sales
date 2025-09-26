@@ -32,7 +32,7 @@ const ERROR_MESSAGES = {
 const useDownloadReport = () => {
     const [isDownloading, setIsDownloading] = useState(false);
     const [downloadProgress, setDownloadProgress] = useState(0);
-    const { accessToken } = useSelector((state) => state.auth);
+    const { accessToken } = useSelector((state) => state.auth ?? {});
     const abortControllerRef = useRef(null);
 
     const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

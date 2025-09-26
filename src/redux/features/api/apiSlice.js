@@ -1,5 +1,4 @@
 /* eslint-disable import/prefer-default-export */
-import { userLoggedOut } from '@redux/features/auth/authSlice';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const baseQuery = fetchBaseQuery({
@@ -18,11 +17,11 @@ export const apiSlice = createApi({
     reducerPath: 'api',
     baseQuery: async (args, api, extraOptions) => {
         const result = await baseQuery(args, api, extraOptions);
-        if (args.url !== '/v1/user/whoami') {
-            if (result?.error?.status === 401) {
-                api.dispatch(userLoggedOut());
-            }
-        }
+        // if (args.url !== '/v1/user/whoami') {
+        //     if (result?.error?.status === 401) {
+        //         api.dispatch(userLoggedOut());
+        //     }
+        // }
         return result;
     },
     // ensure user-scoped data refreshes on focus/reconnect or arg change

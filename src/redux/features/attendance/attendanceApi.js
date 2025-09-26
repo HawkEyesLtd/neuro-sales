@@ -5,7 +5,7 @@ export const attendanceApi = apiSlice.injectEndpoints({
         // get attendance data
         getAttendanceData: builder.mutation({
             query: (data) => ({
-                url: '/v2/attendance/attendanceTracker',
+                url: '/v1/attendance/attendanceTracker',
                 method: 'POST',
                 body: data,
             }),
