@@ -1,5 +1,3 @@
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/react';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
@@ -19,8 +17,6 @@ root.render(
             <Provider store={store}>
                 <HelmetProvider>
                     <App />
-                    <SpeedInsights mode="production" />
-                    <Analytics mode="production" />
                 </HelmetProvider>
             </Provider>
         </BrowserRouter>
