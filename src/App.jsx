@@ -1,5 +1,7 @@
 import { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import Login from '@pages/auth/Login';
+import PrivateRoute from '@pages/auth/PrivateRoute';
 
 import A11yAudit from './components/A11yAudit';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -10,8 +12,6 @@ import UnAuthorized from './components/ui/UnAuthorized';
 import routeData from './data/routeData';
 import useAuthCheck from './hooks/useAuthCheck';
 import LayoutComponent from './Layout/Layout';
-import Login from './pages/Auth/Login';
-import PrivateRoute from './pages/Auth/PrivateRoute';
 import './utils/globalErrorHandler'; // Initialize global error handling
 
 function App() {
