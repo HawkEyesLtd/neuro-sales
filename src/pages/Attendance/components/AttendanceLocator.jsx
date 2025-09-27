@@ -1,9 +1,9 @@
-import bluePin from '@assets/blue-pin.png';
-import redPin from '@assets/red-pin.png';
 import { GoogleMap, InfoWindow, Marker, useJsApiLoader } from '@react-google-maps/api';
-import labelChange from '@utils/labelChange';
 import dayjs from 'dayjs';
+import { SchoolIcon } from 'lucide-react';
 import React, { useState } from 'react';
+
+import labelChange from '@/utils/labelChange';
 
 const containerStyle = {
     width: '100%',
@@ -92,7 +92,7 @@ function AttendanceLocator({
                                             usercode,
                                         })
                                     }
-                                    icon={withinRadius ? bluePin : redPin}
+                                    icon={<SchoolIcon />}
                                     position={{ lat, lng: lon }}
                                 />
                             )

@@ -1,168 +1,184 @@
-import {
-    ExportOutlined,
-    EyeOutlined,
-    MoreOutlined,
-    SortAscendingOutlined,
-} from '@ant-design/icons';
-import { Button, Card, Dropdown, Space, Table, Tag, Typography } from 'antd';
+import { ExportOutlined, EyeOutlined, SortAscendingOutlined } from '@ant-design/icons';
+import { Button, Card, Space, Table, Tag, Typography } from 'antd';
 import { useState } from 'react';
 
-import InventoryFilter from '../../Inventory/components/InventoryFilter';
+import SalesReportFilter from './SalesReportFilter';
 
 const { Title } = Typography;
 
-export default function InventoryStatus() {
+export default function SROrders() {
     const [loading, setLoading] = useState(false);
-    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
-    // Mock data for the table
+    // Mock data matching the screenshot
     const data = [
         {
-            key: '1',
-            productName: 'Meril Vitamin C Soap Bar - Tangerine Orange',
-            productCode: 'PRD-001',
-            size: '100gm',
-            currentStock: 150,
-            reorderLevel: 200,
-            lastUpdatedTime: '23-04-2025 10:15 AM',
-            location: 'Warehouse A',
-            status: 'Low Stock',
+            key: 'INV001',
+            invoiceId: 'INV001',
+            dateTime: '23-04-2025 10:15 AM',
+            outletName: 'Bhai Bhai Enterprise',
+            outletCode: 'RAJA-31-05568',
+            srName: 'Rahim Ahmed',
+            totalValue: 15500,
+            paymentStatus: 'Due on Delivery',
+            deliveryStatus: 'Pending Delivery',
+            deliveryDate: null,
+            picture: true,
+            viewMemo: true,
         },
         {
-            key: '2',
-            productName: 'Meril Milk Soap Bar',
-            productCode: 'PRD-002',
-            size: '75gm',
-            currentStock: 320,
-            reorderLevel: 250,
-            lastUpdatedTime: '23-04-2025 09:45 AM',
-            location: 'Store B',
-            status: 'In Stock',
+            key: 'INV002',
+            invoiceId: 'INV002',
+            dateTime: '23-04-2025 09:45 AM',
+            outletName: 'Karim Store',
+            outletCode: 'RAJA-80-21724',
+            srName: 'Fahim Islam',
+            totalValue: 8200,
+            paymentStatus: 'Paid (Bkash)',
+            deliveryStatus: 'Pending Delivery',
+            deliveryDate: null,
+            picture: true,
+            viewMemo: true,
         },
         {
-            key: '3',
-            productName: 'Meril Milk & Rose Soap Bar',
-            productCode: 'PRD-003',
-            size: '150gm',
-            currentStock: 180,
-            reorderLevel: 200,
-            lastUpdatedTime: '22-04-2025 03:20 PM',
-            location: 'Warehouse C',
-            status: 'Low Stock',
+            key: 'INV003',
+            invoiceId: 'INV003',
+            dateTime: '22-04-2025 03:20 PM',
+            outletName: 'Sohota Traders',
+            outletCode: 'RAJA-31-19605',
+            srName: 'Rahim Ahmed',
+            totalValue: 22750,
+            paymentStatus: 'Paid (Cash)',
+            deliveryStatus: 'Delivered',
+            deliveryDate: '04.09.25',
+            picture: true,
+            viewMemo: true,
         },
         {
-            key: '4',
-            productName: 'Meril Milk & Beli Soap Bar',
-            productCode: 'PRD-004',
-            size: '60gm',
-            currentStock: 420,
-            reorderLevel: 300,
-            lastUpdatedTime: '22-04-2025 11:05 AM',
-            location: 'Store A',
-            status: 'In Stock',
+            key: 'INV004',
+            invoiceId: 'INV004',
+            dateTime: '22-04-2025 11:05 AM',
+            outletName: 'Shadhín Suppliers',
+            outletCode: 'RAJA-31-05569',
+            srName: 'Rahim Ahmed',
+            totalValue: 5960,
+            paymentStatus: 'Due on Delivery',
+            deliveryStatus: 'Pending Delivery',
+            deliveryDate: null,
+            picture: true,
+            viewMemo: true,
         },
         {
-            key: '5',
-            productName: 'Meril Milk & Kiwi Soap Bar',
-            productCode: 'PRD-005',
-            size: '75gm',
-            currentStock: 90,
-            reorderLevel: 150,
-            lastUpdatedTime: '21-04-2025 02:55 PM',
-            location: 'Warehouse B',
-            status: 'Low Stock',
+            key: 'INV005',
+            invoiceId: 'INV005',
+            dateTime: '21-04-2025 02:55 PM',
+            outletName: 'Rupali Benglory',
+            outletCode: 'RAJA-80-21724',
+            srName: 'Nabila Jahan',
+            totalValue: 18000,
+            paymentStatus: 'Paid (Cash)',
+            deliveryStatus: 'Delivered',
+            deliveryDate: '04.09.25',
+            picture: true,
+            viewMemo: true,
         },
     ];
 
     const columns = [
         {
-            title: 'Product Name',
-            dataIndex: 'productName',
-            key: 'productName',
+            title: 'Invoice ID',
+            dataIndex: 'invoiceId',
+            key: 'invoiceId',
+            width: 100,
+        },
+        {
+            title: 'Date & Time',
+            dataIndex: 'dateTime',
+            key: 'dateTime',
+            width: 150,
+            render: (text) => <span className="text-sm">{text}</span>,
+        },
+        {
+            title: 'Outlet Name',
+            dataIndex: 'outletName',
+            key: 'outletName',
             render: (text, record) => (
                 <div>
                     <div className="font-medium text-gray-900">{text}</div>
-                    <div className="text-sm text-gray-500">{record.productCode}</div>
+                    <div className="text-sm text-gray-500">{record.outletCode}</div>
                 </div>
             ),
         },
         {
-            title: 'Size',
-            dataIndex: 'size',
-            key: 'size',
-            width: 100,
-        },
-        {
-            title: 'Current Stock',
-            dataIndex: 'currentStock',
-            key: 'currentStock',
-            width: 120,
-            render: (text) => <span className="font-medium">{text}</span>,
-        },
-        {
-            title: 'Reorder Level',
-            dataIndex: 'reorderLevel',
-            key: 'reorderLevel',
+            title: 'SR Name',
+            dataIndex: 'srName',
+            key: 'srName',
             width: 120,
         },
         {
-            title: 'Last Updated Time',
-            dataIndex: 'lastUpdatedTime',
-            key: 'lastUpdatedTime',
-            width: 150,
-            render: (text) => <span className="text-sm text-gray-600">{text}</span>,
-        },
-        {
-            title: 'Location',
-            dataIndex: 'location',
-            key: 'location',
+            title: 'Total Value (৳)',
+            dataIndex: 'totalValue',
+            key: 'totalValue',
             width: 120,
+            render: (value) => <span className="font-medium">{value?.toLocaleString()}</span>,
         },
         {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
-            width: 100,
+            title: 'Payment Status',
+            dataIndex: 'paymentStatus',
+            key: 'paymentStatus',
+            width: 140,
             render: (status) => {
-                const color = status === 'In Stock' ? 'green' : 'orange';
+                let color = 'default';
+                if (status?.includes('Paid')) {
+                    color = 'green';
+                } else if (status?.includes('Due')) {
+                    color = 'orange';
+                }
                 return <Tag color={color}>{status}</Tag>;
             },
         },
         {
-            title: 'Actions',
-            key: 'actions',
+            title: 'Delivery Status',
+            dataIndex: 'deliveryStatus',
+            key: 'deliveryStatus',
+            width: 140,
+            render: (status) => {
+                const color = status === 'Delivered' ? 'green' : 'orange';
+                return <Tag color={color}>{status}</Tag>;
+            },
+        },
+        {
+            title: 'Delivery Date',
+            dataIndex: 'deliveryDate',
+            key: 'deliveryDate',
+            width: 120,
+            render: (date) => date || '-',
+        },
+        {
+            title: 'Picture',
+            key: 'picture',
+            width: 80,
+            render: () => (
+                <Button type="link" size="small" className="p-0">
+                    📷
+                </Button>
+            ),
+        },
+        {
+            title: 'View Memo',
+            key: 'viewMemo',
             width: 100,
             render: (_, record) => (
-                <Space>
-                    <Button
-                        type="text"
-                        icon={<EyeOutlined />}
-                        onClick={() => handleViewDetails(record)}
-                        className="text-blue-600"
-                    />
-                    <Dropdown
-                        menu={{
-                            items: [
-                                {
-                                    key: 'edit',
-                                    label: 'Edit',
-                                },
-                                {
-                                    key: 'delete',
-                                    label: 'Delete',
-                                },
-                            ],
-                        }}
-                    >
-                        <Button type="text" icon={<MoreOutlined />} />
-                    </Dropdown>
-                </Space>
+                <Button
+                    type="text"
+                    icon={<EyeOutlined />}
+                    onClick={() => handleViewMemo(record)}
+                    className="text-blue-600"
+                />
             ),
         },
     ];
 
-    const handleFilter = (filters) => {
-        console.log('Applied filters:', filters);
+    const handleFilter = (_filters) => {
         setLoading(true);
         // Simulate API call
         setTimeout(() => {
@@ -170,32 +186,28 @@ export default function InventoryStatus() {
         }, 1000);
     };
 
-    const handleViewDetails = (record) => {
-        console.log('View details:', record);
+    const handleViewMemo = (_record) => {
+        // Handle view memo functionality
     };
 
     const handleSort = () => {
-        console.log('Sort clicked');
+        // Handle sort functionality
     };
 
     const handleExport = () => {
-        console.log('Export clicked');
-    };
-
-    const rowSelection = {
-        selectedRowKeys,
-        onChange: (keys) => setSelectedRowKeys(keys),
+        // Handle export functionality
     };
 
     return (
         <div className="p-6">
             <div className="mb-6">
                 <Title level={3} className="mb-4">
-                    Inventory
+                    SR Orders
                 </Title>
+                <p className="text-gray-600">Order Management / SR Orders</p>
             </div>
 
-            <InventoryFilter
+            <SalesReportFilter
                 onFilter={handleFilter}
                 loading={loading}
                 showAddButton={false}
@@ -222,7 +234,6 @@ export default function InventoryStatus() {
                 <Table
                     columns={columns}
                     dataSource={data}
-                    rowSelection={rowSelection}
                     loading={loading}
                     pagination={{
                         current: 1,
@@ -234,7 +245,7 @@ export default function InventoryStatus() {
                             `Showing ${range[0]}-${range[1]} of ${total} records (Page 1 of 106)`,
                         pageSizeOptions: ['5', '10', '20', '50'],
                     }}
-                    scroll={{ x: 1200 }}
+                    scroll={{ x: 1400 }}
                     size="small"
                 />
             </Card>

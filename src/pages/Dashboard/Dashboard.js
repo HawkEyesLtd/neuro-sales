@@ -2,7 +2,6 @@ import { Col, message, Row } from 'antd';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Filter from '@/components/Filter';
 import HelmetHeader from '@/components/HelmetHeader';
 import { useGetDashboardDataMutation } from '@/redux/features/dashboard/dashboardApi';
 import { setReFetchFilter } from '@/redux/features/loaderSlice';
@@ -17,6 +16,7 @@ import SalesPerformanceChart from './Chart/SalesPerformanceChart';
 import TopPromotionsCard from './Chart/TopPromotionsCard';
 import TopSellingProductsTable from './Chart/TopSellingProductsTable';
 import { TopKPIRow } from './Chart/topKPICards';
+import DashboardFilter from './DashboardFilter';
 
 function Dashboard() {
     const dispatch = useDispatch();
@@ -142,9 +142,13 @@ function Dashboard() {
         <>
             <HelmetHeader title="Dashboard" />
 
-            <div className="sticky top-0 z-50 bg-gray-50 py-4 mb-6">
+            <Row gutter={[16, 16]} className="mb-6">
+                <DashboardFilter fetchDashboardData={fetchDashboardData} />
+            </Row>
+
+            {/* <div className="sticky top-0 z-50 bg-gray-50 py-4 mb-6">
                 <Filter loading={isLoading} queryFunc={fetchDashboardData} pathname="/" />
-            </div>
+            </div> */}
 
             {/* Key Metrics Row */}
             <div className="mb-6">
@@ -170,7 +174,20 @@ function Dashboard() {
                     <InventoryAlertsChart />
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={8} xl={8}>
+<<<<<<< HEAD
                     <TopSellingProductsTable />
+=======
+                    <TableCard
+                        title="Top Selling Products"
+                        d
+                        columns={topSellingColumns}
+                        dataSource={topSellingData}
+                        loading={isLoading}
+                        pagination={false}
+                        size="small"
+                        extra={<GiftOutlined className="text-green-500" />}
+                    />
+>>>>>>> 5286d17 (Refactor and enhance various components and utilities)
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={8} xl={8}>
                     <ReturnProductsList />

@@ -1,0 +1,77 @@
+/\*\*
+
+- AUTH DATA STORAGE AND ACCESS DOCUMENTATION
+- ==========================================
+-
+- This document outlines the consistent pattern for storing and retrieving
+- authentication data throughout the application.
+-
+- SINGLE SOURCE OF TRUTH:
+- ***
+- All auth data is stored and managed through:
+-   1. Redux store (state.auth) - Primary source during app runtime
+-   2. SessionStorage ('auth' key) - Persistence across browser sessions
+-
+- CENTRALIZED STORAGE UTILITY:
+- ***
+- File: src/utils/authStorage.js
+-   - authStorage.save(authData) - Save to sessionStorage
+-   - authStorage.load() - Load from sessionStorage
+-   - authStorage.remove() - Remove from sessionStorage
+-   - authStorage.exists() - Check if auth data exists
+-
+- REDUX STATE MANAGEMENT:
+- ***
+- File: src/redux/features/auth/authSlice.js
+-   - userLoggedIn action: Updates Redux state + saves to sessionStorage
+-   - userLoggedOut action: Clears Redux state + removes from sessionStorage
+-   - Initial state: Loaded from sessionStorage on app start
+-
+- ACCESS PATTERNS:
+- ***
+-
+-   1. READING AUTH DATA (Runtime):
+- ✅ Use Redux selector: useSelector(state => state.auth)
+- ✅ Use useAuth() hook for authentication status
+- ❌ DON'T access sessionStorage directly
+-
+-   2. STORING AUTH DATA:
+- ✅ Dispatch userLoggedIn(authData) action
+- ❌ DON'T write to sessionStorage directly
+-
+-   3. CLEARING AUTH DATA:
+- ✅ Dispatch userLoggedOut() action
+- ✅ Use useLogout() hook
+- ❌ DON'T remove from sessionStorage directly
+-
+-   4. INITIALIZATION (App startup):
+- ✅ useAuthCheck() hook hydrates Redux from sessionStorage
+- ✅ Initial slice state uses authStorage.load()
+-
+- AUTHENTICATION FLOW:
+- ***
+-   1. User logs in → Login component dispatches userLoggedIn()
+-   2. authSlice saves to Redux state + sessionStorage via authStorage.save()
+-   3. API calls use Redux state via prepareHeaders in apiSlice
+-   4. Page refresh → useAuthCheck() restores Redux from sessionStorage
+-   5. User logs out → Dispatch userLoggedOut() clears both locations
+-
+- FILES INVOLVED:
+- ***
+- ✅ src/utils/authStorage.js - Centralized storage utility
+- ✅ src/redux/features/auth/authSlice.js - Redux state management
+- ✅ src/hooks/useAuth.js - Authentication status hook
+- ✅ src/hooks/useAuthCheck.js - App initialization hook
+- ✅ src/hooks/useLogout.js - Logout utility hook
+- ✅ src/pages/auth/Login.jsx - Login form component
+- ✅ src/pages/auth/PrivateRoute.js - Route protection
+-
+- BENEFITS:
+- ***
+- ✅ Single source of truth for auth data
+- ✅ Consistent storage/retrieval patterns
+- ✅ Automatic persistence across sessions
+- ✅ Centralized error handling
+- ✅ Easy testing and debugging
+- ✅ No duplicate sessionStorage operations
+  \*/

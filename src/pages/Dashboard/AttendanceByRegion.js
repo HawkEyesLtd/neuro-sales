@@ -44,7 +44,7 @@ function AttendanceByRegion({ data, loading }) {
                                           key={i}
                                           label={name || rName || aName || tName || dName}
                                           data={Math.round(percentage)}
-                                          margin={i === data.data.length - 1 ? 0 : 15}
+                                          margin={i === data.data?.length - 1 ? 0 : 15}
                                           colors={{ '0%': '#8464EE', '100%': '#697BFD' }}
                                       />
                                   )

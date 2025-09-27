@@ -7,7 +7,6 @@ const { Title } = Typography;
 
 export default function DHProductReceived() {
     const [loading, setLoading] = useState(false);
-    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
     // Mock data for the table
     const data = [
@@ -178,7 +177,7 @@ export default function DHProductReceived() {
         },
     ];
 
-    const handleFilter = (filters) => {
+    const handleFilter = (_filters) => {
         setLoading(true);
         // Simulate API call
         setTimeout(() => {
@@ -190,18 +189,12 @@ export default function DHProductReceived() {
         // Handle add SKU functionality
     };
 
-    const handleQuantityChange = (key, value) => {
+    const handleQuantityChange = (_key, _value) => {
         // Handle quantity change
-        console.log(`Changed quantity for ${key} to ${value}`);
     };
 
     const handleReceive = () => {
         // Handle receive functionality
-    };
-
-    const rowSelection = {
-        selectedRowKeys,
-        onChange: (keys) => setSelectedRowKeys(keys),
     };
 
     return (
@@ -212,30 +205,37 @@ export default function DHProductReceived() {
                 </Title>
             </div>
 
-            <InventoryFilter
-                onFilter={handleFilter}
-                loading={loading}
-                showAddButton={true}
-                onAddClick={handleAddSKU}
-                addButtonText="Add SKU"
-                showSearch={false}
-                showStatus={false}
-                showDateRange={true}
-            />
+            <div className="bg-gray-50 p-4 rounded-lg mb-6">
+                <InventoryFilter
+                    onFilter={handleFilter}
+                    loading={loading}
+                    showAddButton={true}
+                    onAddClick={handleAddSKU}
+                    addButtonText="Add SKU"
+                    showSearch={false}
+                    showStatus={false}
+                    showDateRange={true}
+                />
+            </div>
 
             <Card className="shadow-sm">
                 <Table
                     columns={columns}
                     dataSource={data}
-                    rowSelection={rowSelection}
                     loading={loading}
                     pagination={false}
                     scroll={{ x: 1000, y: 400 }}
                     size="small"
                 />
 
-                <div className="mt-4 text-right">
-                    <Button type="primary" size="large" onClick={handleReceive} className="px-8">
+                <div className="mt-4 text-center">
+                    <Button
+                        type="primary"
+                        size="large"
+                        onClick={handleReceive}
+                        className="px-12"
+                        style={{ backgroundColor: '#4096ff', borderColor: '#4096ff' }}
+                    >
                         Receive
                     </Button>
                 </div>

@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import DataManagementFilter from '@/components/DataManagementFilter';
-
+import { setDateRange } from '@/redux/features/dashboard/dashboardFilterSlice';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -67,9 +67,6 @@ export default function SalesReportFilter({ onFilter, loading }) {
                 <DataManagementFilter />
 
                 <Col xs={24} sm={12} md={8} lg={6}>
-                    <label style={{ display: 'block', marginBottom: 4, fontWeight: 500 }}>
-                        Date Range
-                    </label>
                     <RangePicker
                         style={{ width: '100%' }}
                         onChange={handleDateRangeChange}
@@ -83,9 +80,6 @@ export default function SalesReportFilter({ onFilter, loading }) {
                 </Col>
 
                 <Col xs={24} sm={12} md={8} lg={6}>
-                    <label style={{ display: 'block', marginBottom: 4, fontWeight: 500 }}>
-                        Order Status
-                    </label>
                     <Select
                         style={{ width: '100%' }}
                         placeholder="Select Order Status"
@@ -101,9 +95,6 @@ export default function SalesReportFilter({ onFilter, loading }) {
                 </Col>
 
                 <Col xs={24} sm={12} md={8} lg={6}>
-                    <label style={{ display: 'block', marginBottom: 4, fontWeight: 500 }}>
-                        Delivery Status
-                    </label>
                     <Select
                         style={{ width: '100%' }}
                         placeholder="Select Delivery Status"
@@ -119,9 +110,6 @@ export default function SalesReportFilter({ onFilter, loading }) {
                 </Col>
 
                 <Col xs={24} sm={12} md={8} lg={6}>
-                    <label style={{ display: 'block', marginBottom: 4, fontWeight: 500 }}>
-                        Search Term
-                    </label>
                     <Input
                         placeholder="Search by outlet name, user, etc."
                         value={filters.searchTerm}

@@ -23,6 +23,49 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+.ant-menu-root {
+    background: #ffffff !important;
+    color: black !important;
+}
+
+.ant-layout-sider-children {
+    background: #ffffff !important;
+    color: black !important;
+}
+
+.ant-layout-sider .ant-layout-sider-trigger {
+    background: #d9d9d9 !important;
+    color: black !important;
+}
+
+.ant-menu.ant-menu-root ant-menu-inline ant-menu-dark {
+    background: #ffffff !important;
+    color: black !important;
+}
+
+.ant-menu-item.ant-menu-item-selected {
+    background-color: #007bff !important;
+    color: white !important;
+}
+
+.ant-menu.ant-menu-root.adjust__button__inputant-menu-dark {
+    background-color: white !important;
+    color: rgb(174, 42, 42) !important;
+}
+` .ant-menu.ant-menu-root.ant-menu-inline.ant-menu-dark {
+    /* background: #FFFFFF !important; */
+    color: black !important;
+}
+
+.ant-menu-dark .ant-menu-item,
+.ant-menu-dark > .ant-menu .ant-menu-item,
+.ant-menu-dark .ant-menu-submenu-title,
+.ant-menu-dark > .ant-menu .ant-menu-submenu-title {
+    color: black !important;
+}
+
+/* Oldis previous */
+
 /* date picker style start */
 .ant-picker-panels > *:first-child button.ant-picker-header-next-btn {
     visibility: visible !important;
@@ -62,9 +105,25 @@ code {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+.ant-menu.ant-menu-sub.ant-menu-inline {
+    background-color: rgba(255, 255, 255, 0.801) !important;
+}
+
+ant-menu-submenu ant-menu-submenu-inline ant-menu-submenu-open ant-menu-submenu-selected {
+    background-color: rgba(255, 255, 255, 0.801) !important;
+}
+
+.ant-menu-submenu.ant-menu-submenu-inline.ant-menu-submenu-open .ant-menu-submenu-selected {
+    background-color: rgba(255, 255, 255, 0.801) !important;
+}
+
+.ant-menu-submenu-selected {
+    background-color: #d9d9d9 !important;
+}
+
 /* layout page design start */
 .ant-menu-root {
-    background: #1677ff;
+    background: white !important;
     color: #fff;
 }
 .ant-layout-sider-has-trigger {

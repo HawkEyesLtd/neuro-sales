@@ -7,7 +7,7 @@ function Legend({ data }) {
     function formatValue(val) {
         let stringValue = String(val);
 
-        while (stringValue.length < 4) {
+        while (stringValue?.length < 4) {
             stringValue = `0${stringValue}`;
         }
 
