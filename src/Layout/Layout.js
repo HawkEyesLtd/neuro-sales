@@ -1,7 +1,7 @@
-import { Layout } from 'antd';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import LoadingBar from 'react-top-loading-bar';
+import { Layout } from 'antd';
 
 import IdleModal from '@/components/ui/IddleSessionTimeoutModal';
 
