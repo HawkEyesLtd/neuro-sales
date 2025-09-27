@@ -174,20 +174,7 @@ function Dashboard() {
                     <InventoryAlertsChart />
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={8} xl={8}>
-<<<<<<< HEAD
                     <TopSellingProductsTable />
-=======
-                    <TableCard
-                        title="Top Selling Products"
-                        d
-                        columns={topSellingColumns}
-                        dataSource={topSellingData}
-                        loading={isLoading}
-                        pagination={false}
-                        size="small"
-                        extra={<GiftOutlined className="text-green-500" />}
-                    />
->>>>>>> 5286d17 (Refactor and enhance various components and utilities)
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={8} xl={8}>
                     <ReturnProductsList />
