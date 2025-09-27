@@ -103,7 +103,7 @@ function AttendanceFilter({ queryFunc, loading, downloadButton, isDownloading })
                         value: emp._id,
                     }))}
                     filterOption={(input, option) =>
-                        option.props.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        option.props?.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
                     }
                     searchValue={search}
                     onSearch={onSearch}

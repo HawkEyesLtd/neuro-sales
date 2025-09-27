@@ -3,8 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
-import appLogo from '@/assets/logo/logo-portal.svg';
-import mlLogo from '@/assets/logo/ml-logo.svg';
+import nuroSellso from '@/assets/logo/logo.png';
 import items from '@/data/menuData';
 import { useWhoAmIQuery } from '@/redux/features/auth/authApi';
 
@@ -74,11 +73,7 @@ function Sidebar() {
         >
             <div>
                 <Link to="/">
-                    <img
-                        className="bg-white rounded-md p-2 m-2"
-                        src={collapsed ? mlLogo : appLogo}
-                        alt="Logo"
-                    />
+                    <img className="bg-white rounded-md p-2 m-2" src={nuroSellso} alt="Logo" />
                 </Link>
             </div>
             {isLoading ? (

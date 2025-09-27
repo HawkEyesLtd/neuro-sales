@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import useGeolocation from '@/hooks/useGeolocation';
 
-import ublLogo from '../../assets/app_logo.png';
+import nuroSale from '../../assets/logo/logo.png';
 import HelmetHeader from '../../components/HelmetHeader';
 import { useLoginMutation } from '../../redux/features/auth/authApi';
 import { userLoggedIn } from '../../redux/features/auth/authSlice';
@@ -125,8 +125,8 @@ function Login() {
                             form={form}
                         >
                             <div className="text-center flex flex-col justify-center items-center">
-                                <img alt="neuro-sales logo" src={ublLogo} width={150} />
-                                <Title
+                                <img alt="neuro-sales logo" src={nuroSale} width={200} />
+                                {/* <Title
                                     level={2}
                                     style={{
                                         color: '#213CB3',
@@ -134,7 +134,7 @@ function Login() {
                                     }}
                                 >
                                     Sign In to Your Account
-                                </Title>
+                                </Title> */}
                             </div>
 
                             {/* Username Field */}

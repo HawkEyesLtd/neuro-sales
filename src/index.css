@@ -23,6 +23,49 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+.ant-menu-root {
+    background: #ffffff !important;
+    color: black !important;
+}
+
+.ant-layout-sider-children {
+    background: #ffffff !important;
+    color: black !important;
+}
+
+.ant-layout-sider .ant-layout-sider-trigger {
+    background: #706c74 !important;
+    color: black !important;
+}
+
+.ant-menu.ant-menu-root ant-menu-inline ant-menu-dark {
+    background: #ffffff !important;
+    color: black !important;
+}
+
+.ant-menu-item.ant-menu-item-selected {
+    background-color: #007bff !important;
+    color: white !important;
+}
+
+.ant-menu.ant-menu-root.adjust__button__inputant-menu-dark {
+    background-color: white !important;
+    color: black !important;
+}
+` .ant-menu.ant-menu-root.ant-menu-inline.ant-menu-dark {
+    /* background: #FFFFFF !important; */
+    color: black !important;
+}
+
+.ant-menu-dark .ant-menu-item,
+.ant-menu-dark > .ant-menu .ant-menu-item,
+.ant-menu-dark .ant-menu-submenu-title,
+.ant-menu-dark > .ant-menu .ant-menu-submenu-title {
+    color: black !important;
+}
+
+/* Oldis previous */
+
 /* date picker style start */
 .ant-picker-panels > *:first-child button.ant-picker-header-next-btn {
     visibility: visible !important;

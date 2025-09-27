@@ -16,6 +16,7 @@ import SalesPerformanceChart from './Chart/SalesPerformanceChart';
 import TopPromotionsCard from './Chart/TopPromotionsCard';
 import TopSellingProductsTable from './Chart/TopSellingProductsTable';
 import { TopKPIRow } from './Chart/topKPICards';
+import DashboardFilter from './DashboardFilter';
 
 function Dashboard() {
     const dispatch = useDispatch();
@@ -140,6 +141,10 @@ function Dashboard() {
     return (
         <>
             <HelmetHeader title="Dashboard" />
+
+            <Row gutter={[16, 16]} className="mb-6">
+                <DashboardFilter fetchDashboardData={fetchDashboardData} />
+            </Row>
 
             {/* <div className="sticky top-0 z-50 bg-gray-50 py-4 mb-6">
                 <Filter loading={isLoading} queryFunc={fetchDashboardData} pathname="/" />
