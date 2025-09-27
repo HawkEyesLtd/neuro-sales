@@ -1,7 +1,7 @@
-import { Suspense } from 'react';
-import { Route, Routes } from 'react-router-dom';
 import Login from '@pages/auth/Login';
 import PrivateRoute from '@pages/auth/PrivateRoute';
+import { Suspense } from 'react';
+import { Route, Routes } from 'react-router-dom';
 
 import A11yAudit from './components/A11yAudit';
 import ErrorBoundary from './components/ErrorBoundary';
