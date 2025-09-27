@@ -68,8 +68,8 @@ function DataManagementFilter({ selectAllDisable }) {
 
     // filter data normalize and performance boost
     const data = useMemo(() => {
-        const filterValues = [circle, region, area, territory, town];
-        const filterKeys = ['circleId', 'regionId', 'areaId', 'territoryId', 'townId'];
+        const filterValues = [region, area, territory, town];
+        const filterKeys = ['regionId', 'areaId', 'territoryId', 'townId'];
 
         const object = filterValues.reduce((prev, current, index) => {
             // Ensure current is an array and has elements
@@ -83,7 +83,7 @@ function DataManagementFilter({ selectAllDisable }) {
         }, {});
 
         return object;
-    }, [circle, region, area, territory, town]);
+    }, [region, area, territory, town]);
 
     // load filter data
     useEffect(() => {

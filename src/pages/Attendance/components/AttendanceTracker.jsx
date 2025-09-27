@@ -1,10 +1,11 @@
 import { EnvironmentOutlined, InfoCircleOutlined, UserOutlined } from '@ant-design/icons';
-import AttendanceItemSkeleton from '@components/ui/AttendanceItemSkeleton';
-import NoResult from '@components/ui/NoResult';
-import labelChange from '@utils/labelChange';
 import { Avatar, Col, Image, Row, Segmented, Tabs, Tooltip } from 'antd';
 import dayjs from 'dayjs';
 import { useState } from 'react';
+
+import labelChange from '@/utils/labelChange';
+import NoResult from '@/components/ui/NoResult';
+import AttendanceItemSkeleton from '@/components/ui/AttendanceItemSkeleton';
 
 function AttendanceList({ type, isLoading, data, setInfoWindowState }) {
     return (
