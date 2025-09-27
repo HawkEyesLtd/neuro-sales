@@ -136,7 +136,7 @@ function DataManagementFilter({ selectAllDisable }) {
 
     return (
         <>
-            {renderMultiselectComponent('Market Operation', 'circle', circle)}
+            {/* {renderMultiselectComponent('Market Operation', 'circle', circle)} */}
             {renderMultiselectComponent('Select Region', 'region', region)}
             {renderMultiselectComponent('Select Area', 'area', area)}
             {renderMultiselectComponent('Select Territory', 'territory', territory)}

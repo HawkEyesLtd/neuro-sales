@@ -5,6 +5,8 @@ import { setDateRange } from '@redux/features/dashboard/dashboardFilterSlice';
 import { Col, Select } from 'antd';
 import { useDispatch } from 'react-redux';
 
+import DataManagementFilter from '@/components/DataManagementFilter';
+
 const { Option } = Select;
 
 function DashboardFilter({ queryFunc, loading }) {
@@ -47,7 +49,7 @@ function DashboardFilter({ queryFunc, loading }) {
 
     return (
         <>
-            {/* <DataManagementFilter /> */}
+            <DataManagementFilter />
 
             <Col xs={24} sm={12} md={6} lg={6} xl={6}>
                 <Select placeholder="Select DH Name" className="w-full" size="large" allowClear>
