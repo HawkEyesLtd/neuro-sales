@@ -1,23 +1,22 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import { apiSlice } from '../features/api/apiSlice';
+import authSlice from '../features/auth/authSlice';
 
-// Middleware: reset RTK Query cache and clear session on logout
+// Middleware: reset RTK Query cache on logout
 const resetOnLogoutMiddleware = (storeAPI) => (next) => (action) => {
+    const result = next(action);
     if (action?.type === 'authSlice/userLoggedOut') {
-        try {
-            sessionStorage.removeItem('auth');
-        } catch {
-            // ignore storage errors
-        }
+        // Only reset API cache - sessionStorage is handled in authSlice
         storeAPI.dispatch(apiSlice.util.resetApiState());
     }
-    return next(action);
+    return result;
 };
 
 const store = configureStore({
     reducer: {
         [apiSlice.reducerPath]: apiSlice.reducer,
+        auth: authSlice,
     },
     devTools: import.meta.env.NODE_ENV !== 'production',
     middleware: (getDefaultMiddlewares) =>

@@ -77,7 +77,7 @@ const useDownloadReport = () => {
                 if (done) break;
 
                 chunks.push(value);
-                receivedLength += value.length;
+                receivedLength += value?.length;
 
                 // Update progress if total size is known
                 if (total > 0) {

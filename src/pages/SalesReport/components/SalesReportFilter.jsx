@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import DataManagementFilter from '@/components/DataManagementFilter';
-
+import { setDateRange } from '@/redux/features/dashboard/dashboardFilterSlice';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;

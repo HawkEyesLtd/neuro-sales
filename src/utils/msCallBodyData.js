@@ -16,19 +16,19 @@ const msCallBodyData = ({
     evaluationScore,
 }) => {
     const bodyData = {};
-    if (region.length) {
+    if (region?.length) {
         bodyData.regionId = region.map((item) => item.value);
     }
-    if (area.length) {
+    if (area?.length) {
         bodyData.areaId = area.map((item) => item.value);
     }
-    if (territory.length) {
+    if (territory?.length) {
         bodyData.territoryId = territory.map((item) => item.value);
     }
-    if (town.length) {
+    if (town?.length) {
         bodyData.townId = town.map((item) => item.value);
     }
-    if (dateRange.length) {
+    if (dateRange?.length) {
         const [fromDate, toDate] = dateRange;
         bodyData.fromDate = fromDate;
         bodyData.toDate = toDate;

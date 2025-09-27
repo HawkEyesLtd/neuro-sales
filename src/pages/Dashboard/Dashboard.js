@@ -2,7 +2,6 @@ import { Col, message, Row } from 'antd';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Filter from '@/components/Filter';
 import HelmetHeader from '@/components/HelmetHeader';
 import { useGetDashboardDataMutation } from '@/redux/features/dashboard/dashboardApi';
 import { setReFetchFilter } from '@/redux/features/loaderSlice';
@@ -142,9 +141,9 @@ function Dashboard() {
         <>
             <HelmetHeader title="Dashboard" />
 
-            <div className="sticky top-0 z-50 bg-gray-50 py-4 mb-6">
+            {/* <div className="sticky top-0 z-50 bg-gray-50 py-4 mb-6">
                 <Filter loading={isLoading} queryFunc={fetchDashboardData} pathname="/" />
-            </div>
+            </div> */}
 
             {/* Key Metrics Row */}
             <div className="mb-6">

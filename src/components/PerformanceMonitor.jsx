@@ -20,7 +20,7 @@ export const usePerformanceMonitoring = () => {
             ) {
                 const observer = new PerformanceObserver((list) => {
                     const entries = list.getEntries();
-                    const lastEntry = entries[entries.length - 1];
+                    const lastEntry = entries[entries?.length - 1];
 
                     // LCP should be under 2.5s for good performance
                     console.log('LCP:', lastEntry.startTime);

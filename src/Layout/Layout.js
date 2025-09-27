@@ -1,13 +1,14 @@
 import { Layout } from 'antd';
 import { useEffect, useState } from 'react';
-import LoadingBar from 'react-top-loading-bar';
 import { useSelector } from 'react-redux';
+import LoadingBar from 'react-top-loading-bar';
 
 import IdleModal from '@/components/ui/IddleSessionTimeoutModal';
 
 import FooterComponent from './FooterComponent';
 import HeaderComponent from './HeaderComponent';
 import Sidebar from './Sidebar';
+import SidebarErrorBoundary from './SidebarErrorBoundary';
 
 const { Content } = Layout;
 
@@ -45,7 +46,9 @@ function LayoutComponent({ children }) {
             className={`${globalLoading && pathName === '/download-report' ? 'global-loading' : ''}`}
         >
             {/* sidebar and menu */}
-            <Sidebar />
+            <SidebarErrorBoundary>
+                <Sidebar />
+            </SidebarErrorBoundary>
             <LoadingBar height={3} progress={value} color="#f11946" />
 
             <Layout className="site-layout">

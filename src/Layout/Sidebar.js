@@ -1,8 +1,7 @@
 import { Layout, Menu, Skeleton } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
 import appLogo from '@/assets/logo/logo-portal.svg';
 import mlLogo from '@/assets/logo/ml-logo.svg';
@@ -12,14 +11,28 @@ import { useWhoAmIQuery } from '@/redux/features/auth/authApi';
 const { Sider } = Layout;
 
 function Sidebar() {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [collapsed, setCollapsed] = useState(window.innerWidth <= 1024);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-    const { accessToken } = useSelector((state) => state.auth ?? {});
 
-    // Fetch user permissions
-    const { data, isLoading } = useWhoAmIQuery({}, {});
+    // Safe auth state access with proper error handling
+    const auth = useSelector((state) => {
+        try {
+            return state?.auth || null;
+        } catch (error) {
+            console.error('Error accessing auth state:', error);
+            return null;
+        }
+    });
+    const { accessToken } = auth || {};
+
+    // Fetch user permissions - only if authenticated
+    const { data: _userData, isLoading } = useWhoAmIQuery(
+        {},
+        {
+            skip: !accessToken,
+        }
+    );
 
     // Responsive collapse
     useEffect(() => {
@@ -34,8 +47,22 @@ function Sidebar() {
 
     // Always show all menu items without permission checks
     const finalPermittedRoutes = useMemo(() => {
-        if (!items) return [];
-        return items.sort((a, b) => a.serial - b.serial);
+        try {
+            // Ensure items is an array and handle undefined case
+            if (!Array.isArray(items) || items.length === 0) {
+                console.error('Menu items is not an array or is empty:', items);
+                return [];
+            }
+
+            const filteredItems = items
+                .filter((item) => item && typeof item === 'object') // Filter out invalid items
+                .sort((a, b) => (a.serial || 0) - (b.serial || 0)); // Safe serial comparison
+
+            return filteredItems;
+        } catch (error) {
+            console.error('Error processing menu items:', error);
+            return [];
+        }
     }, []);
 
     return (
@@ -54,15 +81,15 @@ function Sidebar() {
                     />
                 </Link>
             </div>
-            {isLoading || data ? (
-                Array.from({ length: 20 }).map((_, index) => (
+            {isLoading ? (
+                Array.from({ length: 8 }).map((_, index) => (
                     <div
                         style={{
                             padding: '6px 10px',
                         }}
                         key={index}
                     >
-                        <Skeleton.Input active block key={index} />
+                        <Skeleton.Input active block />
                     </div>
                 ))
             ) : (
@@ -70,7 +97,9 @@ function Sidebar() {
                     theme="dark"
                     style={{ paddingBottom: '50px' }}
                     onClick={({ key }) => {
-                        navigate(key);
+                        if (key && typeof key === 'string') {
+                            navigate(key);
+                        }
                         // dispatch(resetSalaryDisbursementFilter());
                     }}
                     selectedKeys={[window.location.pathname]}

@@ -32,38 +32,38 @@ function ShareOfVisibility({ data }) {
     }, [data]);
 
     const sharedPlotOptions = {
-            pie: {
-                donut: { size: '65%' },
-                expandOnClick: false,
-                customScale: 1,
-            },
-        }
+        pie: {
+            donut: { size: '65%' },
+            expandOnClick: false,
+            customScale: 1,
+        },
+    };
 
     const sharedResponsiveConfig = [
-            {
-                breakpoint: 1280,
-                options: {
-                    legend: { position: 'bottom' },
-                    plotOptions: { pie: { donut: { size: '60%' } } },
-                },
+        {
+            breakpoint: 1280,
+            options: {
+                legend: { position: 'bottom' },
+                plotOptions: { pie: { donut: { size: '60%' } } },
             },
-            {
-                breakpoint: 1024,
-                options: {
-                    legend: { position: 'bottom' },
-                    chart: { height: '100%', width: '100%' },
-                    plotOptions: { pie: { donut: { size: '56%' } } },
-                },
+        },
+        {
+            breakpoint: 1024,
+            options: {
+                legend: { position: 'bottom' },
+                chart: { height: '100%', width: '100%' },
+                plotOptions: { pie: { donut: { size: '56%' } } },
             },
-            {
-                breakpoint: 768,
-                options: {
-                    legend: { position: 'bottom' },
-                    chart: { height: 220 },
-                    plotOptions: { pie: { donut: { size: '52%' } } },
-                },
+        },
+        {
+            breakpoint: 768,
+            options: {
+                legend: { position: 'bottom' },
+                chart: { height: 220 },
+                plotOptions: { pie: { donut: { size: '52%' } } },
             },
-        ]
+        },
+    ];
 
     const chartOptions1 = {
         chart: {

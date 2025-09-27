@@ -1,210 +1,247 @@
-import { Col, Pagination, Row } from 'antd';
-import dayjs from 'dayjs';
-import isToday from 'dayjs/plugin/isToday';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { Table, Typography } from 'antd';
+import { useState } from 'react';
 
-import Filter from '@/components/Filter';
-import HelmetHeader from '@/components/HelmetHeader';
-import TownSummaryTable from '@/components/TownSummaryTable';
-import NoResult from '@/components/ui/NoResult';
-import { resetDataManagementFilter } from '@/redux/features/filter/dataManagementFilterSlice';
-import { useGetTownSummaryMutation } from '@/redux/features/inventory/inventoryApiSlice';
-import { setGlobalLoading, setReFetchFilter } from '@/redux/features/loaderSlice';
-import getDataManagementFilterData from '@/utils/generateDataManagementFilterData';
+import InventoryFilter from './components/InventoryFilter';
 
-dayjs.extend(isToday);
+const { Title } = Typography;
 
-export default function DHCCreditLifting() {
-    // pagination
-    const [totalShowPage, setTotalPageShow] = useState(10);
-    const [currentPage, setCurrentPageShow] = useState(1);
+export default function DHCreditLifting() {
+    const [loading, setLoading] = useState(false);
 
-    // dh history filter hook - handle undefined state gracefully
-    const townSummaryFilter = useSelector((state) => state.townSummaryFilter);
-    const { dateRange = [], posmId = null } = townSummaryFilter || {};
+    // Mock data for DH Credit Lifting Status matching the screenshot
+    const data = [
+        {
+            key: 'RAJ-39-09705',
+            outletCode: 'RAJ-39-09705',
+            outletName: 'Fraim Store',
+            creditTaken: 10000,
+            orderQty: 2000,
+            remainCredit: 8000,
+        },
+        {
+            key: 'RAJ-39-5631',
+            outletCode: 'RAJ-39-5631',
+            outletName: 'Uzzal Store',
+            creditTaken: 12000,
+            orderQty: 3500,
+            remainCredit: 8500,
+        },
+        {
+            key: 'RAJ-39-18149',
+            outletCode: 'RAJ-39-18149',
+            outletName: 'Sohidul Store',
+            creditTaken: 8000,
+            orderQty: 2200,
+            remainCredit: 5800,
+        },
+        {
+            key: 'RAJ-39-18154',
+            outletCode: 'RAJ-39-18154',
+            outletName: 'Uzzal Store',
+            creditTaken: 15000,
+            orderQty: 5000,
+            remainCredit: 10000,
+        },
+        {
+            key: 'RAJ-39-09697',
+            outletCode: 'RAJ-39-09697',
+            outletName: 'Rubel Store',
+            creditTaken: 7500,
+            orderQty: 1500,
+            remainCredit: 6000,
+        },
+        {
+            key: 'RAJ-39-18201',
+            outletCode: 'RAJ-39-18201',
+            outletName: 'Zamal Store',
+            creditTaken: 18000,
+            orderQty: 6500,
+            remainCredit: 11500,
+        },
+        {
+            key: 'RAJ-39-20865',
+            outletCode: 'RAJ-39-20865',
+            outletName: 'Nirob Store',
+            creditTaken: 9000,
+            orderQty: 4100,
+            remainCredit: 4900,
+        },
+        {
+            key: 'RAJ-39-06510',
+            outletCode: 'RAJ-39-06510',
+            outletName: 'Anonna Store',
+            creditTaken: 11500,
+            orderQty: 3000,
+            remainCredit: 8500,
+        },
+        {
+            key: 'RAJ-39-15800',
+            outletCode: 'RAJ-39-15800',
+            outletName: 'Alamin Pan Vandar',
+            creditTaken: 5000,
+            orderQty: 1800,
+            remainCredit: 3200,
+        },
+        {
+            key: 'RAJ-39-20968',
+            outletCode: 'RAJ-39-20968',
+            outletName: 'Rufsan Store',
+            creditTaken: 13000,
+            orderQty: 7200,
+            remainCredit: 5800,
+        },
+        {
+            key: 'RAJ-39-07503',
+            outletCode: 'RAJ-39-07503',
+            outletName: 'Rasel Store',
+            creditTaken: 10500,
+            orderQty: 2500,
+            remainCredit: 8000,
+        },
+        {
+            key: 'RAJ-78-28758',
+            outletCode: 'RAJ-78-28758',
+            outletName: 'Achiya Store',
+            creditTaken: 16000,
+            orderQty: 8000,
+            remainCredit: 8000,
+        },
+        {
+            key: 'RAJ-39-07553',
+            outletCode: 'RAJ-39-07553',
+            outletName: 'Mukter Store',
+            creditTaken: 8500,
+            orderQty: 3300,
+            remainCredit: 5200,
+        },
+        {
+            key: 'RAJ-39-07648',
+            outletCode: 'RAJ-39-07648',
+            outletName: 'Akhil Store',
+            creditTaken: 14000,
+            orderQty: 4000,
+            remainCredit: 10000,
+        },
+        {
+            key: 'RAJ-39-07657',
+            outletCode: 'RAJ-39-07657',
+            outletName: 'Ronjon Anjon Store',
+            creditTaken: 12500,
+            orderQty: 5500,
+            remainCredit: 7000,
+        },
+        {
+            key: 'RAJ-78-28780',
+            outletCode: 'RAJ-78-28780',
+            outletName: 'Ma Babar Doya Store',
+            creditTaken: 20000,
+            orderQty: 9500,
+            remainCredit: 10500,
+        },
+        {
+            key: 'RAJ-39-07645',
+            outletCode: 'RAJ-39-07645',
+            outletName: 'Proshanto Store',
+            creditTaken: 6650,
+            orderQty: 2800,
+            remainCredit: 3200,
+        },
+        {
+            key: 'RAJ-78-28781',
+            outletCode: 'RAJ-78-28781',
+            outletName: 'Ripun Store',
+            creditTaken: 17000,
+            orderQty: 7050,
+            remainCredit: 10000,
+        },
+        {
+            key: 'RAJ-39-07665',
+            outletCode: 'RAJ-39-07665',
+            outletName: 'Molla Store',
+            creditTaken: 9500,
+            orderQty: 4500,
+            remainCredit: 5000,
+        },
+    ];
 
-    // filter data - handle undefined state gracefully
-    const dataManagement = useSelector((state) => state.dataManagement);
-    const { circle, region, area, territory, town } = dataManagement || {};
+    const columns = [
+        {
+            title: 'Outlet Code',
+            dataIndex: 'outletCode',
+            key: 'outletCode',
+            width: 150,
+        },
+        {
+            title: 'Outlet Name',
+            dataIndex: 'outletName',
+            key: 'outletName',
+            width: 200,
+        },
+        {
+            title: 'Credit Taken',
+            dataIndex: 'creditTaken',
+            key: 'creditTaken',
+            width: 120,
+            render: (value) => value?.toLocaleString(),
+        },
+        {
+            title: 'Order Qty',
+            dataIndex: 'orderQty',
+            key: 'orderQty',
+            width: 120,
+            render: (value) => value?.toLocaleString(),
+        },
+        {
+            title: 'Remain Credit',
+            dataIndex: 'remainCredit',
+            key: 'remainCredit',
+            width: 120,
+            render: (value) => value?.toLocaleString(),
+        },
+    ];
 
-    const getDhHistoryFilterData = (dateArr = [], pId) => {
-        const bodyData = {};
-
-        if (dateArr && dateArr.length >= 2 && dateArr[0] && dateArr[1]) {
-            const [s, e] = dateArr;
-            bodyData.from = s;
-            bodyData.to = e;
-        }
-        if (dateArr && dateArr.length) {
-            let [s, e] = dateArr;
-
-            const isSameDay = dayjs(e).isToday();
-
-            if (isSameDay) {
-                e = dayjs().toJSON();
-            } else {
-                e = dayjs(e).endOf('day');
-            }
-            s = dayjs(s).startOf('day');
-
-            bodyData.startDate = s;
-            bodyData.endDate = e;
-            bodyData.fromDate = s;
-            bodyData.toDate = e;
-        }
-        if (pId) {
-            bodyData.materialId = pId;
-        }
-        return bodyData;
+    const handleFilter = (_filters) => {
+        setLoading(true);
+        // Simulate API call
+        setTimeout(() => {
+            setLoading(false);
+        }, 1000);
     };
-
-    const [getTownSummary, { data, isLoading }] = useGetTownSummaryMutation();
-
-    const transformData = data?.data?.summary?.map((item) => ({
-        circle: item.circle,
-        region: item.region,
-        area: item.area,
-        territory: item.territory,
-        town: item.town,
-        materials: item.materials,
-    }));
-
-    const fetchDhSummaryData = (page, totalShow, clean) => {
-        if (clean === 'cleanShowResultOnPage') {
-            setCurrentPageShow(1);
-            setTotalPageShow(10);
-        }
-
-        getTownSummary({
-            page,
-            limit: totalShow,
-            ...getDataManagementFilterData({ circle, region, area, territory, town }),
-            ...getDhHistoryFilterData(dateRange, posmId),
-        });
-    };
-
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(setGlobalLoading(isLoading));
-    }, [dispatch, isLoading]);
-
-    // const onChange = (pageNumber, totalPageChange) => {
-    //     setTotalPageShow(() => totalPageChange);
-    //     setCurrentPageShow(pageNumber);
-    //     fetchDhSummaryData(pageNumber, totalPageChange);
-    // };
-
-    const { reFetchFilter, globalLoading } = useSelector((state) => state.globalLoading || {});
-    // reset existing filter
-    useEffect(() => {
-        dispatch(setReFetchFilter(!reFetchFilter));
-        dispatch(resetDataManagementFilter());
-    }, [dispatch, reFetchFilter]);
-
-    // by default data load
-    useEffect(() => {
-        getTownSummary();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     return (
-        <>
-            {/* page title and description */}
-            <HelmetHeader title="DH Credit Lifting" />
+        <div className="p-6">
+            <div className="mb-6">
+                <Title level={3} className="mb-4">
+                    DH Credit Lifting Status
+                </Title>
+            </div>
 
-            <div style={{ margin: '16px 0' }}>
-                <Filter
-                    loading={isLoading || globalLoading}
-                    queryFunc={fetchDhSummaryData}
-                    pathname="/dh-credit-lifting"
+            <InventoryFilter
+                onFilter={handleFilter}
+                loading={loading}
+                showAddButton={false}
+                showSearch={true}
+                showStatus={false}
+                showDateRange={true}
+            />
+
+            <div className="bg-white rounded-lg shadow-sm">
+                <Table
+                    columns={columns}
+                    dataSource={data}
+                    loading={loading}
+                    pagination={{
+                        current: 1,
+                        pageSize: 20,
+                        total: data.length,
+                        showSizeChanger: false,
+                        showQuickJumper: false,
+                        showTotal: (total) => `Total ${total} items`,
+                    }}
+                    scroll={{ x: 800 }}
+                    size="small"
                 />
             </div>
-
-            <div style={{ borderRadius: '10px' }}>
-                {data?.data?.summary?.length ? (
-                    <>
-                        {transformData?.length ? (
-                            <>
-                                {transformData?.map((item, i) => (
-                                    <div
-                                        key={i}
-                                        style={{
-                                            boxShadow: '0 0 5px 0 #dad5d5',
-                                            borderRadius: '10px',
-                                            padding: '10px',
-                                            margin: '10px 0',
-                                        }}
-                                    >
-                                        <Row gutter={[10, 10]} justify="space-evenly">
-                                            <Col>
-                                                <p style={{ margin: 0 }}>
-                                                    <span style={{ fontWeight: 500 }}>
-                                                        Cluster:{' '}
-                                                    </span>
-                                                    {item.region}
-                                                </p>
-                                            </Col>
-                                            <Col>
-                                                {' '}
-                                                <p style={{ margin: 0 }}>
-                                                    <span style={{ fontWeight: 500 }}>Area: </span>
-                                                    {item.area}
-                                                </p>
-                                            </Col>
-                                            <Col>
-                                                <p style={{ margin: 0 }}>
-                                                    <span style={{ fontWeight: 500 }}>
-                                                        Territory:{' '}
-                                                    </span>
-                                                    {item.territory}
-                                                </p>
-                                            </Col>
-                                            <Col>
-                                                <p style={{ margin: 0 }}>
-                                                    <span style={{ fontWeight: 500 }}>Town: </span>
-                                                    {item.town}
-                                                </p>
-                                            </Col>
-                                        </Row>
-                                        <div style={{ marginTop: '10px' }}>
-                                            <TownSummaryTable
-                                                data={item?.materials}
-                                                isLoading={isLoading}
-                                            />
-                                        </div>
-                                    </div>
-                                ))}
-                            </>
-                        ) : (
-                            <NoResult />
-                        )}
-                    </>
-                ) : null}
-            </div>
-
-            {data?.data?.summary?.length ? (
-                <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        padding: '10px 0',
-                    }}
-                >
-                    <Pagination
-                        size="large"
-                        pageSize={totalShowPage}
-                        showSizeChanger
-                        showQuickJumper
-                        current={currentPage}
-                        defaultCurrent={1}
-                        total={data?.meta.total}
-                        // onChange={onChange}
-                        showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`}
-                    />
-                </div>
-            ) : null}
-        </>
+        </div>
     );
 }

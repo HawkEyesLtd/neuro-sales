@@ -15,14 +15,7 @@ export const authApi = apiSlice.injectEndpoints({
                 try {
                     const result = await queryFulfilled;
 
-                    sessionStorage.setItem(
-                        'auth',
-                        JSON.stringify({
-                            accessToken: result?.data?.data.access_token,
-                            user: result?.data?.data.payload,
-                        })
-                    );
-
+                    // Only dispatch Redux action - sessionStorage is handled in authSlice
                     dispatch(
                         userLoggedIn({
                             accessToken: result?.data?.data.access_token,
@@ -50,8 +43,7 @@ export const authApi = apiSlice.injectEndpoints({
                 } catch {
                     // ignore API errors for signout; proceed with local cleanup
                 } finally {
-                    // Clear persisted session and auth state
-                    sessionStorage.removeItem('auth');
+                    // Only dispatch Redux action - sessionStorage is handled in authSlice
                     dispatch(userLoggedOut());
                     // Reset all RTK Query caches
                     dispatch(apiSlice.util.resetApiState());

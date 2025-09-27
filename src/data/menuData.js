@@ -1,4 +1,4 @@
-import { AimOutlined, FolderOpenOutlined, PieChartOutlined } from '@ant-design/icons';
+import { AimOutlined, FolderOpenOutlined, PieChartOutlined, SaveFilled } from '@ant-design/icons';
 
 const items = [
     {
@@ -36,6 +36,7 @@ const items = [
     {
         label: 'Sales Report',
         key: '/sales-report',
+        icon: <SaveFilled />,
     },
 ];
 

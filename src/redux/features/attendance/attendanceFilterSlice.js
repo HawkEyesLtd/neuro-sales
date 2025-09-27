@@ -1,8 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import dayjs from 'dayjs';
 
-const authData = sessionStorage.getItem('auth');
-const { user = {} } = authData ? JSON.parse(authData) : {};
+import authStorage from '@/utils/authStorage';
+
+// Get user data from storage during initialization
+// This is acceptable since it's only used for initial state
+const getInitialUserData = () => {
+    const auth = authStorage.load();
+    return auth?.user || {};
+};
+
+const user = getInitialUserData();
 
 const initialState = {
     date: dayjs(),
