@@ -1,6 +1,6 @@
 import { Row } from 'antd';
 
-import AttendanceFilter from '@/pages/Attendance/AttendanceFilter';
+import AttendanceFilter from '@/pages/Attendance/components/AttendanceFilter';
 import DashboardFilter from '@/pages/Dashboard/DashboardFilter';
 import InventoryFilter from '@/pages/Inventory/components/InventoryFilter';
 import SalesReportFilter from '@/pages/SalesReport/components/SalesReportFilter';

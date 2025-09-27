@@ -11,9 +11,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Filter from '@/components/Filter';
 
-import AttendanceLocator from './AttendanceLocator';
-import AttendanceOverview from './AttendanceOverview';
-import AttendanceTracker from './AttendanceTracker';
+import AttendanceLocator from './components/AttendanceLocator';
+import AttendanceOverview from './components/AttendanceOverview';
+import AttendanceTracker from './components/AttendanceTracker';
 
 function getAttendanceBodyData(filterState, dataManagementState) {
     const bodyData = {};
