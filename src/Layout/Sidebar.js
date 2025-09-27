@@ -73,7 +73,11 @@ function Sidebar() {
         >
             <div>
                 <Link to="/">
-                    <img className="bg-white rounded-md p-2 m-2" src={nuroSellso} alt="Logo" />
+                    <img
+                        className="bg-white text-black rounded-md p-2 m-2"
+                        src={nuroSellso}
+                        alt="Logo"
+                    />
                 </Link>
             </div>
             {isLoading ? (
