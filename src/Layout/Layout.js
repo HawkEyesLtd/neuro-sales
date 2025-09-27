@@ -5,7 +5,6 @@ import LoadingBar from 'react-top-loading-bar';
 
 import IdleModal from '@/components/ui/IddleSessionTimeoutModal';
 
-import FooterComponent from './FooterComponent';
 // import HeaderComponent from './HeaderComponent';
 import Sidebar from './Sidebar';
 import SidebarErrorBoundary from './SidebarErrorBoundary';
@@ -66,7 +65,7 @@ function LayoutComponent({ children }) {
                 </Content>
 
                 {/* footer */}
-                <FooterComponent />
+                {/* <FooterComponent /> */}
             </Layout>
         </Layout>
     );
