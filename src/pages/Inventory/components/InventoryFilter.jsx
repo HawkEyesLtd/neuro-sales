@@ -149,7 +149,6 @@ export default function InventoryFilter({
                     {showAddButton && (
                         <Button
                             block
-                            style
                             type="primary"
                             style={{ backgroundColor: '#52c41a', borderColor: '#52c41a' }}
                             onClick={onAddClick}

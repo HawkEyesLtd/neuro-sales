@@ -4,8 +4,10 @@ import {
     MoreOutlined,
     SortAscendingOutlined,
 } from '@ant-design/icons';
-import { Button, Card, Dropdown, Space, Table, Tag, Typography } from 'antd';
-import { useState } from 'react';
+import { Button, Card, Dropdown, Space, Table, Typography, message } from 'antd';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+
+import { useGetInventoryStatusMutation } from '@/redux/features/inventory/inventoryApiSlice';
 
 import InventoryFilter from './components/InventoryFilter';
 
@@ -14,65 +16,70 @@ const { Title } = Typography;
 export default function InventoryStatus() {
     const [loading, setLoading] = useState(false);
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [inventoryData, setInventoryData] = useState([]);
+    const [pagination, setPagination] = useState({
+        current: 1,
+        pageSize: 10,
+        total: 0,
+    });
+    const [getInventoryStatus] = useGetInventoryStatusMutation();
 
-    // Mock data for the table
-    const data = [
-        {
-            key: '1',
-            productName: 'Meril Vitamin C Soap Bar - Tangerine Orange',
-            productCode: 'PRD-001',
-            size: '100gm',
-            currentStock: 150,
-            reorderLevel: 200,
-            lastUpdatedTime: '23-04-2025 10:15 AM',
-            location: 'Warehouse A',
-            status: 'Low Stock',
-        },
-        {
-            key: '2',
-            productName: 'Meril Milk Soap Bar',
-            productCode: 'PRD-002',
-            size: '75gm',
-            currentStock: 320,
-            reorderLevel: 250,
-            lastUpdatedTime: '23-04-2025 09:45 AM',
-            location: 'Store B',
-            status: 'In Stock',
-        },
-        {
-            key: '3',
-            productName: 'Meril Milk & Rose Soap Bar',
-            productCode: 'PRD-003',
-            size: '150gm',
-            currentStock: 180,
-            reorderLevel: 200,
-            lastUpdatedTime: '22-04-2025 03:20 PM',
-            location: 'Warehouse C',
-            status: 'Low Stock',
-        },
-        {
-            key: '4',
-            productName: 'Meril Milk & Beli Soap Bar',
-            productCode: 'PRD-004',
-            size: '60gm',
-            currentStock: 420,
-            reorderLevel: 300,
-            lastUpdatedTime: '22-04-2025 11:05 AM',
-            location: 'Store A',
-            status: 'In Stock',
-        },
-        {
-            key: '5',
-            productName: 'Meril Milk & Kiwi Soap Bar',
-            productCode: 'PRD-005',
-            size: '75gm',
-            currentStock: 90,
-            reorderLevel: 150,
-            lastUpdatedTime: '21-04-2025 02:55 PM',
-            location: 'Warehouse B',
-            status: 'Low Stock',
-        },
-    ];
+    // Mock data for the table - matching screenshot data
+    const data = useMemo(
+        () => [
+            {
+                key: '1',
+                productName: 'Meril Vitamin C Soap Bar - Tangerine Orange',
+                productCode: 'PRD-001',
+                size: '100gm',
+                currentStock: 150,
+                reorderLevel: 200,
+                lastUpdatedTime: '23-04-2025 10:15 AM',
+                location: 'Warehouse A',
+            },
+            {
+                key: '2',
+                productName: 'Meril Milk Soap Bar',
+                productCode: 'PRD-002',
+                size: '75gm',
+                currentStock: 320,
+                reorderLevel: 250,
+                lastUpdatedTime: '23-04-2025 09:45 AM',
+                location: 'Store B',
+            },
+            {
+                key: '3',
+                productName: 'Meril Milk & Rose Soap Bar',
+                productCode: 'PRD-003',
+                size: '150gm',
+                currentStock: 180,
+                reorderLevel: 200,
+                lastUpdatedTime: '22-04-2025 03:20 PM',
+                location: 'Warehouse C',
+            },
+            {
+                key: '4',
+                productName: 'Meril Milk & Beli Soap Bar',
+                productCode: 'PRD-004',
+                size: '60gm',
+                currentStock: 420,
+                reorderLevel: 300,
+                lastUpdatedTime: '22-04-2025 11:05 AM',
+                location: 'Store A',
+            },
+            {
+                key: '5',
+                productName: 'Meril Milk & Kiwi Soap Bar',
+                productCode: 'PRD-005',
+                size: '75gm',
+                currentStock: 90,
+                reorderLevel: 150,
+                lastUpdatedTime: '21-04-2025 02:55 PM',
+                location: 'Warehouse B',
+            },
+        ],
+        []
+    );
 
     const columns = [
         {
@@ -119,16 +126,6 @@ export default function InventoryStatus() {
             width: 120,
         },
         {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
-            width: 100,
-            render: (status) => {
-                const color = status === 'In Stock' ? 'green' : 'orange';
-                return <Tag color={color}>{status}</Tag>;
-            },
-        },
-        {
             title: 'Actions',
             key: 'actions',
             width: 100,
@@ -161,25 +158,57 @@ export default function InventoryStatus() {
         },
     ];
 
-    const handleFilter = (filters) => {
-        console.log('Applied filters:', filters);
-        setLoading(true);
-        // Simulate API call
-        setTimeout(() => {
-            setLoading(false);
-        }, 1000);
-    };
+    const handleFilter = useCallback(
+        async (filters) => {
+            setLoading(true);
+            try {
+                const response = await getInventoryStatus({
+                    ...filters,
+                    page: pagination.current,
+                    pageSize: pagination.pageSize,
+                });
 
-    const handleViewDetails = (record) => {
-        console.log('View details:', record);
+                if (response?.data?.success) {
+                    setInventoryData(response.data.data);
+                    setPagination((prev) => ({
+                        ...prev,
+                        total: response.data.total || 0,
+                    }));
+                } else {
+                    throw new Error('API Error');
+                }
+            } catch {
+                message.error('Failed to fetch inventory data');
+                // Fallback to mock data
+                setInventoryData(data);
+                setPagination((prev) => ({
+                    ...prev,
+                    total: data.length,
+                }));
+            } finally {
+                setLoading(false);
+            }
+        },
+        [getInventoryStatus, pagination, data]
+    );
+
+    useEffect(() => {
+        const loadData = async () => {
+            await handleFilter({});
+        };
+        loadData();
+    }, [handleFilter]);
+
+    const handleViewDetails = (_record) => {
+        // Handle view details functionality
     };
 
     const handleSort = () => {
-        console.log('Sort clicked');
+        // Handle sort functionality
     };
 
     const handleExport = () => {
-        console.log('Export clicked');
+        // Handle export functionality
     };
 
     const rowSelection = {
@@ -221,7 +250,7 @@ export default function InventoryStatus() {
 
                 <Table
                     columns={columns}
-                    dataSource={data}
+                    dataSource={inventoryData.length > 0 ? inventoryData : data}
                     rowSelection={rowSelection}
                     loading={loading}
                     pagination={{

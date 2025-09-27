@@ -89,7 +89,7 @@ function IdleModal({ timeout, autoCloseTime }) {
         logout();
         setIsModalVisible(false);
         message.error('Logged out');
-        sessionStorage.removeItem('auth');
+        // Only dispatch Redux action - sessionStorage is handled in authSlice
         dispatch(userLoggedOut());
         navigate('/login');
         resetIdleTimer();

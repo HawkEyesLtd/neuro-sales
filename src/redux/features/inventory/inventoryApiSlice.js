@@ -2,6 +2,7 @@ import { apiSlice } from '../api/apiSlice';
 
 export const inventoryApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
+        // Existing endpoints
         getTownPosmHistory: builder.mutation({
             query: (data) => ({
                 url: '/v1/material-activity/town-material',
@@ -42,6 +43,42 @@ export const inventoryApiSlice = apiSlice.injectEndpoints({
                 url: '/v1/material',
             }),
         }),
+        // New inventory management endpoints
+        getInventoryStatus: builder.mutation({
+            query: (data) => ({
+                url: '/v1/inventory/status',
+                method: 'POST',
+                body: data,
+            }),
+        }),
+        getDHProductReceipts: builder.mutation({
+            query: (data) => ({
+                url: '/v1/inventory/dh-product-receipts',
+                method: 'POST',
+                body: data,
+            }),
+        }),
+        getDHCreditLifting: builder.mutation({
+            query: (data) => ({
+                url: '/v1/inventory/dh-credit-lifting',
+                method: 'POST',
+                body: data,
+            }),
+        }),
+        addProductReceipt: builder.mutation({
+            query: (data) => ({
+                url: '/v1/inventory/add-receipt',
+                method: 'POST',
+                body: data,
+            }),
+        }),
+        addSKU: builder.mutation({
+            query: (data) => ({
+                url: '/v1/inventory/add-sku',
+                method: 'POST',
+                body: data,
+            }),
+        }),
     }),
 });
 
@@ -52,4 +89,9 @@ export const {
     useGetUserHistoryMutation,
     useGetUserSummaryMutation,
     useGetPosmListQuery,
+    useGetInventoryStatusMutation,
+    useGetDHProductReceiptsMutation,
+    useGetDHCreditLiftingMutation,
+    useAddProductReceiptMutation,
+    useAddSKUMutation,
 } = inventoryApiSlice;

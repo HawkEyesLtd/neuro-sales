@@ -12,7 +12,6 @@ import { Col, message, Row } from 'antd';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Filter from '@/components/Filter';
 import HelmetHeader from '@/components/HelmetHeader';
 import ChartCard from '@/components/dashboard/ChartCard';
 import MetricCard from '@/components/dashboard/MetricCard';
@@ -147,9 +146,9 @@ function Dashboard() {
         <>
             <HelmetHeader title="Dashboard" />
 
-            <div className="sticky top-0 z-50 bg-gray-50 py-4 mb-6">
+            {/* <div className="sticky top-0 z-50 bg-gray-50 py-4 mb-6">
                 <Filter loading={isLoading} queryFunc={fetchDashboardData} pathname="/" />
-            </div>
+            </div> */}
 
             {/* Key Metrics Row */}
             <Row gutter={[16, 16]} className="mb-6">
@@ -253,6 +252,7 @@ function Dashboard() {
                 <Col xs={24} sm={24} md={12} lg={8} xl={8}>
                     <TableCard
                         title="Top Selling Products"
+                        d
                         columns={topSellingColumns}
                         dataSource={topSellingData}
                         loading={isLoading}
