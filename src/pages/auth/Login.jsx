@@ -1,20 +1,17 @@
-import { Col, Form, message, Row, Typography } from 'antd';
+import { Col, Form, message, Row } from 'antd';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import nuroSale from '@/assets/logo/logo.png';
+import HelmetHeader from '@/components/HelmetHeader';
 import useGeolocation from '@/hooks/useGeolocation';
-
-import nuroSale from '../../assets/logo/logo.png';
-import HelmetHeader from '../../components/HelmetHeader';
-import { useLoginMutation } from '../../redux/features/auth/authApi';
-import { userLoggedIn } from '../../redux/features/auth/authSlice';
+import { useLoginMutation } from '@/redux/features/auth/authApi';
+import { userLoggedIn } from '@/redux/features/auth/authSlice';
 
 import ActionButton from './components/ActionButton';
 import LoginInput from './components/LoginInput';
 import LoginPassword from './components/LoginPassword';
-
-const { Title } = Typography;
 
 function Login() {
     const [form] = Form.useForm();
@@ -125,7 +122,7 @@ function Login() {
                             form={form}
                         >
                             <div className="text-center flex flex-col justify-center items-center">
-                                <img alt="neuro-sales logo" src={nuroSale} width={200} />
+                                <img alt="neuro-sales-logo" src={nuroSale} width={200} />
                                 {/* <Title
                                     level={2}
                                     style={{
