@@ -12,7 +12,7 @@
                 { "key": "Referrer-Policy", "value": "same-origin" },
                 {
                     "key": "Permissions-Policy",
-                    "value": "geolocation=(), microphone=(), camera=()"
+                    "value": "geolocation=(), microphone=(), camera=(), payment=(), usb=()"
                 },
                 {
                     "key": "Strict-Transport-Security",
@@ -20,7 +20,7 @@
                 },
                 {
                     "key": "Content-Security-Policy",
-                    "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https:; object-src 'none'; base-uri 'self'; frame-ancestors 'none';"
+                    "value": "default-src 'self'; script-src 'self' 'sha256-uEIpXhNYjmiAsa8bheQs7bMc94qI/9xgQl6iC7UxdmU=' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests;"
                 }
             ]
         }

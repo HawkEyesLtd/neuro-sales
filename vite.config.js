@@ -26,6 +26,32 @@ export default defineConfig({
             '@components/ui': '/src/components/ui',
         },
     },
+    build: {
+        // Generate CSP-friendly builds
+        rollupOptions: {
+            output: {
+                // Ensure proper chunking for better CSP compatibility
+                manualChunks: {
+                    vendor: ['react', 'react-dom'],
+                    antd: ['antd'],
+                    charts: ['apexcharts', 'react-apexcharts', 'echarts', 'echarts-for-react'],
+                    utils: ['dayjs', 'xlsx'],
+                },
+            },
+        },
+        // Generate source maps for better debugging
+        sourcemap: process.env.NODE_ENV === 'development',
+        // Terser options for production builds
+        terserOptions:
+            process.env.NODE_ENV === 'production'
+                ? {
+                      compress: {
+                          drop_console: true,
+                          drop_debugger: true,
+                      },
+                  }
+                : undefined,
+    },
     esbuild: {
         loader: 'jsx',
         include: /src\/.*\.[jt]sx?$/,
@@ -51,14 +77,5 @@ export default defineConfig({
             'react-redux',
         ],
         exclude: ['firebase'],
-    },
-    build: {
-        sourcemap: process.env.NODE_ENV !== 'production',
-        terserOptions: {
-            compress: {
-                drop_console: true,
-                drop_debugger: true,
-            },
-        },
     },
 });

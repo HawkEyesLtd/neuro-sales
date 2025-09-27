@@ -44,7 +44,11 @@
         "lint:fix": "eslint . --fix",
         "format": "prettier --write \"src/**/*.{js,jsx,json,css,md}\"",
         "prepare": "husky",
-        "pre-commit": "lint-staged"
+        "pre-commit": "lint-staged",
+        "csp:test": "pnpm build && pnpm preview --host --port 4173",
+        "csp:helper": "./scripts/csp-helper.sh",
+        "deploy": "vercel --prod",
+        "deploy:secure": "cp vercel.json vercel.json.backup && cp vercel.secure.json vercel.json && vercel --prod && mv vercel.json.backup vercel.json"
     },
     "devDependencies": {
         "@eslint/js": "^9.36.0",
