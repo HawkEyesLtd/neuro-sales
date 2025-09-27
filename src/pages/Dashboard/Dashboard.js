@@ -1,27 +1,22 @@
-import {
-    AimOutlined,
-    DollarOutlined,
-    GiftOutlined,
-    ShoppingCartOutlined,
-    TrophyOutlined,
-    UndoOutlined,
-    UserOutlined,
-    WarningOutlined,
-} from '@ant-design/icons';
 import { Col, message, Row } from 'antd';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Filter from '@/components/Filter';
 import HelmetHeader from '@/components/HelmetHeader';
-import ChartCard from '@/components/dashboard/ChartCard';
-import MetricCard from '@/components/dashboard/MetricCard';
-import TableCard from '@/components/dashboard/TableCard';
-import B2BOrderPerformanceChart from '@/components/dashboard/charts/B2BOrderPerformanceChart';
-import DeliveryPerformanceChart from '@/components/dashboard/charts/DeliveryPerformanceChart';
-import SalesPerformanceChart from '@/components/dashboard/charts/SalesPerformanceChart';
 import { useGetDashboardDataMutation } from '@/redux/features/dashboard/dashboardApi';
 import { setReFetchFilter } from '@/redux/features/loaderSlice';
+
+import B2BOrderPerformanceChart from './Chart/B2BOrderPerformanceChart';
+import DeliveryPerformanceChart from './Chart/DeliveryPerformanceChart';
+import InventoryAlertsChart from './Chart/InventoryAlertsChart';
+import LeaderboardCard from './Chart/LeaderboardCard';
+import OrderTrendsByGeoCard from './Chart/OrderTrendsByGeoCard';
+import ReturnProductsList from './Chart/ReturnProductsList';
+import SalesPerformanceChart from './Chart/SalesPerformanceChart';
+import TopPromotionsCard from './Chart/TopPromotionsCard';
+import TopSellingProductsTable from './Chart/TopSellingProductsTable';
+import { TopKPIRow } from './Chart/topKPICards';
 
 function Dashboard() {
     const dispatch = useDispatch();
@@ -152,125 +147,46 @@ function Dashboard() {
             </div>
 
             {/* Key Metrics Row */}
-            <Row gutter={[16, 16]} className="mb-6">
-                <Col xs={24} sm={12} md={12} lg={6} xl={6}>
-                    <MetricCard
-                        title="Total Sales"
-                        value={metricsData.totalSales.value}
-                        icon={<DollarOutlined />}
-                        trend={metricsData.totalSales.trend}
-                        trendValue={metricsData.totalSales.trendValue}
-                        trendLabel={metricsData.totalSales.trendLabel}
-                        loading={isLoading}
-                        color="#1890ff"
-                    />
-                </Col>
-                <Col xs={24} sm={12} md={12} lg={6} xl={6}>
-                    <MetricCard
-                        title="Total Orders"
-                        value={metricsData.totalOrders.value}
-                        icon={<ShoppingCartOutlined />}
-                        trend={metricsData.totalOrders.trend}
-                        trendValue={metricsData.totalOrders.trendValue}
-                        trendLabel={metricsData.totalOrders.trendLabel}
-                        loading={isLoading}
-                        color="#52c41a"
-                    />
-                </Col>
-                <Col xs={24} sm={12} md={12} lg={6} xl={6}>
-                    <MetricCard
-                        title="Target VS Achiev"
-                        value={metricsData.targetVsAchiev.value}
-                        icon={<AimOutlined />}
-                        trend={metricsData.targetVsAchiev.trend}
-                        trendValue={metricsData.targetVsAchiev.trendValue}
-                        trendLabel={metricsData.targetVsAchiev.trendLabel}
-                        loading={isLoading}
-                        color="#fa8c16"
-                    />
-                </Col>
-                <Col xs={24} sm={12} md={12} lg={6} xl={6}>
-                    <MetricCard
-                        title="Active SR"
-                        value={metricsData.activeSR.value}
-                        icon={<UserOutlined />}
-                        trend={metricsData.activeSR.trend}
-                        trendValue={metricsData.activeSR.trendValue}
-                        trendLabel={metricsData.activeSR.trendLabel}
-                        loading={isLoading}
-                        color="#eb2f96"
-                    />
-                </Col>
-            </Row>
-
-            {/* Strike Rate Card */}
-            <Row gutter={[16, 16]} className="mb-6">
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <MetricCard
-                        title="Strike Rate"
-                        value={metricsData.strikeRate.value}
-                        suffix={metricsData.strikeRate.suffix}
-                        icon={<TrophyOutlined />}
-                        trend={metricsData.strikeRate.trend}
-                        loading={isLoading}
-                        color="#722ed1"
-                    />
-                </Col>
-            </Row>
+            <div className="mb-6">
+                <TopKPIRow />
+            </div>
 
             {/* Charts Row */}
             <Row gutter={[16, 16]} className="mb-6">
-                <Col xs={24} sm={24} md={12} lg={6} xl={6}>
-                    <ChartCard title="Sales Performance" loading={isLoading} height={300}>
-                        <SalesPerformanceChart />
-                    </ChartCard>
+                <Col xs={24} sm={24} md={12} lg={8} xl={8}>
+                    <SalesPerformanceChart />
                 </Col>
-                <Col xs={24} sm={24} md={12} lg={6} xl={6}>
-                    <ChartCard title="Delivery Performance" loading={isLoading} height={300}>
-                        <DeliveryPerformanceChart />
-                    </ChartCard>
+                <Col xs={24} sm={24} md={12} lg={8} xl={8}>
+                    <DeliveryPerformanceChart />
                 </Col>
-                <Col xs={24} sm={24} md={24} lg={6} xl={6}>
-                    <ChartCard title="B2B Order Performance" loading={isLoading} height={300}>
-                        <B2BOrderPerformanceChart />
-                    </ChartCard>
+                <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                    <B2BOrderPerformanceChart />
                 </Col>
             </Row>
 
             {/* Data Tables Row */}
             <Row gutter={[16, 16]} className="mb-6">
                 <Col xs={24} sm={24} md={12} lg={8} xl={8}>
-                    <TableCard
-                        title="Inventory Alerts"
-                        columns={inventoryAlertsColumns}
-                        dataSource={inventoryAlertsData}
-                        loading={isLoading}
-                        pagination={false}
-                        size="small"
-                        extra={<WarningOutlined className="text-orange-500" />}
-                    />
+                    <InventoryAlertsChart />
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={8} xl={8}>
-                    <TableCard
-                        title="Top Selling Products"
-                        columns={topSellingColumns}
-                        dataSource={topSellingData}
-                        loading={isLoading}
-                        pagination={false}
-                        size="small"
-                        extra={<GiftOutlined className="text-green-500" />}
-                    />
+                    <TopSellingProductsTable />
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={8} xl={8}>
-                    <TableCard
-                        title="Return Products"
-                        columns={returnProductsColumns}
-                        dataSource={returnProductsData}
-                        loading={isLoading}
-                        pagination={false}
-                        size="small"
-                        extra={<UndoOutlined className="text-red-500" />}
-                    />
+                    <ReturnProductsList />
+                </Col>
+            </Row>
+
+            {/* bottom chart */}
+            <Row gutter={[16, 16]} className="mb-6">
+                <Col xs={24} sm={24} md={12} lg={8} xl={8}>
+                    <LeaderboardCard />
+                </Col>
+                <Col xs={24} sm={24} md={12} lg={8} xl={8}>
+                    <OrderTrendsByGeoCard />
+                </Col>
+                <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                    <TopPromotionsCard />
                 </Col>
             </Row>
         </>
