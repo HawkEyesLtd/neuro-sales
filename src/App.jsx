@@ -1,5 +1,5 @@
-import Login from '@pages/auth/Login';
-import PrivateRoute from '@pages/auth/PrivateRoute';
+import Login from '@pages/Auth/Login';
+import PrivateRoute from '@pages/Auth/PrivateRoute';
 import { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
