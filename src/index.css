@@ -64,6 +64,10 @@ body {
     color: black !important;
 }
 
+.ant-menu-item > span {
+    color: black !important;
+}
+
 /* Oldis previous */
 
 /* date picker style start */

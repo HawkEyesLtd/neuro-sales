@@ -48,7 +48,7 @@
         "csp:test": "pnpm build && pnpm preview --host --port 4173",
         "csp:helper": "./scripts/csp-helper.sh",
         "deploy": "vercel --prod",
-        "deploy:secure": "cp vercel.json vercel.json.backup && cp vercel.secure.json vercel.json && vercel --prod && mv vercel.json.backup vercel.json"
+        "deploy:minimal": "cp vercel.json vercel.json.backup && cp vercel.minimal.json vercel.json && vercel --prod && mv vercel.json.backup vercel.json"
     },
     "devDependencies": {
         "@eslint/js": "^9.36.0",

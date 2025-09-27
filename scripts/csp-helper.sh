@@ -26,28 +26,28 @@ fi
 # Function to test CSP configuration
 test_csp() {
     echo "🧪 Testing CSP configuration..."
-    
+
     # Build the application
     echo "📦 Building application..."
     pnpm build
-    
+
     if [ $? -ne 0 ]; then
         echo "❌ Build failed. Please check your code."
         exit 1
     fi
-    
+
     # Start preview server
     echo "🌐 Starting preview server..."
     pnpm preview --host --port 4173 &
     PREVIEW_PID=$!
-    
+
     # Wait for server to start
     sleep 5
-    
+
     # Test with curl for CSP headers
     echo "🔍 Testing CSP headers..."
     curl -I http://localhost:4173 | grep -i "content-security-policy"
-    
+
     echo "✅ Preview server running at http://localhost:4173"
     echo "🔍 Please test the following:"
     echo "   - Google Fonts loading correctly"
@@ -57,7 +57,7 @@ test_csp() {
     echo ""
     echo "Press Enter when testing is complete..."
     read -r
-    
+
     # Kill preview server
     kill $PREVIEW_PID 2>/dev/null
     echo "🛑 Preview server stopped"
@@ -66,32 +66,32 @@ test_csp() {
 # Function to deploy with CSP
 deploy_with_csp() {
     local config_file=${1:-"vercel.json"}
-    
+
     echo "🚀 Deploying with CSP configuration: $config_file"
-    
+
     if [ ! -f "$config_file" ]; then
         echo "❌ Configuration file $config_file not found!"
         exit 1
     fi
-    
+
     # Backup current vercel.json if using alternative config
     if [ "$config_file" != "vercel.json" ]; then
         cp vercel.json vercel.json.backup
         cp "$config_file" vercel.json
     fi
-    
+
     # Deploy to Vercel
     vercel --prod
-    
+
     # Restore backup if needed
     if [ "$config_file" != "vercel.json" ] && [ -f "vercel.json.backup" ]; then
         mv vercel.json.backup vercel.json
     fi
-    
+
     echo "✅ Deployment complete!"
     echo "🔍 Please test your deployed application for:"
     echo "   - Font loading"
-    echo "   - Style rendering" 
+    echo "   - Style rendering"
     echo "   - JavaScript functionality"
     echo "   - Console errors"
 }
