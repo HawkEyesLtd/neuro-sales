@@ -3,7 +3,7 @@ import Dashboard from '@/pages/Dashboard/Dashboard';
 import DHCreditLifting from '@/pages/Inventory/DHCreditLifting';
 import DHProductReceived from '@/pages/Inventory/DHProductReceived';
 import InventoryStatus from '@/pages/Inventory/InventoryStatus';
-import SROrders from '@/pages/SalesReport/SROrders';
+import SROrders from '@/pages/SalesReport/components/SROrders';
 
 const routeData = [
     {

@@ -122,8 +122,6 @@ export default function DHCCreditLifting() {
             </div>
 
             <div style={{ borderRadius: '10px' }}>
-                <div className="box-heading">DH Credit Lifting</div>
-
                 {data?.data?.summary?.length ? (
                     <>
                         {transformData?.length ? (

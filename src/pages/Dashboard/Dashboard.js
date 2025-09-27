@@ -220,17 +220,17 @@ function Dashboard() {
 
             {/* Charts Row */}
             <Row gutter={[16, 16]} className="mb-6">
-                <Col xs={24} sm={24} md={12} lg={8} xl={8}>
+                <Col xs={24} sm={24} md={12} lg={6} xl={6}>
                     <ChartCard title="Sales Performance" loading={isLoading} height={300}>
                         <SalesPerformanceChart />
                     </ChartCard>
                 </Col>
-                <Col xs={24} sm={24} md={12} lg={8} xl={8}>
+                <Col xs={24} sm={24} md={12} lg={6} xl={6}>
                     <ChartCard title="Delivery Performance" loading={isLoading} height={300}>
                         <DeliveryPerformanceChart />
                     </ChartCard>
                 </Col>
-                <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                <Col xs={24} sm={24} md={24} lg={6} xl={6}>
                     <ChartCard title="B2B Order Performance" loading={isLoading} height={300}>
                         <B2BOrderPerformanceChart />
                     </ChartCard>

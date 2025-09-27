@@ -1,5 +1,5 @@
 import { SearchOutlined } from '@ant-design/icons';
-import { Button, Col, DatePicker, Input, Row, Select, Space } from 'antd';
+import { Button, Col, DatePicker, Input, Row, Select } from 'antd';
 import { useState } from 'react';
 
 const { Option } = Select;
@@ -38,7 +38,7 @@ export default function InventoryFilter({
     return (
         <div className="bg-gray-50 p-4 rounded-lg mb-6">
             <Row gutter={[16, 16]}>
-                <Col xs={24} sm={12} md={6} lg={4}>
+                <Col xs={24} sm={12} md={6} lg={6}>
                     <Select
                         placeholder="Region"
                         style={{ width: '100%' }}
@@ -53,7 +53,7 @@ export default function InventoryFilter({
                     </Select>
                 </Col>
 
-                <Col xs={24} sm={12} md={6} lg={4}>
+                <Col xs={24} sm={12} md={6} lg={6}>
                     <Select
                         placeholder="Area"
                         style={{ width: '100%' }}
@@ -67,7 +67,7 @@ export default function InventoryFilter({
                     </Select>
                 </Col>
 
-                <Col xs={24} sm={12} md={6} lg={4}>
+                <Col xs={24} sm={12} md={6} lg={6}>
                     <Select
                         placeholder="Territory"
                         style={{ width: '100%' }}
@@ -81,7 +81,7 @@ export default function InventoryFilter({
                     </Select>
                 </Col>
 
-                <Col xs={24} sm={12} md={6} lg={4}>
+                <Col xs={24} sm={12} md={6} lg={6}>
                     <Select
                         placeholder="DH Name"
                         style={{ width: '100%' }}
@@ -96,7 +96,7 @@ export default function InventoryFilter({
                 </Col>
 
                 {showDateRange && (
-                    <Col xs={24} sm={12} md={6} lg={4}>
+                    <Col xs={24} sm={12} md={6} lg={6}>
                         <RangePicker
                             style={{ width: '100%' }}
                             placeholder={['Start Date', 'End Date']}
@@ -108,6 +108,7 @@ export default function InventoryFilter({
                 {showStatus && (
                     <Col xs={24} sm={12} md={6} lg={4}>
                         <Select
+                            className="w-full!"
                             placeholder="Status"
                             style={{ width: '100%' }}
                             value={filters.status}
@@ -135,25 +136,27 @@ export default function InventoryFilter({
                 )}
 
                 <Col xs={24} sm={12} md={8} lg={6}>
-                    <Space>
+                    <Button
+                        type="primary"
+                        icon={<SearchOutlined />}
+                        onClick={handleSearch}
+                        loading={loading}
+                    >
+                        Search
+                    </Button>
+                </Col>
+                <Col xs={24} sm={12} md={8} lg={6}>
+                    {showAddButton && (
                         <Button
+                            block
+                            style
                             type="primary"
-                            icon={<SearchOutlined />}
-                            onClick={handleSearch}
-                            loading={loading}
+                            style={{ backgroundColor: '#52c41a', borderColor: '#52c41a' }}
+                            onClick={onAddClick}
                         >
-                            Search
+                            {addButtonText}
                         </Button>
-                        {showAddButton && (
-                            <Button
-                                type="primary"
-                                style={{ backgroundColor: '#52c41a', borderColor: '#52c41a' }}
-                                onClick={onAddClick}
-                            >
-                                {addButtonText}
-                            </Button>
-                        )}
-                    </Space>
+                    )}
                 </Col>
             </Row>
         </div>

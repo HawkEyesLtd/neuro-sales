@@ -47,42 +47,9 @@ function DashboardFilter({ queryFunc, loading }) {
 
     return (
         <>
-            <Col xs={24} sm={12} md={6} lg={4} xl={4}>
-                <Select placeholder="Select Region Name" className="w-full" size="large" allowClear>
-                    {regions.map((region) => (
-                        <Option key={region.value} value={region.value}>
-                            {region.label}
-                        </Option>
-                    ))}
-                </Select>
-            </Col>
+            {/* <DataManagementFilter /> */}
 
-            <Col xs={24} sm={12} md={6} lg={4} xl={4}>
-                <Select placeholder="Select Area Name" className="w-full" size="large" allowClear>
-                    {areas.map((area) => (
-                        <Option key={area.value} value={area.value}>
-                            {area.label}
-                        </Option>
-                    ))}
-                </Select>
-            </Col>
-
-            <Col xs={24} sm={12} md={6} lg={4} xl={4}>
-                <Select
-                    placeholder="Select Territory Name"
-                    className="w-full"
-                    size="large"
-                    allowClear
-                >
-                    {territories.map((territory) => (
-                        <Option key={territory.value} value={territory.value}>
-                            {territory.label}
-                        </Option>
-                    ))}
-                </Select>
-            </Col>
-
-            <Col xs={24} sm={12} md={6} lg={4} xl={4}>
+            <Col xs={24} sm={12} md={6} lg={6} xl={6}>
                 <Select placeholder="Select DH Name" className="w-full" size="large" allowClear>
                     {dhNames.map((dh) => (
                         <Option key={dh.value} value={dh.value}>
@@ -94,8 +61,9 @@ function DashboardFilter({ queryFunc, loading }) {
 
             <DateRange dataPickerFunc={dataPickerFunc} />
 
-            <Col xs={12} sm={8} md={6} lg={4} xl={4}>
+            <Col xs={12} sm={8} md={6} lg={6} xl={6}>
                 <FilterButton
+                    block
                     fn={queryFunc}
                     loading={loading}
                     icon={<SearchOutlined />}
