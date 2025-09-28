@@ -1,11 +1,11 @@
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 
-const Login = React.lazy(() => import('./Login'));
+import LoginPage from './LoginPage';
 
 export default function LoginPageWrapper(props) {
     return (
         <Suspense fallback={<div>Loading...</div>}>
-            <Login {...props} />
+            <LoginPage {...props} />
         </Suspense>
     );
 }
