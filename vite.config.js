@@ -20,6 +20,7 @@ export default defineConfig({
             '@redux': '/src/redux',
         },
     },
+    base: './',
     esbuild: {
         loader: 'jsx',
         include: /\.(jsx|js|ts|tsx)$/,
