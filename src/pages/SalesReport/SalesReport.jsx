@@ -51,8 +51,6 @@ export default function SalesReportPage() {
                 limit: pagination.pageSize,
             }).unwrap();
 
-            console.log(response);
-
             setSalesData(response.data || []);
             setPagination((prev) => ({
                 ...prev,
@@ -71,7 +69,6 @@ export default function SalesReportPage() {
             pageSize: paginationInfo.pageSize,
         }));
     };
-    console.log('Pagination changed:', salesData);
 
     useEffect(() => {
         // Load initial data with default filters
@@ -389,7 +386,7 @@ export default function SalesReportPage() {
             {/* Summary Cards */}
             <Row gutter={[10, 10]} style={{ marginBottom: 16 }}>
                 <Col xs={24} sm={6}>
-                    <Card>
+                    <Card hoverable>
                         <Statistic
                             title="Total Orders"
                             value={salesData.length}
@@ -398,17 +395,17 @@ export default function SalesReportPage() {
                     </Card>
                 </Col>
                 <Col xs={24} sm={6}>
-                    <Card>
+                    <Card hoverable>
                         <Statistic
                             title="Total Amount"
                             value={totalAmount}
-                            prefix={<DollarCircleOutlined />}
+                            prefix={<span className="font-bold text-[20px]">৳</span>}
                             precision={2}
                         />
                     </Card>
                 </Col>
                 <Col xs={24} sm={6}>
-                    <Card>
+                    <Card hoverable>
                         <Statistic
                             title="Delivered Orders"
                             value={deliveredCount}
@@ -418,11 +415,11 @@ export default function SalesReportPage() {
                     </Card>
                 </Col>
                 <Col xs={24} sm={6}>
-                    <Card>
+                    <Card hoverable>
                         <Statistic
                             title="Total Discount"
                             value={totalDiscount}
-                            prefix={<DollarCircleOutlined />}
+                            prefix={<span className="font-bold text-[20px]">৳</span>}
                             precision={2}
                         />
                     </Card>
@@ -430,7 +427,7 @@ export default function SalesReportPage() {
             </Row>
 
             {/* Data Table */}
-            <Card>
+            <Card hoverable>
                 <Table
                     columns={columns}
                     dataSource={salesData}
