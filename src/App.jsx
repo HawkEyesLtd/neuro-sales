@@ -10,7 +10,7 @@ import UnAuthorized from './components/ui/UnAuthorized';
 import routeData from './data/routeData';
 import useAuthCheck from './hooks/useAuthCheck';
 import LayoutComponent from './Layout/Layout';
-import LoginPage from './pages/Auth/LoginPage.jsx';
+import LoginPage from './pages/Auth/Loginpage.jsx';
 import './utils/globalErrorHandler'; // Initialize global error handling
 
 function App() {
