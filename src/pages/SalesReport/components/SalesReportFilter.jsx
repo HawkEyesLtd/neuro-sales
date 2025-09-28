@@ -61,7 +61,7 @@ export default function SalesReportFilter({ onFilter, loading }) {
                     Sales Report Filters
                 </Space>
             }
-            style={{ marginBottom: 16 }}
+            style={{ marginBottom: 15 }}
         >
             <Row gutter={[10, 10]}>
                 <DataManagementFilter />
@@ -122,11 +122,11 @@ export default function SalesReportFilter({ onFilter, loading }) {
                     />
                 </Col>
 
-                <Col xs={24} sm={12} md={8} lg={6} style={{ textAlign: 'right' }}>
+                {/* <Col xs={24} sm={12} md={8} lg={6} style={{ textAlign: 'right' }}>
                     <Button className="w-full" onClick={handleReset} size="large">
                         Reset
                     </Button>
-                </Col>
+                </Col> */}
                 <Col xs={24} sm={12} md={8} lg={6} style={{ textAlign: 'right' }}>
                     <Button
                         className="w-full"
