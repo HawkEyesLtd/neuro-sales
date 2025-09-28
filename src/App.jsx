@@ -1,5 +1,4 @@
 import Login from '@pages/Auth/Login';
-import PrivateRoute from '@pages/Auth/PrivateRoute';
 import { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
@@ -42,9 +41,9 @@ function App() {
                                         key={i}
                                         path={path}
                                         element={
-                                            <PrivateRoute>
-                                                <LayoutComponent>{element}</LayoutComponent>
-                                            </PrivateRoute>
+                                            // <PrivateRoute>
+                                            <LayoutComponent>{element}</LayoutComponent>
+                                            // </PrivateRoute>
                                         }
                                     />
                                 ))

@@ -1,4 +1,11 @@
-import { AimOutlined, FolderOpenOutlined, PieChartOutlined, SaveFilled } from '@ant-design/icons';
+import {
+    AimOutlined,
+    FolderOpenOutlined,
+    PieChartOutlined,
+    ProductFilled,
+    SaveFilled,
+    UpCircleOutlined,
+} from '@ant-design/icons';
 
 const items = [
     {
@@ -22,14 +29,20 @@ const items = [
             {
                 label: 'Inventory Status',
                 key: '/inventory/inventory-status',
+                icon: <FolderOpenOutlined />,
+                serial: 1,
             },
             {
                 label: 'DH Product Receipt',
                 key: '/inventory/dh-product-receipt',
+                icon: <ProductFilled />,
+                serial: 2,
             },
             {
                 label: 'DH Credit Lifting',
                 key: '/inventory/dh-credit-lifting',
+                icon: <UpCircleOutlined />,
+                serial: 3,
             },
         ],
     },
@@ -37,6 +50,7 @@ const items = [
         label: 'Sales Report',
         key: '/sales-report',
         icon: <SaveFilled />,
+        serial: 4,
     },
 ];
 
