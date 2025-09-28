@@ -2,6 +2,7 @@ import { Col, Form, message, Row } from 'antd';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import Title from 'antd/es/typography/Title';
 
 import nuroSale from '@/assets/logo/logo.png';
 import HelmetHeader from '@/components/HelmetHeader';
@@ -121,17 +122,25 @@ function Login() {
                             onKeyPress={handleKeyPress}
                             form={form}
                         >
-                            <div className="text-center flex flex-col justify-center items-center">
+                            <div
+                                style={{
+                                    textAlign: 'center',
+                                    marginBottom: '20px',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                }}
+                            >
                                 <img alt="neuro-sales-logo" src={nuroSale} width={200} />
-                                {/* <Title
+                                <Title
                                     level={2}
                                     style={{
                                         color: '#213CB3',
                                         marginTop: '10px',
                                     }}
                                 >
-                                    Sign In to Your Account
-                                </Title> */}
+                                    {/* Sign In to Your Account */}
+                                </Title>
                             </div>
 
                             {/* Username Field */}
