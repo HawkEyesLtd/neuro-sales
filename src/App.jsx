@@ -10,7 +10,7 @@ import UnAuthorized from './components/ui/UnAuthorized';
 import routeData from './data/routeData';
 import useAuthCheck from './hooks/useAuthCheck';
 import LayoutComponent from './Layout/Layout';
-import Login from './pages/Auth/Login';
+import LoginPage from './pages/Auth/Login';
 import './utils/globalErrorHandler'; // Initialize global error handling
 
 function App() {
@@ -55,7 +55,7 @@ function App() {
                             )}
 
                             <Route path="/un-authorized" element={<UnAuthorized />} />
-                            <Route path="/login" element={<Login />} />
+                            <Route path="/login" element={<LoginPage />} />
                             <Route path="*" element={<NotFound />} />
                         </Routes>
                     </Suspense>

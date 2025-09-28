@@ -14,7 +14,7 @@ import ActionButton from './components/ActionButton';
 import LoginInput from './components/LoginInput';
 import LoginPassword from './components/LoginPassword';
 
-function Login() {
+export default function LoginPage() {
     const [form] = Form.useForm();
     const [login, { isLoading }] = useLoginMutation();
     const dispatch = useDispatch();
@@ -189,5 +189,3 @@ function Login() {
         </>
     );
 }
-
-export default Login;
