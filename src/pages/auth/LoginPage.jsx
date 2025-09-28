@@ -1,4 +1,5 @@
 import { Col, Form, message, Row } from 'antd';
+import Title from 'antd/es/typography/Title';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -13,9 +14,9 @@ import ActionButton from './components/ActionButton';
 import LoginInput from './components/LoginInput';
 import LoginPassword from './components/LoginPassword';
 
-function Login() {
+export default function LoginPage() {
     const [form] = Form.useForm();
-    const [login, { isLoading }] = useLoginMutation();
+    const [triggerLogin, { isLoading }] = useLoginMutation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { location, hasLocation, error, retry, contextHolder } = useGeolocation();
@@ -31,7 +32,7 @@ function Login() {
             message.loading({ content: 'Logging in...', key: 'login' });
 
             try {
-                const res = await login({
+                const res = await triggerLogin({
                     ...values,
                     ...location,
                     loggedOn: 'Web',
@@ -69,7 +70,7 @@ function Login() {
                 });
             }
         },
-        [location, login, navigate, hasLocation, error, retry, dispatch]
+        [location, triggerLogin, navigate, hasLocation, error, retry, dispatch]
     );
 
     const handleSubmit = useCallback(() => {
@@ -121,17 +122,25 @@ function Login() {
                             onKeyPress={handleKeyPress}
                             form={form}
                         >
-                            <div className="text-center flex flex-col justify-center items-center">
+                            <div
+                                style={{
+                                    textAlign: 'center',
+                                    marginBottom: '20px',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                }}
+                            >
                                 <img alt="neuro-sales-logo" src={nuroSale} width={200} />
-                                {/* <Title
+                                <Title
                                     level={2}
                                     style={{
                                         color: '#213CB3',
                                         marginTop: '10px',
                                     }}
                                 >
-                                    Sign In to Your Account
-                                </Title> */}
+                                    {/* Sign In to Your Account */}
+                                </Title>
                             </div>
 
                             {/* Username Field */}
@@ -180,5 +189,3 @@ function Login() {
         </>
     );
 }
-
-export default Login;

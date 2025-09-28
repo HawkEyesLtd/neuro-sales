@@ -1,5 +1,3 @@
-import Login from '@pages/auth/Login';
-import PrivateRoute from '@pages/auth/PrivateRoute';
 import { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
@@ -12,6 +10,7 @@ import UnAuthorized from './components/ui/UnAuthorized';
 import routeData from './data/routeData';
 import useAuthCheck from './hooks/useAuthCheck';
 import LayoutComponent from './Layout/Layout';
+import LoginPage from './pages/Auth/LoginPage.jsx';
 import './utils/globalErrorHandler'; // Initialize global error handling
 
 function App() {
@@ -42,9 +41,9 @@ function App() {
                                         key={i}
                                         path={path}
                                         element={
-                                            <PrivateRoute>
-                                                <LayoutComponent>{element}</LayoutComponent>
-                                            </PrivateRoute>
+                                            // <PrivateRoute>
+                                            <LayoutComponent>{element}</LayoutComponent>
+                                            // </PrivateRoute>
                                         }
                                     />
                                 ))
@@ -56,7 +55,7 @@ function App() {
                             )}
 
                             <Route path="/un-authorized" element={<UnAuthorized />} />
-                            <Route path="/login" element={<Login />} />
+                            <Route path="/login" element={<LoginPage />} />
                             <Route path="*" element={<NotFound />} />
                         </Routes>
                     </Suspense>
