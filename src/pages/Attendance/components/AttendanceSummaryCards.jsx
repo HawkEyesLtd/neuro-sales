@@ -110,7 +110,7 @@ function AttendanceSummaryCards({ data }) {
     return (
         <Row gutter={[16, 16]} style={{ marginBottom: '24px' }}>
             <Col xs={24} sm={12} md={6} lg={6}>
-                <Card style={cardStyle} bodyStyle={{ padding: 0 }}>
+                <Card hoverable style={cardStyle} bodyStyle={{ padding: 0 }}>
                     <div style={containerStyle}>
                         <div>
                             <div style={titleStyle}>Total Employee</div>
@@ -128,7 +128,7 @@ function AttendanceSummaryCards({ data }) {
             </Col>
 
             <Col xs={24} sm={12} md={6} lg={6}>
-                <Card style={cardStyle} bodyStyle={{ padding: 0 }}>
+                <Card hoverable style={cardStyle} bodyStyle={{ padding: 0 }}>
                     <div style={containerStyle}>
                         <div>
                             <div style={titleStyle}>Total Present</div>
@@ -145,7 +145,7 @@ function AttendanceSummaryCards({ data }) {
             </Col>
 
             <Col xs={24} sm={12} md={6} lg={6}>
-                <Card style={cardStyle} bodyStyle={{ padding: 0 }}>
+                <Card hoverable style={cardStyle} bodyStyle={{ padding: 0 }}>
                     <div style={containerStyle}>
                         <div>
                             <div style={titleStyle}>Total Absent</div>
@@ -162,7 +162,7 @@ function AttendanceSummaryCards({ data }) {
             </Col>
 
             <Col xs={24} sm={12} md={6} lg={6}>
-                <Card style={cardStyle} bodyStyle={{ padding: 0 }}>
+                <Card hoverable style={cardStyle} bodyStyle={{ padding: 0 }}>
                     <div style={containerStyle}>
                         <div>
                             <div style={titleStyle}>Total Leave</div>
