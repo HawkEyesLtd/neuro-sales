@@ -399,7 +399,7 @@ export default function SalesReportPage() {
                         <Statistic
                             title="Total Amount"
                             value={totalAmount}
-                            prefix={<DollarCircleOutlined />}
+                            prefix={<span className="font-bold text-4xl">৳</span>}
                             precision={2}
                         />
                     </Card>
@@ -419,7 +419,7 @@ export default function SalesReportPage() {
                         <Statistic
                             title="Total Discount"
                             value={totalDiscount}
-                            prefix={<DollarCircleOutlined />}
+                            prefix={<span className="font-bold text-4xl">৳</span>}
                             precision={2}
                         />
                     </Card>
