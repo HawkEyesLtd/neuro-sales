@@ -1,5 +1,4 @@
-import { DownloadOutlined } from '@ant-design/icons';
-import { Button, Col, DatePicker, Input, Select } from 'antd';
+import { Col, DatePicker, Input, Select } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,10 +8,7 @@ import {
     setDate,
     setEmployeeCode,
     setEmployeeId,
-    setFacialError,
-    setLateAttendance,
     setLeveL,
-    setLocationMatch,
 } from '@/redux/features/attendance/attendanceFilterSlice';
 import { useSearchEmployeeMutation } from '@/redux/features/teamManagement/teamManagementApi';
 import getDataManagementFilterData from '@/utils/generateDataManagementFilterData';
@@ -127,7 +123,7 @@ function AttendanceFilter({ queryFunc, loading, downloadButton, isDownloading })
                     onChange={(e) => dispatch(setEmployeeCode(e.target.value))}
                 />
             </Col>
-            <Col xs={12} sm={8} md={6} lg={6} xl={6}>
+            {/* <Col xs={12} sm={8} md={6} lg={6} xl={6}>
                 <Select
                     allowClear
                     placeholder="Location Match"
@@ -189,12 +185,12 @@ function AttendanceFilter({ queryFunc, loading, downloadButton, isDownloading })
                         },
                     ]}
                 />
-            </Col>
+            </Col> */}
             <Col xs={12} sm={8} md={6} lg={6} xl={6}>
                 <CommonButton loading={loading} disabled={isDownloading} queryFunc={queryFunc} />
             </Col>
 
-            <Col xs={12} sm={8} md={6} lg={6} xl={6}>
+            {/* <Col xs={12} sm={8} md={6} lg={6} xl={6}>
                 <Button
                     loading={isDownloading}
                     disabled={loading}
@@ -209,7 +205,7 @@ function AttendanceFilter({ queryFunc, loading, downloadButton, isDownloading })
                 >
                     Download
                 </Button>
-            </Col>
+            </Col>  */}
         </>
     );
 }

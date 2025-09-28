@@ -3,9 +3,9 @@ import { Avatar, Col, Image, Row, Segmented, Tabs, Tooltip } from 'antd';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 
-import labelChange from '@/utils/labelChange';
-import NoResult from '@/components/ui/NoResult';
 import AttendanceItemSkeleton from '@/components/ui/AttendanceItemSkeleton';
+import NoResult from '@/components/ui/NoResult';
+import labelChange from '@/utils/labelChange';
 
 function AttendanceList({ type, isLoading, data, setInfoWindowState }) {
     return (
@@ -218,7 +218,7 @@ function AttendanceTracker({ data, isLoading, setInfoWindowState }) {
                 <AttendanceList
                     type="present"
                     isLoading={isLoading}
-                    data={data?.presentList || []}
+                    data={data || []}
                     setInfoWindowState={setInfoWindowState}
                 />
             ), // Present list
@@ -242,7 +242,7 @@ function AttendanceTracker({ data, isLoading, setInfoWindowState }) {
     };
 
     return (
-        <div className="component-box-container">
+        <div className="">
             <div className="box-heading" style={{ position: 'sticky', top: 0, zIndex: 1 }}>
                 Attendance Tracker
             </div>

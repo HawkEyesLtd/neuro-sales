@@ -51,8 +51,6 @@ export default function SalesReportPage() {
                 limit: pagination.pageSize,
             }).unwrap();
 
-            console.log(response);
-
             setSalesData(response.data || []);
             setPagination((prev) => ({
                 ...prev,
@@ -71,7 +69,6 @@ export default function SalesReportPage() {
             pageSize: paginationInfo.pageSize,
         }));
     };
-    console.log('Pagination changed:', salesData);
 
     useEffect(() => {
         // Load initial data with default filters

@@ -155,14 +155,14 @@ function Attendance() {
             <Row gutter={[5, 10]} style={{ paddingBottom: '10px' }}>
                 <Col lg={12}>
                     <AttendanceTracker
-                        data={data?.data}
+                        data={data?.data?.list}
                         isLoading={isLoading}
                         setInfoWindowState={setInfoWindowState}
                     />
                 </Col>
                 <Col lg={12}>
                     <AttendanceLocator
-                        data={data?.data?.presentList}
+                        data={data?.data?.absentList || []}
                         infoWindowState={infoWindowState}
                         setInfoWindowState={setInfoWindowState}
                     />
