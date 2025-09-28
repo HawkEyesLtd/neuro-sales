@@ -1,7 +1,6 @@
 import {
     ClockCircleOutlined,
     DollarCircleOutlined,
-    DownloadOutlined,
     EyeOutlined,
     ShopOutlined,
     UserOutlined,
@@ -52,6 +51,8 @@ export default function SalesReportPage() {
                 limit: pagination.pageSize,
             }).unwrap();
 
+            console.log(response);
+
             setSalesData(response.data || []);
             setPagination((prev) => ({
                 ...prev,
@@ -70,6 +71,7 @@ export default function SalesReportPage() {
             pageSize: paginationInfo.pageSize,
         }));
     };
+    console.log('Pagination changed:', salesData);
 
     useEffect(() => {
         // Load initial data with default filters
@@ -264,13 +266,13 @@ export default function SalesReportPage() {
                             onClick={() => handleViewDetails(record)}
                         />
                     </Tooltip>
-                    <Tooltip title="Download Report">
+                    {/* <Tooltip title="Download Report">
                         <Button
                             type="text"
                             icon={<DownloadOutlined />}
                             onClick={() => handleDownload(record)}
                         />
-                    </Tooltip>
+                    </Tooltip> */}
                 </Space>
             ),
         },
@@ -385,7 +387,7 @@ export default function SalesReportPage() {
             <SalesReportFilter onFilter={handleFilter} loading={isLoading} />
 
             {/* Summary Cards */}
-            <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
+            <Row gutter={[10, 10]} style={{ marginBottom: 16 }}>
                 <Col xs={24} sm={6}>
                     <Card>
                         <Statistic
