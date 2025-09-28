@@ -16,7 +16,7 @@ import LoginPassword from './components/LoginPassword';
 
 export default function LoginPage() {
     const [form] = Form.useForm();
-    const [login, { isLoading }] = useLoginMutation();
+    const [triggerLogin, { isLoading }] = useLoginMutation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { location, hasLocation, error, retry, contextHolder } = useGeolocation();
@@ -32,7 +32,7 @@ export default function LoginPage() {
             message.loading({ content: 'Logging in...', key: 'login' });
 
             try {
-                const res = await login({
+                const res = await triggerLogin({
                     ...values,
                     ...location,
                     loggedOn: 'Web',
@@ -70,7 +70,7 @@ export default function LoginPage() {
                 });
             }
         },
-        [location, login, navigate, hasLocation, error, retry, dispatch]
+        [location, triggerLogin, navigate, hasLocation, error, retry, dispatch]
     );
 
     const handleSubmit = useCallback(() => {
