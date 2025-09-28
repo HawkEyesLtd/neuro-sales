@@ -4,8 +4,8 @@ import {
     MoreOutlined,
     SortAscendingOutlined,
 } from '@ant-design/icons';
-import { Button, Card, Dropdown, Space, Table, Typography, message } from 'antd';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Button, Card, Dropdown, Space, Table, Typography } from 'antd';
+import { useMemo, useState } from 'react';
 
 import { useGetInventoryStatusMutation } from '@/redux/features/inventory/inventoryApiSlice';
 
@@ -14,7 +14,7 @@ import InventoryFilter from './components/InventoryFilter';
 const { Title } = Typography;
 
 export default function InventoryStatus() {
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [inventoryData, setInventoryData] = useState([]);
     const [pagination, setPagination] = useState({
@@ -158,46 +158,46 @@ export default function InventoryStatus() {
         },
     ];
 
-    const handleFilter = useCallback(
-        async (filters) => {
-            setLoading(true);
-            try {
-                const response = await getInventoryStatus({
-                    ...filters,
-                    page: pagination.current,
-                    pageSize: pagination.pageSize,
-                });
+    // const handleFilter = useCallback(
+    //     async (filters) => {
+    //         // setLoading(true);
+    //         try {
+    //             const response = await getInventoryStatus({
+    //                 ...filters,
+    //                 page: pagination.current,
+    //                 pageSize: pagination.pageSize,
+    //             });
 
-                if (response?.data?.success) {
-                    setInventoryData(response.data.data);
-                    setPagination((prev) => ({
-                        ...prev,
-                        total: response.data.total || 0,
-                    }));
-                } else {
-                    throw new Error('API Error');
-                }
-            } catch {
-                message.error('Failed to fetch inventory data');
-                // Fallback to mock data
-                setInventoryData(data);
-                setPagination((prev) => ({
-                    ...prev,
-                    total: data.length,
-                }));
-            } finally {
-                setLoading(false);
-            }
-        },
-        [getInventoryStatus, pagination, data]
-    );
+    //             if (response?.data?.success) {
+    //                 setInventoryData(response.data.data);
+    //                 setPagination((prev) => ({
+    //                     ...prev,
+    //                     total: response.data.total || 0,
+    //                 }));
+    //             } else {
+    //                 throw new Error('API Error');
+    //             }
+    //         } catch {
+    //             message.error('Failed to fetch inventory data');
+    //             // Fallback to mock data
+    //             setInventoryData(data);
+    //             setPagination((prev) => ({
+    //                 ...prev,
+    //                 total: data.length,
+    //             }));
+    //         } finally {
+    //             // setLoading(false);
+    //         }
+    //     },
+    //     [pagination, data]
+    // );
 
-    useEffect(() => {
-        const loadData = async () => {
-            await handleFilter({});
-        };
-        loadData();
-    }, [handleFilter]);
+    // useEffect(() => {
+    //     const loadData = async () => {
+    //         await handleFilter({});
+    //     };
+    //     loadData();
+    // }, [handleFilter]);
 
     const handleViewDetails = (_record) => {
         // Handle view details functionality
@@ -225,8 +225,8 @@ export default function InventoryStatus() {
             </div>
 
             <InventoryFilter
-                onFilter={handleFilter}
-                loading={loading}
+                // onFilter={handleFilter}
+                // loading={loading}
                 showAddButton={false}
                 showSearch={true}
                 showStatus={true}
@@ -252,7 +252,7 @@ export default function InventoryStatus() {
                     columns={columns}
                     dataSource={inventoryData.length > 0 ? inventoryData : data}
                     rowSelection={rowSelection}
-                    loading={loading}
+                    // loading={loading}
                     pagination={{
                         current: 1,
                         pageSize: 5,
