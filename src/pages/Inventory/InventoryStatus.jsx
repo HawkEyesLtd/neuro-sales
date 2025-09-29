@@ -217,7 +217,7 @@ export default function InventoryStatus() {
     };
 
     return (
-        <div className="p-6">
+        <div>
             <div className="mb-6">
                 <Title level={3} className="mb-4">
                     Inventory
