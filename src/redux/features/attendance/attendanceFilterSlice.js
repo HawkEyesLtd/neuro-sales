@@ -51,6 +51,9 @@ const attendanceFilterSlice = createSlice({
         setFacialError: (state, action) => {
             state.facialError = action.payload;
         },
+        setTownCode: (state, action) => {
+            state.townCode = action.payload;
+        },
         resetAttendanceFilter: (state) => {
             state.date = dayjs();
             state.employeeCode = '';
@@ -75,4 +78,5 @@ export const {
     setEmployeeId,
     resetAttendanceFilter,
     setFacialError,
+    setTownCode,
 } = attendanceFilterSlice.actions;

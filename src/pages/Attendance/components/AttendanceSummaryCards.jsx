@@ -62,11 +62,10 @@ function AttendanceSummaryCards({ data }) {
 
     const cardStyle = {
         borderRadius: '8px',
-        boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
+        // boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
         border: '1px solid #e8e8e8',
         backgroundColor: '#fff',
-        padding: '16px',
-        height: 'auto',
+        padding: '15px',
     };
 
     const titleStyle = {

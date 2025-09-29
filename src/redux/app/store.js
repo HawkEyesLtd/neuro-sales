@@ -1,7 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import { apiSlice } from '../features/api/apiSlice';
+import attendanceFilterSlice from '../features/attendance/attendanceFilterSlice';
 import authSlice from '../features/auth/authSlice';
+import dataManagementFilterSlice from '../features/filter/dataManagementFilterSlice';
+import globalLoadingSlice from '../features/loaderSlice';
 
 // Middleware: reset RTK Query cache on logout
 const resetOnLogoutMiddleware = (storeAPI) => (next) => (action) => {
@@ -17,6 +20,9 @@ const store = configureStore({
     reducer: {
         [apiSlice.reducerPath]: apiSlice.reducer,
         auth: authSlice,
+        attendanceFilter: attendanceFilterSlice,
+        dataManagement: dataManagementFilterSlice,
+        globalLoading: globalLoadingSlice,
     },
     devTools: import.meta.env.NODE_ENV !== 'production',
     middleware: (getDefaultMiddlewares) =>

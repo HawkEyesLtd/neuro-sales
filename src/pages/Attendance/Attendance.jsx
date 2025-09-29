@@ -10,6 +10,10 @@ import { useGetAttendanceDataMutation } from '@/redux/features/attendance/attend
 import { resetAttendanceFilter } from '@/redux/features/attendance/attendanceFilterSlice';
 import { resetDataManagementFilter } from '@/redux/features/filter/dataManagementFilterSlice';
 import { setGlobalLoading, setReFetchFilter } from '@/redux/features/loaderSlice';
+import {
+    selectAttendanceFilterData,
+    selectDataManagementFilters,
+} from '@/redux/selectors/attendanceSelectors';
 import getDataManagementFilterData from '@/utils/generateDataManagementFilterData';
 
 import AttendanceLocator from './components/AttendanceLocator';
@@ -64,7 +68,7 @@ function Attendance() {
         usercode: '',
     });
     const dispatch = useDispatch();
-    const { region, area, territory, town } = useSelector((state) => state.dataManagement ?? {});
+    const { region, area, territory, town } = useSelector(selectDataManagementFilters);
     const {
         date,
         employeeCode,
@@ -74,7 +78,7 @@ function Attendance() {
         lateAttendance,
         employeeId,
         facialError,
-    } = useSelector((state) => state.attendanceFilter ?? {});
+    } = useSelector(selectAttendanceFilterData);
     const [getAttendanceData, { data, isLoading }] = useGetAttendanceDataMutation();
 
     const { download, isDownloading } = useDownloadReport();
@@ -151,7 +155,10 @@ function Attendance() {
                     pathname="/attendance"
                 />
             </div>
+
             <AttendanceSummaryCards data={data?.data?.meta || []} />
+
+            {/* main content - table and map */}
             <Row gutter={[5, 10]} style={{ paddingBottom: '10px' }}>
                 <Col lg={12}>
                     <AttendanceTracker

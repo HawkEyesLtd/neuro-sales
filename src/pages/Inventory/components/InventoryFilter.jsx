@@ -1,142 +1,136 @@
-import { SearchOutlined } from '@ant-design/icons';
-import { Button, Col, DatePicker, Input, Row, Select } from 'antd';
-import { useState } from 'react';
+import { FilterOutlined, SearchOutlined } from '@ant-design/icons';
+import { Button, Card, Col, DatePicker, Input, Row, Select, Space } from 'antd';
+import dayjs from 'dayjs';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-const { Option } = Select;
+import DataManagementFilter from '@/components/DataManagementFilter';
+import { setDateRange } from '@/redux/features/dashboard/dashboardFilterSlice';
+
 const { RangePicker } = DatePicker;
+const { Option } = Select;
 
-export default function InventoryFilter({
-    onFilter,
-    loading,
-    showAddButton = false,
-    onAddClick = () => {},
-    addButtonText = 'Add SKU',
-    showStatus = true,
-    showSearch = true,
-    showDateRange = true,
-}) {
-    const [filters, setFilters] = useState({
-        region: null,
-        area: null,
-        territory: null,
-        dhName: null,
-        dateRange: null,
-        status: null,
-        search: '',
-    });
+export default function InventoryFilter({ onFilter, loading }) {
+    const dispatch = useDispatch();
+    const filters = useSelector((state) => state.inventoryFilter || {});
 
-    const handleFilterChange = (field, value) => {
-        const newFilters = { ...filters, [field]: value };
-        setFilters(newFilters);
-        onFilter?.(newFilters);
+    const handleDateRangeChange = (dates) => {
+        if (dates && dates.length === 2) {
+            dispatch(
+                setDateRange({
+                    from: dates[0].toISOString(),
+                    to: dates[1].toISOString(),
+                })
+            );
+        } else {
+            dispatch(
+                setDateRange({
+                    from: null,
+                    to: null,
+                })
+            );
+        }
     };
 
     const handleSearch = () => {
-        onFilter?.(filters);
+        onFilter(filters);
     };
 
+    const handleReset = () => {
+        // dispatch(resetFilters());
+    };
+
+    // Auto-trigger search when filters change
+    useEffect(() => {
+        if (
+            filters.from ||
+            filters.to ||
+            filters.orderStatus ||
+            filters.deliveryStatus ||
+            filters.searchTerm
+        ) {
+            onFilter(filters);
+        }
+    }, [filters, onFilter]);
+
     return (
-        <div className="bg-gray-50 p-4 rounded-lg mb-6">
-            <Row gutter={[16, 16]}>
-                <Col xs={24} sm={12} md={6} lg={6}>
-                    <Select
-                        placeholder="Region"
-                        style={{ width: '100%' }}
-                        value={filters.region}
-                        onChange={(value) => handleFilterChange('region', value)}
-                        allowClear
-                    >
-                        <Option value="central-north">Central North</Option>
-                        <Option value="central-south">Central South</Option>
-                        <Option value="eastern">Eastern</Option>
-                        <Option value="western">Western</Option>
-                    </Select>
-                </Col>
-
-                <Col xs={24} sm={12} md={6} lg={6}>
-                    <Select
-                        placeholder="Area"
-                        style={{ width: '100%' }}
-                        value={filters.area}
-                        onChange={(value) => handleFilterChange('area', value)}
-                        allowClear
-                    >
-                        <Option value="dhaka">Dhaka</Option>
-                        <Option value="tangail">Tangail</Option>
-                        <Option value="chittagong">Chittagong</Option>
-                    </Select>
-                </Col>
-
-                <Col xs={24} sm={12} md={6} lg={6}>
-                    <Select
-                        placeholder="Territory"
-                        style={{ width: '100%' }}
-                        value={filters.territory}
-                        onChange={(value) => handleFilterChange('territory', value)}
-                        allowClear
-                    >
-                        <Option value="territory-1">Territory 1</Option>
-                        <Option value="territory-2">Territory 2</Option>
-                        <Option value="territory-3">Territory 3</Option>
-                    </Select>
-                </Col>
-
-                <Col xs={24} sm={12} md={6} lg={6}>
-                    <Select
-                        placeholder="DH Name"
-                        style={{ width: '100%' }}
-                        value={filters.dhName}
-                        onChange={(value) => handleFilterChange('dhName', value)}
-                        allowClear
-                    >
-                        <Option value="dh-1">DH 1</Option>
-                        <Option value="dh-2">DH 2</Option>
-                        <Option value="dh-3">DH 3</Option>
-                    </Select>
-                </Col>
-
-                {showDateRange && (
-                    <Col xs={24} sm={12} md={6} lg={6}>
-                        <RangePicker
-                            style={{ width: '100%' }}
-                            placeholder={['Start Date', 'End Date']}
-                            onChange={(dates) => handleFilterChange('dateRange', dates)}
-                        />
-                    </Col>
-                )}
-
-                {showStatus && (
-                    <Col xs={24} sm={12} md={6} lg={4}>
-                        <Select
-                            className="w-full!"
-                            placeholder="Status"
-                            style={{ width: '100%' }}
-                            value={filters.status}
-                            onChange={(value) => handleFilterChange('status', value)}
-                            allowClear
-                        >
-                            <Option value="active">Active</Option>
-                            <Option value="pending">Pending</Option>
-                            <Option value="delivered">Delivered</Option>
-                            <Option value="cancelled">Cancelled</Option>
-                        </Select>
-                    </Col>
-                )}
-
-                {showSearch && (
-                    <Col xs={24} sm={12} md={8} lg={6}>
-                        <Input
-                            placeholder="Search Order ID/outlets..."
-                            prefix={<SearchOutlined />}
-                            value={filters.search}
-                            onChange={(e) => handleFilterChange('search', e.target.value)}
-                            onPressEnter={handleSearch}
-                        />
-                    </Col>
-                )}
+        <Card
+            title={
+                <Space>
+                    <FilterOutlined />
+                    Sales Report Filters
+                </Space>
+            }
+            style={{ marginBottom: 15 }}
+        >
+            <Row gutter={[10, 10]}>
+                <DataManagementFilter />
 
                 <Col xs={24} sm={12} md={8} lg={6}>
+                    <RangePicker
+                        size="large"
+                        style={{ width: '100%' }}
+                        onChange={handleDateRangeChange}
+                        value={
+                            filters.from && filters.to
+                                ? [dayjs(filters.from), dayjs(filters.to)]
+                                : []
+                        }
+                        placeholder={['From Date', 'To Date']}
+                    />
+                </Col>
+
+                <Col xs={24} sm={12} md={8} lg={6}>
+                    <Select
+                        size="large"
+                        style={{ width: '100%' }}
+                        placeholder="Select Order Status"
+                        value={filters.orderStatus || undefined}
+                        // onChange={(value) => dispatch(setOrderStatus(value))}
+                        allowClear
+                    >
+                        <Option value="Pending">Pending</Option>
+                        <Option value="Confirmed">Confirmed</Option>
+                        <Option value="Delivered">Delivered</Option>
+                        <Option value="Cancelled">Cancelled</Option>
+                    </Select>
+                </Col>
+
+                <Col xs={24} sm={12} md={8} lg={6}>
+                    <Select
+                        size="large"
+                        style={{ width: '100%' }}
+                        placeholder="Select Delivery Status"
+                        value={filters.deliveryStatus || undefined}
+                        // onChange={(value) => dispatch(setDeliveryStatus(value))}
+                        allowClear
+                    >
+                        <Option value="Pending">Pending</Option>
+                        <Option value="InTransit">In Transit</Option>
+                        <Option value="Delivered">Delivered</Option>
+                        <Option value="Failed">Failed</Option>
+                    </Select>
+                </Col>
+
+                <Col xs={24} sm={12} md={8} lg={6}>
+                    <Input
+                        size="large"
+                        placeholder="Search by outlet name, user, etc."
+                        value={filters.searchTerm}
+                        // onChange={(e) => dispatch(setSearchTerm(e.target.value))}
+                        prefix={<SearchOutlined />}
+                    />
+                </Col>
+
+                {/* <Col xs={24} sm={12} md={8} lg={6} style={{ textAlign: 'right' }}>
+                    <Button className="w-full" onClick={handleReset} size="large">
+                        Reset
+                    </Button>
+                </Col> */}
+                <Col xs={24} sm={12} md={8} lg={6} style={{ textAlign: 'right' }}>
                     <Button
+                        className="w-full"
+                        size="large"
                         type="primary"
                         icon={<SearchOutlined />}
                         onClick={handleSearch}
@@ -145,19 +139,7 @@ export default function InventoryFilter({
                         Search
                     </Button>
                 </Col>
-                <Col xs={24} sm={12} md={8} lg={6}>
-                    {showAddButton && (
-                        <Button
-                            block
-                            type="primary"
-                            style={{ backgroundColor: '#52c41a', borderColor: '#52c41a' }}
-                            onClick={onAddClick}
-                        >
-                            {addButtonText}
-                        </Button>
-                    )}
-                </Col>
             </Row>
-        </div>
+        </Card>
     );
 }

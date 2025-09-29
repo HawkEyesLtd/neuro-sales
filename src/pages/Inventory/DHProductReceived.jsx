@@ -198,25 +198,23 @@ export default function DHProductReceived() {
     };
 
     return (
-        <div className="p-6">
+        <div>
             <div className="mb-6">
                 <Title level={3} className="mb-4">
                     DH Product Receive
                 </Title>
             </div>
 
-            <div className="bg-gray-50 p-4 rounded-lg mb-6">
-                <InventoryFilter
-                    onFilter={handleFilter}
-                    loading={loading}
-                    showAddButton={true}
-                    onAddClick={handleAddSKU}
-                    addButtonText="Add SKU"
-                    showSearch={false}
-                    showStatus={false}
-                    showDateRange={true}
-                />
-            </div>
+            <InventoryFilter
+                onFilter={handleFilter}
+                loading={loading}
+                showAddButton={true}
+                onAddClick={handleAddSKU}
+                addButtonText="Add SKU"
+                showSearch={false}
+                showStatus={false}
+                showDateRange={true}
+            />
 
             <Card className="shadow-sm">
                 <Table

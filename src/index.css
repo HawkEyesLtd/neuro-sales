@@ -43,7 +43,10 @@ body {
     color: black !important;
 }
 
-.ant-menu-item.ant-menu-item-selected {
+.ant-menu-item.ant-menu-item-selected,
+.ant-menu-item.ant-menu-item-selected > span,
+.ant-menu-item.ant-menu-item-active.ant-menu-item-selected > span,
+.ant-menu-item.ant-menu-item-active.ant-menu-item-selected:focus-within {
     background-color: #007bff !important;
     color: white !important;
 }
@@ -52,7 +55,7 @@ body {
     background-color: white !important;
     color: rgb(174, 42, 42) !important;
 }
-` .ant-menu.ant-menu-root.ant-menu-inline.ant-menu-dark {
+.ant-menu.ant-menu-root.ant-menu-inline.ant-menu-dark {
     /* background: #FFFFFF !important; */
     color: black !important;
 }

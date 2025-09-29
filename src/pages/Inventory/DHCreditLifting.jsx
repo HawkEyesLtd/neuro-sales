@@ -209,7 +209,7 @@ export default function DHCreditLifting() {
     };
 
     return (
-        <div className="p-6">
+        <div>
             <div className="mb-6">
                 <Title level={3} className="mb-4">
                     DH Credit Lifting Status
