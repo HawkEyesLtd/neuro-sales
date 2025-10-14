@@ -1,5 +1,6 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
+import { fileURLToPath, URL } from 'node:url';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
@@ -11,13 +12,13 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            '@': '/src',
-            '@components': '/src/components',
-            '@pages': '/src/pages',
-            '@utils': '/src/utils',
-            '@assets': '/src/assets',
-            '@hooks': '/src/hooks',
-            '@redux': '/src/redux',
+            '@': fileURLToPath(new URL('./src', import.meta.url)),
+            '@components': fileURLToPath(new URL('./src/components', import.meta.url)),
+            '@pages': fileURLToPath(new URL('./src/pages', import.meta.url)),
+            '@utils': fileURLToPath(new URL('./src/utils', import.meta.url)),
+            '@assets': fileURLToPath(new URL('./src/assets', import.meta.url)),
+            '@hooks': fileURLToPath(new URL('./src/hooks', import.meta.url)),
+            '@redux': fileURLToPath(new URL('./src/redux', import.meta.url)),
         },
     },
     esbuild: {
