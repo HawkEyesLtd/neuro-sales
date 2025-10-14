@@ -1,14 +1,7 @@
-import {
-    ClockCircleOutlined,
-    DollarCircleOutlined,
-    EyeOutlined,
-    ShopOutlined,
-    UserOutlined,
-} from '@ant-design/icons';
+import { ClockCircleOutlined, ShopOutlined, UserOutlined } from '@ant-design/icons';
 import {
     Avatar,
     Badge,
-    Button,
     Card,
     Col,
     Collapse,
@@ -20,7 +13,6 @@ import {
     Statistic,
     Table,
     Tag,
-    Tooltip,
     Typography,
     message,
 } from 'antd';
@@ -196,7 +188,7 @@ export default function SalesReportPage() {
                 <Space direction="vertical" size="small">
                     <Statistic
                         value={record.totalOrderedAmount}
-                        prefix={<DollarCircleOutlined />}
+                        prefix="৳"
                         precision={2}
                         valueStyle={{ fontSize: 16 }}
                     />
@@ -249,30 +241,30 @@ export default function SalesReportPage() {
                 </Space>
             ),
         },
-        {
-            title: 'Actions',
-            key: 'actions',
-            width: 100,
-            fixed: 'right',
-            render: (record) => (
-                <Space>
-                    <Tooltip title="View Details">
-                        <Button
-                            type="text"
-                            icon={<EyeOutlined />}
-                            onClick={() => handleViewDetails(record)}
-                        />
-                    </Tooltip>
-                    {/* <Tooltip title="Download Report">
-                        <Button
-                            type="text"
-                            icon={<DownloadOutlined />}
-                            onClick={() => handleDownload(record)}
-                        />
-                    </Tooltip> */}
-                </Space>
-            ),
-        },
+        // {
+        //     title: 'Actions',
+        //     key: 'actions',
+        //     width: 100,
+        //     fixed: 'right',
+        //     render: (record) => (
+        //         <Space>
+        //             <Tooltip title="View Details">
+        //                 <Button
+        //                     type="text"
+        //                     icon={<EyeOutlined />}
+        //                     onClick={() => handleViewDetails(record)}
+        //                 />
+        //             </Tooltip>
+        //             {/* <Tooltip title="Download Report">
+        //                 <Button
+        //                     type="text"
+        //                     icon={<DownloadOutlined />}
+        //                     onClick={() => handleDownload(record)}
+        //                 />
+        //             </Tooltip> */}
+        //         </Space>
+        //     ),
+        // },
     ];
 
     const expandedRowRender = (record) => {
@@ -287,8 +279,8 @@ export default function SalesReportPage() {
                                 <Space>
                                     <Text strong>{item.name}</Text>
                                     <Tag>Qty: {item.qty}</Tag>
-                                    <Tag>Price: {formatCurrency(item.unitPrice)}</Tag>
-                                    <Tag color="blue">Total: {formatCurrency(item.totalPrice)}</Tag>
+                                    <Tag>Price: {item.unitPrice}</Tag>
+                                    <Tag color="blue">Total: {item.totalPrice}</Tag>
                                 </Space>
                             </List.Item>
                         )}
