@@ -11,6 +11,8 @@ import routeData from './data/routeData';
 import useAuthCheck from './hooks/useAuthCheck';
 import LayoutComponent from './Layout/Layout';
 // import LoginPage from './pages/Auth/LoginPage.jsx';
+import LoginPage from './pages/Auth/LoginPage';
+import PrivateRoute from './pages/Auth/PrivateRoute';
 import './utils/globalErrorHandler'; // Initialize global error handling
 
 function App() {
@@ -41,9 +43,9 @@ function App() {
                                         key={i}
                                         path={path}
                                         element={
-                                            // <PrivateRoute>
-                                            <LayoutComponent>{element}</LayoutComponent>
-                                            // </PrivateRoute>
+                                            <PrivateRoute>
+                                                <LayoutComponent>{element}</LayoutComponent>
+                                            </PrivateRoute>
                                         }
                                     />
                                 ))
@@ -55,7 +57,7 @@ function App() {
                             )}
 
                             <Route path="/un-authorized" element={<UnAuthorized />} />
-                            {/* <Route path="/login" element={<LoginPage />} /> */}
+                            <Route path="/login" element={<LoginPage />} />
                             <Route path="*" element={<NotFound />} />
                         </Routes>
                     </Suspense>
