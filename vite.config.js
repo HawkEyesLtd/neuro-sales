@@ -1,18 +1,19 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
+import { resolve } from 'path';
 
 export default defineConfig({
     plugins: [react(), tailwindcss()],
     resolve: {
         alias: {
-            '@': '/src',
-            '@components': '/src/components',
-            '@pages': '/src/pages',
-            '@utils': '/src/utils',
-            '@assets': '/src/assets',
-            '@hooks': '/src/hooks',
-            '@redux': '/src/redux',
+            '@': resolve(__dirname, 'src'),
+            '@components': resolve(__dirname, 'src/components'),
+            '@pages': resolve(__dirname, 'src/pages'),
+            '@utils': resolve(__dirname, 'src/utils'),
+            '@assets': resolve(__dirname, 'src/assets'),
+            '@hooks': resolve(__dirname, 'src/hooks'),
+            '@redux': resolve(__dirname, 'src/redux'),
         },
     },
 });
