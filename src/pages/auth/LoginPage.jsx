@@ -14,7 +14,7 @@ import ActionButton from './components/ActionButton';
 import LoginInput from './components/LoginInput';
 import LoginPassword from './components/LoginPassword';
 
-export default function LoginPage() {
+export default function Loginpage() {
     const [form] = Form.useForm();
     const [triggerLogin, { isLoading }] = useLoginMutation();
     const dispatch = useDispatch();
