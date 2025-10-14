@@ -378,13 +378,13 @@ export default function SalesReportPage() {
     const deliveredCount = salesData.filter((record) => record.delivered).length;
 
     return (
-        <div style={{ padding: 24 }}>
+        <div>
             <Title level={2}>Sales Report</Title>
 
             <SalesReportFilter onFilter={handleFilter} loading={isLoading} />
 
             {/* Summary Cards */}
-            <Row gutter={[10, 10]} style={{ marginBottom: 16 }}>
+            <Row gutter={[10, 10]}>
                 <Col xs={24} sm={6}>
                     <Card hoverable>
                         <Statistic
@@ -397,9 +397,9 @@ export default function SalesReportPage() {
                 <Col xs={24} sm={6}>
                     <Card hoverable>
                         <Statistic
+                            prefix={<span className="font-bold text-[30px]">৳</span>}
                             title="Total Amount"
                             value={totalAmount}
-                            prefix={<span className="font-bold text-[20px]">৳</span>}
                             precision={2}
                         />
                     </Card>
@@ -419,7 +419,7 @@ export default function SalesReportPage() {
                         <Statistic
                             title="Total Discount"
                             value={totalDiscount}
-                            prefix={<span className="font-bold text-[20px]">৳</span>}
+                            prefix={<span className="font-bold text-[30px]">৳</span>}
                             precision={2}
                         />
                     </Card>
@@ -427,7 +427,7 @@ export default function SalesReportPage() {
             </Row>
 
             {/* Data Table */}
-            <Card hoverable>
+            <Card hoverable className="!mt-3">
                 <Table
                     columns={columns}
                     dataSource={salesData}
