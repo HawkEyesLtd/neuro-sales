@@ -1,6 +1,6 @@
+import LoginPage from '@pages/Auth/LoginPage';
 import { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import LoginPage from '@pages/Auth/LoginPage';
 
 import A11yAudit from './components/A11yAudit';
 import ErrorBoundary from './components/ErrorBoundary';
