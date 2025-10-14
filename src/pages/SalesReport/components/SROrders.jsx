@@ -234,7 +234,8 @@ export default function SROrders() {
                 <Table
                     columns={columns}
                     dataSource={data}
-                    loading={loading}
+                    // loading={loading}
+                    p
                     pagination={{
                         current: 1,
                         pageSize: 5,

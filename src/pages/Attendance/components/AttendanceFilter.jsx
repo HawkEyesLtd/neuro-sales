@@ -1,31 +1,30 @@
-import { DownloadOutlined } from '@ant-design/icons';
-import { Button, Col, DatePicker, Input, Select } from 'antd';
+import { Col, DatePicker, Input, Select } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import CommonButton from '@/components/CommonButton';
+import DataManagementFilter from '@/components/DataManagementFilter';
 import {
     setDate,
     setEmployeeCode,
     setEmployeeId,
-    setFacialError,
-    setLateAttendance,
     setLeveL,
-    setLocationMatch,
 } from '@/redux/features/attendance/attendanceFilterSlice';
 import { useSearchEmployeeMutation } from '@/redux/features/teamManagement/teamManagementApi';
+import {
+    selectAttendanceFilterData,
+    selectDataManagementFilters,
+    selectUserProjectAccess,
+} from '@/redux/selectors/attendanceSelectors';
 import getDataManagementFilterData from '@/utils/generateDataManagementFilterData';
-import labelChange from '@/utils/labelChange';
 
-function AttendanceFilter({ queryFunc, loading, downloadButton, isDownloading }) {
-    const { date, employeeCode, townCode, level } = useSelector(
-        (state) => state.attendanceFilter ?? {}
-    );
-
-    const AttendanceTracker = useSelector((state) => state.attendanceTracker ?? {});
-    const { data } = AttendanceTracker || {};
-    // redux dispatch function
+function AttendanceFilter({ queryFunc, loading, _downloadButton, isDownloading }) {
+    // Use memoized selectors to prevent unnecessary rerenders
+    const { date, employeeCode, level } = useSelector(selectAttendanceFilterData);
+    const { region, area, territory, town } = useSelector(selectDataManagementFilters);
+    const projectAccessData = useSelector(selectUserProjectAccess);
+    const { accessToken } = useSelector((state) => state.auth || {});
 
     const dispatch = useDispatch();
 
@@ -34,35 +33,28 @@ function AttendanceFilter({ queryFunc, loading, downloadButton, isDownloading })
         dispatch(setDate(dateString));
     };
 
-    // user information log
-    const { user } = useSelector((state) => state.auth);
-    const projectAccessData = user?.projectAccess
-        ?.map((x) => ({ label: labelChange(x), value: x }))
-        ?.filter((x) => x.value !== 'DFF');
-
-    // filter data
-    const { region, area, territory, town } = useSelector((state) => state.dataManagement ?? {});
-
     // search employee api hook
     const [searchEmployee, { data: employeeData, isLoading }] = useSearchEmployeeMutation();
 
     const getFilterData = (lev) => {
         const bodyData = {
-            type: [projectAccessData?.[0].value],
+            type: [projectAccessData?.[0]?.value || 'CM'],
         };
-        if (lev) {
+        if (lev && lev.length > 0) {
             bodyData.type = lev;
         }
         return bodyData;
     };
 
     useEffect(() => {
-        searchEmployee({
-            ...getDataManagementFilterData({ region, area, territory, town }),
-            ...getFilterData(level),
-        });
+        if (accessToken && projectAccessData && projectAccessData.length > 0) {
+            searchEmployee({
+                ...getDataManagementFilterData({ region, area, territory, town }),
+                ...getFilterData(level),
+            });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchEmployee, region, area, territory, town, level]);
+    }, [searchEmployee, region, area, territory, town, level, projectAccessData, accessToken]);
 
     const [search, setSearch] = useState('');
     const onSearch = (e) => {
@@ -71,6 +63,10 @@ function AttendanceFilter({ queryFunc, loading, downloadButton, isDownloading })
 
     return (
         <>
+            {/* Data Management Filters */}
+            <DataManagementFilter />
+
+            {/* Attendance Specific Filters */}
             <Col xs={12} sm={8} md={6} lg={6} xl={6}>
                 <DatePicker
                     defaultValue={dayjs()}
@@ -108,7 +104,6 @@ function AttendanceFilter({ queryFunc, loading, downloadButton, isDownloading })
                     onChange={(e) => dispatch(setEmployeeId(e))}
                     options={employeeData?.data?.map((emp) => ({
                         label: emp.name,
-
                         value: emp._id,
                     }))}
                     filterOption={(input, option) =>
@@ -127,7 +122,7 @@ function AttendanceFilter({ queryFunc, loading, downloadButton, isDownloading })
                     onChange={(e) => dispatch(setEmployeeCode(e.target.value))}
                 />
             </Col>
-            <Col xs={12} sm={8} md={6} lg={6} xl={6}>
+            {/* <Col xs={12} sm={8} md={6} lg={6} xl={6}>
                 <Select
                     allowClear
                     placeholder="Location Match"
@@ -189,12 +184,12 @@ function AttendanceFilter({ queryFunc, loading, downloadButton, isDownloading })
                         },
                     ]}
                 />
-            </Col>
+            </Col> */}
             <Col xs={12} sm={8} md={6} lg={6} xl={6}>
                 <CommonButton loading={loading} disabled={isDownloading} queryFunc={queryFunc} />
             </Col>
 
-            <Col xs={12} sm={8} md={6} lg={6} xl={6}>
+            {/* <Col xs={12} sm={8} md={6} lg={6} xl={6}>
                 <Button
                     loading={isDownloading}
                     disabled={loading}
@@ -209,7 +204,7 @@ function AttendanceFilter({ queryFunc, loading, downloadButton, isDownloading })
                 >
                     Download
                 </Button>
-            </Col>
+            </Col>  */}
         </>
     );
 }

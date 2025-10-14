@@ -62,11 +62,10 @@ function AttendanceSummaryCards({ data }) {
 
     const cardStyle = {
         borderRadius: '8px',
-        boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
+        // boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
         border: '1px solid #e8e8e8',
         backgroundColor: '#fff',
-        padding: '16px',
-        height: 'auto',
+        padding: '15px',
     };
 
     const titleStyle = {
@@ -110,7 +109,7 @@ function AttendanceSummaryCards({ data }) {
     return (
         <Row gutter={[16, 16]} style={{ marginBottom: '24px' }}>
             <Col xs={24} sm={12} md={6} lg={6}>
-                <Card style={cardStyle} bodyStyle={{ padding: 0 }}>
+                <Card hoverable style={cardStyle} bodyStyle={{ padding: 0 }}>
                     <div style={containerStyle}>
                         <div>
                             <div style={titleStyle}>Total Employee</div>
@@ -128,7 +127,7 @@ function AttendanceSummaryCards({ data }) {
             </Col>
 
             <Col xs={24} sm={12} md={6} lg={6}>
-                <Card style={cardStyle} bodyStyle={{ padding: 0 }}>
+                <Card hoverable style={cardStyle} bodyStyle={{ padding: 0 }}>
                     <div style={containerStyle}>
                         <div>
                             <div style={titleStyle}>Total Present</div>
@@ -145,7 +144,7 @@ function AttendanceSummaryCards({ data }) {
             </Col>
 
             <Col xs={24} sm={12} md={6} lg={6}>
-                <Card style={cardStyle} bodyStyle={{ padding: 0 }}>
+                <Card hoverable style={cardStyle} bodyStyle={{ padding: 0 }}>
                     <div style={containerStyle}>
                         <div>
                             <div style={titleStyle}>Total Absent</div>
@@ -162,7 +161,7 @@ function AttendanceSummaryCards({ data }) {
             </Col>
 
             <Col xs={24} sm={12} md={6} lg={6}>
-                <Card style={cardStyle} bodyStyle={{ padding: 0 }}>
+                <Card hoverable style={cardStyle} bodyStyle={{ padding: 0 }}>
                     <div style={containerStyle}>
                         <div>
                             <div style={titleStyle}>Total Leave</div>

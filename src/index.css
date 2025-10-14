@@ -43,7 +43,10 @@ body {
     color: black !important;
 }
 
-.ant-menu-item.ant-menu-item-selected {
+.ant-menu-item.ant-menu-item-selected,
+.ant-menu-item.ant-menu-item-selected > span,
+.ant-menu-item.ant-menu-item-active.ant-menu-item-selected > span,
+.ant-menu-item.ant-menu-item-active.ant-menu-item-selected:focus-within {
     background-color: #007bff !important;
     color: white !important;
 }
@@ -52,7 +55,7 @@ body {
     background-color: white !important;
     color: rgb(174, 42, 42) !important;
 }
-` .ant-menu.ant-menu-root.ant-menu-inline.ant-menu-dark {
+.ant-menu.ant-menu-root.ant-menu-inline.ant-menu-dark {
     /* background: #FFFFFF !important; */
     color: black !important;
 }
@@ -155,11 +158,11 @@ ant-menu-submenu ant-menu-submenu-inline ant-menu-submenu-open ant-menu-submenu-
     width: 250px;
     transition: all 0.05s ease-in-out;
     overflow: auto;
-    background: #1677ff;
+    background: #f5f5f5;
 }
 .ant-layout-sider-trigger,
 .ant-menu-sub {
-    background: #0150a5 !important;
+    background: #f5f5f5 !important;
 }
 .ant-layout-sider-collapsed > .ant-layout-sider-children {
     max-width: 80px;

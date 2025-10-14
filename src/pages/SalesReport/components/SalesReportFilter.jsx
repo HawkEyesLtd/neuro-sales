@@ -61,13 +61,14 @@ export default function SalesReportFilter({ onFilter, loading }) {
                     Sales Report Filters
                 </Space>
             }
-            style={{ marginBottom: 16 }}
+            style={{ marginBottom: 15 }}
         >
-            <Row gutter={[16, 16]}>
+            <Row gutter={[10, 10]}>
                 <DataManagementFilter />
 
                 <Col xs={24} sm={12} md={8} lg={6}>
                     <RangePicker
+                        size="large"
                         style={{ width: '100%' }}
                         onChange={handleDateRangeChange}
                         value={
@@ -81,6 +82,7 @@ export default function SalesReportFilter({ onFilter, loading }) {
 
                 <Col xs={24} sm={12} md={8} lg={6}>
                     <Select
+                        size="large"
                         style={{ width: '100%' }}
                         placeholder="Select Order Status"
                         value={filters.orderStatus || undefined}
@@ -96,6 +98,7 @@ export default function SalesReportFilter({ onFilter, loading }) {
 
                 <Col xs={24} sm={12} md={8} lg={6}>
                     <Select
+                        size="large"
                         style={{ width: '100%' }}
                         placeholder="Select Delivery Status"
                         value={filters.deliveryStatus || undefined}
@@ -111,6 +114,7 @@ export default function SalesReportFilter({ onFilter, loading }) {
 
                 <Col xs={24} sm={12} md={8} lg={6}>
                     <Input
+                        size="large"
                         placeholder="Search by outlet name, user, etc."
                         value={filters.searchTerm}
                         // onChange={(e) => dispatch(setSearchTerm(e.target.value))}
@@ -118,18 +122,22 @@ export default function SalesReportFilter({ onFilter, loading }) {
                     />
                 </Col>
 
-                <Col xs={24} style={{ textAlign: 'right' }}>
-                    <Space>
-                        <Button onClick={handleReset}>Reset</Button>
-                        <Button
-                            type="primary"
-                            icon={<SearchOutlined />}
-                            onClick={handleSearch}
-                            loading={loading}
-                        >
-                            Search
-                        </Button>
-                    </Space>
+                {/* <Col xs={24} sm={12} md={8} lg={6} style={{ textAlign: 'right' }}>
+                    <Button className="w-full" onClick={handleReset} size="large">
+                        Reset
+                    </Button>
+                </Col> */}
+                <Col xs={24} sm={12} md={8} lg={6} style={{ textAlign: 'right' }}>
+                    <Button
+                        className="w-full"
+                        size="large"
+                        type="primary"
+                        icon={<SearchOutlined />}
+                        onClick={handleSearch}
+                        loading={loading}
+                    >
+                        Search
+                    </Button>
                 </Col>
             </Row>
         </Card>

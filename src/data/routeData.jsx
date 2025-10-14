@@ -3,7 +3,7 @@ import Dashboard from '@/pages/Dashboard/Dashboard';
 import DHCreditLifting from '@/pages/Inventory/DHCreditLifting';
 import DHProductReceived from '@/pages/Inventory/DHProductReceived';
 import InventoryStatus from '@/pages/Inventory/InventoryStatus';
-import SROrders from '@/pages/SalesReport/components/SROrders';
+import SalesReportPage from '@/pages/SalesReport/SalesReport';
 
 const routeData = [
     {
@@ -34,7 +34,7 @@ const routeData = [
     {
         name: 'Sales Report',
         path: '/sales-report',
-        element: <SROrders />,
+        element: <SalesReportPage />,
     },
 ];
 

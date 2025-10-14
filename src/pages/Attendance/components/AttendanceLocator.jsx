@@ -57,7 +57,7 @@ function AttendanceLocator({
     // });
 
     return (
-        <div className="component-box-container" style={{ position: 'sticky', top: 0 }}>
+        <div className="" style={{ position: 'sticky', top: 0 }}>
             <div className="box-heading">Attendance Locator</div>
 
             <div style={{ padding: '10px', width: '100%' }}>
@@ -73,13 +73,12 @@ function AttendanceLocator({
                             ({
                                 lat,
                                 lon,
-                                withinRadius,
-                                user: { name, kind, id, usercode },
+                                user: { name, kind, usercode },
                                 punchInAt: time,
                                 image: { original: imageURL },
                             }) => (
                                 <Marker
-                                    key={id}
+                                    key={usercode}
                                     onClick={() =>
                                         setVisibleInfoWindow({
                                             lat,
