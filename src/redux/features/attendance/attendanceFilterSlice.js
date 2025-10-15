@@ -15,7 +15,7 @@ const user = getInitialUserData();
 const initialState = {
     date: dayjs(),
     employeeCode: '',
-    level: [user?.projectAccess?.[0] || 'CM'],
+    level: '',
     townCode: '',
     locationMatch: '',
     lateAttendance: '',

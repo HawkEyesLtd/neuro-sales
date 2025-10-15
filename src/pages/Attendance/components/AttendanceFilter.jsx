@@ -87,7 +87,16 @@ function AttendanceFilter({ queryFunc, loading, _downloadButton, isDownloading }
                     style={{
                         width: '100%',
                     }}
-                    options={projectAccessData || []}
+                    options={[
+                        {
+                            label: 'SR',
+                            value: 'CM',
+                        },
+                        {
+                            label: 'DSR',
+                            value: 'MS',
+                        },
+                    ]}
                     onChange={(e) => dispatch(setLeveL(e))}
                 />
             </Col>
